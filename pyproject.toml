@@ -1,0 +1,13 @@
+[project]
+name = "chrona"
+version = "1.0.0"
+description = "File organizer by date and type"
+authors = [{name = "Jin-Mach"}]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+PyQt6 = "^6.10"
+
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
