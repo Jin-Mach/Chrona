@@ -1,0 +1,3 @@
+[LanguageProvider]
+default_language = "en_GB"
+supported_languages = ["cs_CZ", "en_GB"]
