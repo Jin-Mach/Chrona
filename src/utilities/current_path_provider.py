@@ -14,8 +14,8 @@ def get_base_path() -> Path:
         base_path = Path(__file__).parent
     return base_path.resolve()
 
-def check_base_dir() -> Path | None:
-    project_path = get_base_path().parents[2]
+def set_project_path() -> Path | None:
+    project_path = get_base_path().parents[1]
     if not project_path.exists() or not project_path.is_dir() or not any(project_path.iterdir()):
         return None
     return project_path

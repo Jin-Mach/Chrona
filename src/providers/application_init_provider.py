@@ -1,4 +1,5 @@
-from src.utilities.current_path_provider import check_base_dir
+from src.utilities.current_path_provider import set_project_path
+from src.utilities.error_handler import Errorhandler
 
 
 class ApplicationInit:
@@ -6,10 +7,10 @@ class ApplicationInit:
     @staticmethod
     def initialize_application() -> bool:
         try:
-            default_dir = check_base_dir()
-            if default_dir is None:
+            project_path = set_project_path()
+            if project_path is None or not project_path.is_dir():
                 raise FileNotFoundError("Default application directory not found")
         except Exception as e:
-            print(e)
+            Errorhandler.handle_error(ApplicationInit.__class__.__name__, e)
             return False
         return True
