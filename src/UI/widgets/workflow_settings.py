@@ -11,6 +11,7 @@ class WorkflowSettings(QWidget):
 
     def __init__(self, main_window: "MainWindow") -> None:
         super().__init__(main_window)
+        self.main_window = main_window
         self.setLayout(self.create_gui())
         self.basic_setup()
         self.create_connection()
