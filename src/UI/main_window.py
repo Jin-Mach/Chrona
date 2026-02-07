@@ -5,6 +5,7 @@ from src.UI.widgets.processing_widget import ProcessingWidget
 from src.UI.widgets.workflow_settings import WorkflowSettings
 from src.UI.widgets.side_panel import SidePanel
 
+
 class MainWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
