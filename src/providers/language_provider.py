@@ -20,8 +20,9 @@ class LanguageProvider:
         cls.project_path = set_project_path()
         cls.name = cls.__name__
         cls.config_data = ConfigProvider.get_config_data(class_name=cls.name)
-        cls.language_code = cls.config_data.get("default_language", "en_GB")
+        cls.default_code = cls.config_data.get("default_language", "en_GB")
         cls.supported_languages = cls.config_data.get("supported_languages", ["en_GB"])
+        cls.language_code = cls.get_language_code()
 
     @classmethod
     def get_language_code(cls) -> str:
@@ -40,7 +41,9 @@ class LanguageProvider:
             json_file = file_name + ".json"
             if language_code is None:
                 language_code = cls.language_code
+            print(language_code)
             texts_path = cls.project_path.joinpath("resources", "texts", language_code, json_file)
+            print(texts_path)
             if texts_path.exists() and texts_path.is_file():
                 with open(texts_path, "r", encoding="utf-8") as texts_file:
                     texts_data = json.load(texts_file).get(widget_name, {})

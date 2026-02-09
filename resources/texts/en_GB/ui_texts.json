@@ -1,5 +1,59 @@
 {
   "MainWindow": {
-    "titleText": "Chrono"
+    "titleText": "Chrona"
+  },
+  "SidePanel": {
+    "processingButtonText": "File Transfer",
+    "workflowSettingsButtonText": "Transfer Settings"
+  },
+  "ProcessingWidget": {
+    "startButtonText": "Start Transfer",
+    "dragGroupText": "Quick Selection",
+    "dragLabelText": "Drag and drop a file or folder here.",
+    "pathGroupText": "Paths",
+    "sourceLabelText": "Input files:",
+    "inputPathSelectText": "Select new",
+    "inputPathAddText": "Add to selection",
+    "destinationLabelText": "Target folder:",
+    "outputPathSelectText": "Select folder",
+    "detailsGroupText": "Information",
+    "filesCountLabelText": "Files count:",
+    "filesSizeLabelText": "Total size:",
+    "filesTypeLabelText": "File types:",
+    "showFilesButtonText": "Show files",
+    "clearButtonText": "Clear"
+  },
+  "WorkflowSettings": {
+    "sourceLabelText": "Input files:",
+    "inputPathBrowseText": "Browse",
+    "destinationLabelText": "Target folder:",
+    "outputPathBrowseText": "Browse",
+    "folderGroupText": "Folders",
+    "yearCheckboxText": "Year",
+    "monthCheckboxText": "Month",
+    "dayCheckboxText": "Day",
+    "createSubfoldersDateCheckboxText": "Create subfolders by date",
+    "createSubfoldersTypeCheckboxText": "Create subfolders by type",
+    "includeHiddenFoldersCheckboxText": "Include hidden folders",
+    "filterGroupText": "Filter",
+    "filterCheckboxText": "Enable filter",
+    "documentsFilesCheckboxText": "Documents",
+    "txtFilesCheckboxText": "Text files",
+    "officeFilesCheckboxText": "Office files",
+    "imageFilesCheckboxText": "Images",
+    "musicFilesCheckboxText": "Music",
+    "archiveFilesCheckboxText": "Archives",
+    "customExtensionsLabelText": "Custom extensions:",
+    "customExtensionsEditText": "e.g. *.pdf; *.csv",
+    "nameGroupText": "Name",
+    "defaultNameRadiobuttonText": "Default",
+    "userNameRadiobuttonText": "Custom",
+    "fileNameEditText": "Enter custom name...",
+    "useTimestampCheckboxText": "Use timestamp",
+    "useCounterCheckboxText": "Use counter",
+    "actionsGroupText": "Actions",
+    "deleteFileCheckboxText": "Delete file",
+    "moveInsteadCopyCheckboxText": "Move instead of copy",
+    "overwriteCheckboxText": "Overwrite existing files"
   }
 }

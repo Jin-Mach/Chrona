@@ -1,5 +1,59 @@
 {
   "MainWindow": {
-    "titleText": "Chrono"
+    "titleText": "Chrona"
+  },
+  "SidePanel": {
+    "processingButtonText": "Přenos souborů",
+    "workflowSettingsButtonText": "Nastavení přenosu"
+  },
+  "ProcessingWidget": {
+    "startButtonText": "Spustit přenos",
+    "dragGroupText": "Rychlý výběr",
+    "dragLabelText": "Přetáhni sem soubor nebo složku.",
+    "pathGroupText": "Cesty",
+    "sourceLabelText": "Vstupní soubory:",
+    "inputPathSelectText": "Vybrat nové",
+    "inputPathAddText": "Přidat k výběru",
+    "destinationLabelText": "Cílová složka:",
+    "outputPathSelectText": "Vybrat složku",
+    "detailsGroupText": "Informace",
+    "filesCountLabelText": "Počet souborů:",
+    "filesSizeLabelText": "Velikost souborů:",
+    "filesTypeLabelText": "Typy souborů:",
+    "showFilesButtonText": "Zobrazit soubory",
+    "clearButtonText": "Vyčistit"
+  },
+  "WorkflowSettings": {
+    "sourceLabelText": "Vstupní soubory:",
+    "inputPathBrowseText": "Vybrat",
+    "destinationLabelText": "Cílová složka:",
+    "outputPathBrowseText": "Vybrat",
+    "folderGroupText": "Složky",
+    "yearCheckboxText": "Rok",
+    "monthCheckboxText": "Měsíc",
+    "dayCheckboxText": "Den",
+    "createSubfoldersDateCheckboxText": "Vytvořit podsložky podle data",
+    "createSubfoldersTypeCheckboxText": "Vytvořit podsložky podle typu",
+    "includeHiddenFoldersCheckboxText": "Zahrnout skryté složky",
+    "filterGroupText": "Filtr",
+    "filterCheckboxText": "Použít filtr",
+    "documentsFilesCheckboxText": "Dokumenty",
+    "txtFilesCheckboxText": "Texty",
+    "officeFilesCheckboxText": "Office",
+    "imageFilesCheckboxText": "Obrázky",
+    "musicFilesCheckboxText": "Hudba",
+    "archiveFilesCheckboxText": "Archivy",
+    "customExtensionsLabelText": "Vlastní přípony:",
+    "customExtensionsEditText": "např. *.pdf; *.csv",
+    "nameGroupText": "Název",
+    "defaultNameRadiobuttonText": "Výchozí",
+    "userNameRadiobuttonText": "Vlastní",
+    "fileNameEditText": "Zadej vlastní název...",
+    "useTimestampCheckboxText": "Použít časové razítko",
+    "useCounterCheckboxText": "Použít čítač",
+    "actionsGroupText": "Akce",
+    "deleteFileCheckboxText": "Smazat soubor",
+    "moveInsteadCopyCheckboxText": "Přesunout místo kopírování",
+    "overwriteCheckboxText": "Přepsat existující"
   }
 }

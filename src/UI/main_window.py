@@ -4,6 +4,9 @@ from PyQt6.QtWidgets import QMainWindow, QApplication, QWidget, QHBoxLayout, QSt
 from src.UI.widgets.processing_widget import ProcessingWidget
 from src.UI.widgets.workflow_settings import WorkflowSettings
 from src.UI.widgets.side_panel import SidePanel
+from src.providers.language_provider import LanguageProvider
+from src.utilities.error_handler import Errorhandler
+from src.utilities.texts_handler import handle_ui_texts
 
 
 class MainWindow(QMainWindow):
@@ -13,6 +16,7 @@ class MainWindow(QMainWindow):
         self.centered = False
         self.setCentralWidget(self.create_gui())
         self.setup_stack()
+        self.set_ui_texts()
 
     def create_gui(self) -> QWidget:
         central_widget = QWidget()
@@ -31,6 +35,16 @@ class MainWindow(QMainWindow):
         widgets = [self.files_list_widget, self.workflow_settings]
         for widget in widgets:
             self.stacked_widget.addWidget(widget)
+
+    def set_ui_texts(self) -> None:
+        try:
+            texts_data = LanguageProvider.get_texts_data("ui_texts", self.__class__.__name__,
+                                                         LanguageProvider.language_code)
+            if not texts_data:
+                raise IOError("Texts data loading failed.")
+            handle_ui_texts(self, texts_data)
+        except Exception as e:
+            Errorhandler.handle_error(self.__class__.__name__, e)
 
     def showEvent(self, event: QShowEvent) -> None:
         super().showEvent(event)
