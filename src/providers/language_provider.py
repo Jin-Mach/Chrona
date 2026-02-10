@@ -41,9 +41,7 @@ class LanguageProvider:
             json_file = file_name + ".json"
             if language_code is None:
                 language_code = cls.language_code
-            print(language_code)
             texts_path = cls.project_path.joinpath("resources", "texts", language_code, json_file)
-            print(texts_path)
             if texts_path.exists() and texts_path.is_file():
                 with open(texts_path, "r", encoding="utf-8") as texts_file:
                     texts_data = json.load(texts_file).get(widget_name, {})
