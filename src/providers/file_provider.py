@@ -37,21 +37,28 @@ class FileProvider:
         "userNameRadiobuttonState"
     ]
 
-    TEXTS_KEYS = ["MainWindow", "titleText", "SidePanel", "processingButtonText", "workflowSettingsButtonText",
-                  "ProcessingWidget", "startButtonText", "dragGroupText", "dragLabelText", "pathGroupText",
-                  "sourceLabelText", "inputPathSelectText", "inputPathAddText", "destinationLabelText",
-                  "outputPathSelectText", "detailsGroupText", "filesCountLabelText", "filesSizeLabelText",
-                  "filesTypeLabelText", "showFilesButtonText", "clearButtonText", "WorkflowSettings",
-                  "sourceLabelText", "inputPathBrowseText", "destinationLabelText", "outputPathBrowseText",
-                  "folderGroupText", "yearCheckboxText", "monthCheckboxText", "dayCheckboxText",
-                  "createSubfoldersDateCheckboxText", "createSubfoldersTypeCheckboxText",
-                  "includeHiddenFoldersCheckboxText", "filterGroupText", "filterCheckboxText",
-                  "documentsFilesCheckboxText", "txtFilesCheckboxText", "officeFilesCheckboxText",
-                  "imageFilesCheckboxText", "musicFilesCheckboxText", "archiveFilesCheckboxText",
-                  "customExtensionsLabelText", "customExtensionsEditText", "nameGroupText",
-                  "defaultNameRadiobuttonText", "userNameRadiobuttonText", "fileNameEditText",
-                  "useTimestampCheckboxText", "useCounterCheckboxText", "actionsGroupText",
-                  "deleteFileCheckboxText", "moveInsteadCopyCheckboxText", "overwriteCheckboxText"
+    TEXTS_KEYS = [
+        "MainWindow", "titleText", "SidePanel", "processingButtonText", "processingButtonTooltipText",
+        "workflowSettingsButtonText", "workflowSettingsButtonTooltipText",
+        "ProcessingWidget",
+        "startButtonText", "startButtonTooltipText", "dragGroupText", "dragLabelText", "pathGroupText",
+        "sourceLabelText", "inputPathSelectText", "inputPathSelectTooltipText", "inputPathAddText",
+        "inputPathAddTooltipText", "destinationLabelText", "outputPathSelectText",
+        "outputPathSelectTooltipText", "detailsGroupText", "filesCountLabelText", "filesSizeLabelText",
+        "filesTypeLabelText", "showFilesButtonText", "showFilesButtonTooltipText", "clearButtonText",
+        "clearButtonTooltipText",
+        "WorkflowSettings",
+        "sourceLabelText", "inputPathBrowseText",
+        "inputPathBrowseTooltipText", "destinationLabelText", "outputPathBrowseText",
+        "outputPathBrowseTooltipText", "folderGroupText", "yearCheckboxText", "monthCheckboxText",
+        "dayCheckboxText", "createSubfoldersDateCheckboxText", "createSubfoldersTypeCheckboxText",
+        "includeHiddenFoldersCheckboxText", "filterGroupText", "filterCheckboxText",
+        "documentsFilesCheckboxText", "txtFilesCheckboxText", "officeFilesCheckboxText",
+        "imageFilesCheckboxText", "musicFilesCheckboxText", "archiveFilesCheckboxText",
+        "customExtensionsLabelText", "customExtensionsEditPlaceholderText", "nameGroupText",
+        "defaultNameRadiobuttonText", "userNameRadiobuttonText", "fileNameEditText",
+        "useTimestampCheckboxText", "useCounterCheckboxText", "actionsGroupText", "deleteFileCheckboxText",
+        "moveInsteadCopyCheckboxText", "overwriteCheckboxText"
     ]
 
     @classmethod

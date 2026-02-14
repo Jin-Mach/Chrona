@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 
 class ProcessingWidget(QWidget):
-    DEFAULT_SPACING = 20
+    DEFAULT_SPACING = 30
 
     def __init__(self, main_window: "MainWindow"):
         super().__init__(main_window)

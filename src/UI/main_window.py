@@ -12,7 +12,7 @@ from src.utilities.setup_handler import handle_ui_texts
 class MainWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
-        self.setMinimumSize(1000, 600)
+        self.setMinimumSize(1200, 700)
         self.centered = False
         self.setCentralWidget(self.create_gui())
         self.setup_stack()

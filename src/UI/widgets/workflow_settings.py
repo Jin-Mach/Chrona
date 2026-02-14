@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from src.UI.main_window import MainWindow
 
 class WorkflowSettings(QWidget):
-    DEFAULT_SPACING = 20
+    DEFAULT_SPACING = 30
 
     def __init__(self, main_window: "MainWindow") -> None:
         super().__init__(main_window)
