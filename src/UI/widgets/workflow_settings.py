@@ -3,9 +3,10 @@ from typing import TYPE_CHECKING
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QGroupBox, QCheckBox, QRadioButton, QLineEdit,
                              QPushButton, QGridLayout, QLabel, QSizePolicy)
 
+from src.providers.config_provider import ConfigProvider
 from src.providers.language_provider import LanguageProvider
 from src.utilities.error_handler import Errorhandler
-from src.utilities.texts_handler import handle_ui_texts
+from src.utilities.setup_handler import handle_ui_texts, handle_ui_widgets
 
 if TYPE_CHECKING:
     from src.UI.main_window import MainWindow
@@ -18,7 +19,7 @@ class WorkflowSettings(QWidget):
         self.main_window = main_window
         self.setLayout(self.create_gui())
         self.set_ui_texts()
-        self.basic_setup()
+        self.set_config_data()
         self.create_connection()
 
     def create_gui(self) -> QVBoxLayout:
@@ -52,7 +53,6 @@ class WorkflowSettings(QWidget):
         self.source_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         self.input_path_edit = QLineEdit()
         self.input_path_edit.setObjectName("inputPathEdit")
-        self.input_path_edit.setReadOnly(True)
         self.input_path_edit.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         self.input_path_browse = QPushButton()
         self.input_path_browse.setObjectName("inputPathBrowse")
@@ -204,25 +204,22 @@ class WorkflowSettings(QWidget):
                                                          LanguageProvider.language_code)
             if not texts_data:
                 raise IOError("Texts data loading failed.")
-            handle_ui_texts(self, texts_data,self.findChildren((QGroupBox, QCheckBox, QRadioButton, QLineEdit,
+            handle_ui_texts(self, texts_data, self.findChildren((QGroupBox, QCheckBox, QRadioButton, QLineEdit,
                                                                 QPushButton, QGridLayout, QLabel)))
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
 
-    def basic_setup(self) -> None:
-        for checkbox in [
-            self.year_checkbox, self.filter_checkbox, self.documents_files_checkbox, self.txt_files_checkbox,
-            self.office_files_checkbox, self.image_files_checkbox, self.music_files_checkbox,
-            self.archive_files_checkbox, self.default_name_radiobutton, self.delete_file_checkbox
-        ]:
-            checkbox.setChecked(True)
-        for checkbox in [
-            self.month_checkbox, self.day_checkbox, self.create_subfolders_type_checkbox, self.create_subfolders_date_checkbox,
-            self.include_hidden_folders_checkbox, self.user_name_radiobutton, self.move_instead_copy_checkbox,
-            self.overwrite_checkbox, self.use_counter_checkbox
-        ]:
-            checkbox.setChecked(False)
-        self.file_name_edit.setEnabled(False)
+    def set_config_data(self) -> None:
+        try:
+            config_data = ConfigProvider.get_config_data(self.__class__.__name__)
+            if not config_data:
+                raise IOError("Config data loading failed.")
+            handle_ui_widgets(config_data, self.findChildren((QCheckBox, QRadioButton)))
+            self.input_path_edit.setReadOnly(True)
+            self.output_path_edit.setReadOnly(True)
+            self.file_name_edit.setEnabled(False)
+        except Exception as e:
+            Errorhandler.handle_error(self.__class__.__name__, e)
 
     def create_connection(self) -> None:
         files_checkboxes = [self.documents_files_checkbox, self.txt_files_checkbox, self.office_files_checkbox,

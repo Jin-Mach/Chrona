@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QGro
 
 from src.providers.language_provider import LanguageProvider
 from src.utilities.error_handler import Errorhandler
-from src.utilities.texts_handler import handle_ui_texts
+from src.utilities.setup_handler import handle_ui_texts
 
 if TYPE_CHECKING:
     from src.UI.main_window import MainWindow

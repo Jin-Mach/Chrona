@@ -22,3 +22,14 @@ def handle_ui_texts(top_widget: QWidget, texts_data: dict[str, str], widgets: li
                     widget.setTitle(text)
     except Exception as e:
         Errorhandler.handle_error("UITextsHandler", e)
+
+def handle_ui_widgets(config_data: dict[str, bool], widgets: list[QWidget]) -> None:
+    try:
+        if not widgets:
+            return
+        for widget in widgets:
+            key_name = widget.objectName() + "State"
+            if key_name in config_data:
+                if isinstance(widget, (QCheckBox, QRadioButton)):
+                    widget.setChecked(config_data[key_name])
+    except Exception as e: Errorhandler.handle_error("UIWidgetsHandler", e)

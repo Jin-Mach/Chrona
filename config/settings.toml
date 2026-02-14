@@ -1,3 +1,25 @@
 [LanguageProvider]
 default_language = "en_GB"
 supported_languages = ["cs_CZ", "en_GB"]
+
+[WorkflowSettings]
+yearCheckboxState = true
+monthCheckboxState = false
+dayCheckboxState = false
+createSubfoldersDateCheckboxState = false
+createSubfoldersTypeCheckboxState = false
+includeHiddenFoldersCheckboxState = false
+filterCheckboxState = true
+documentsFilesCheckboxState = true
+txtFilesCheckboxState = true
+officeFilesCheckboxState = true
+imageFilesCheckboxState = true
+musicFilesCheckboxState = true
+archiveFilesCheckboxState = true
+useTimestampCheckboxState = false
+useCounterCheckboxState = false
+deleteFileCheckboxState = true
+moveInsteadCopyCheckboxState = false
+overwriteCheckboxState = false
+defaultNameRadiobuttonState = true
+userNameRadiobuttonState = false

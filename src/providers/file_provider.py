@@ -25,7 +25,17 @@ class FileProvider:
             }
         }
 
-    SETTINGS_KEYS = ["LanguageProvider", "default_language", "supported_languages"]
+    SETTINGS_KEYS = [
+        "LanguageProvider",
+        "default_language", "supported_languages",
+        "WorkflowSettings",
+        "yearCheckboxState", "monthCheckboxState", "dayCheckboxState", "createSubfoldersDateCheckboxState",
+        "createSubfoldersTypeCheckboxState", "includeHiddenFoldersCheckboxState", "filterCheckboxState",
+        "documentsFilesCheckboxState", "txtFilesCheckboxState", "officeFilesCheckboxState", "imageFilesCheckboxState",
+        "musicFilesCheckboxState", "archiveFilesCheckboxState", "useTimestampCheckboxState", "useCounterCheckboxState",
+        "deleteFileCheckboxState", "moveInsteadCopyCheckboxState", "overwriteCheckboxState", "defaultNameRadiobuttonState",
+        "userNameRadiobuttonState"
+    ]
 
     TEXTS_KEYS = ["MainWindow", "titleText", "SidePanel", "processingButtonText", "workflowSettingsButtonText",
                   "ProcessingWidget", "startButtonText", "dragGroupText", "dragLabelText", "pathGroupText",
@@ -41,7 +51,8 @@ class FileProvider:
                   "customExtensionsLabelText", "customExtensionsEditText", "nameGroupText",
                   "defaultNameRadiobuttonText", "userNameRadiobuttonText", "fileNameEditText",
                   "useTimestampCheckboxText", "useCounterCheckboxText", "actionsGroupText",
-                  "deleteFileCheckboxText", "moveInsteadCopyCheckboxText", "overwriteCheckboxText"]
+                  "deleteFileCheckboxText", "moveInsteadCopyCheckboxText", "overwriteCheckboxText"
+    ]
 
     @classmethod
     def check_missing_files(cls) -> dict[str, dict[pathlib.Path, str]]:
