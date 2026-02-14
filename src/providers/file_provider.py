@@ -2,7 +2,6 @@ import json
 import pathlib
 import tomllib
 
-from src.utilities.current_path_provider import set_project_path
 from src.utilities.error_handler import Errorhandler
 
 
@@ -26,7 +25,7 @@ class FileProvider:
             }
         }
 
-    SETTINGS_KEYS = ["LanguageProvider", "default_languages", "supported_languages"]
+    SETTINGS_KEYS = ["LanguageProvider", "default_language", "supported_languages"]
 
     TEXTS_KEYS = ["MainWindow", "titleText", "SidePanel", "processingButtonText", "workflowSettingsButtonText",
                   "ProcessingWidget", "startButtonText", "dragGroupText", "dragLabelText", "pathGroupText",
@@ -55,10 +54,11 @@ class FileProvider:
                 for file, url in cls.required_files[category].items():
                     if not file.exists() or file.stat().st_size == 0:
                         missing_files[category][file] = url
-                    if file.suffix == ".toml":
+                    suffix = file.suffix.lower()
+                    if suffix == ".toml":
                         if not cls.check_keys(file, cls.SETTINGS_KEYS, file_type="toml"):
                             missing_files[category][file] = url
-                    if file.suffix == ".json":
+                    if suffix == ".json":
                         if not cls.check_keys(file, cls.TEXTS_KEYS, file_type="json"):
                             missing_files[category][file] = url
             return missing_files
