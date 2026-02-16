@@ -38,8 +38,9 @@ class FileProvider:
     ]
 
     TEXTS_KEYS = [
-        "MainWindow", "titleText", "SidePanel", "processingButtonText", "processingButtonTooltipText",
-        "workflowSettingsButtonText", "workflowSettingsButtonTooltipText",
+        "MainWindow", "titleText",
+        "SidePanel",
+        "processingButtonText", "processingButtonTooltipText", "workflowSettingsButtonText", "workflowSettingsButtonTooltipText",
         "ProcessingWidget",
         "startButtonText", "startButtonTooltipText", "dragGroupText", "dragLabelText", "pathGroupText",
         "sourceLabelText", "inputPathSelectText", "inputPathSelectTooltipText", "inputPathAddText",
@@ -58,7 +59,9 @@ class FileProvider:
         "customExtensionsLabelText", "customExtensionsEditPlaceholderText", "nameGroupText",
         "defaultNameRadiobuttonText", "userNameRadiobuttonText", "fileNameEditText",
         "useTimestampCheckboxText", "useCounterCheckboxText", "actionsGroupText", "deleteFileCheckboxText",
-        "moveInsteadCopyCheckboxText", "overwriteCheckboxText"
+        "moveInsteadCopyCheckboxText", "overwriteCheckboxText",
+        "ErrorDialog",
+        "titleText", "showHideButtonText", "closeButtonText"
     ]
 
     @classmethod

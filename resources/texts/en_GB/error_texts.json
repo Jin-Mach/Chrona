@@ -1,0 +1,23 @@
+{
+  "IOError": "File read/write error",
+  "OSError": "File read/write error",
+  "FileNotFoundError": "File not found",
+  "ConnectionError": "Connection error",
+  "ValueError": "Invalid value",
+  "TypeError": "Incorrect data type",
+  "KeyError": "Missing key",
+  "IndexError": "Index out of range",
+  "AttributeError": "Object has no required attribute or method",
+  "ZeroDivisionError": "Division by zero is not allowed",
+  "RuntimeError": "General runtime error",
+  "ImportError": "Module import error",
+  "ModuleNotFoundError": "Module not found",
+  "NameError": "Unknown variable or function name",
+  "StopIteration": "End of iteration",
+  "MemoryError": "Out of memory",
+  "AssertionError": "Assertion failed",
+  "RecursionError": "Maximum recursion depth exceeded",
+  "FloatingPointError": "Floating point error",
+  "TimeoutError": "Operation timed out",
+  "UnknownError": "Unknown error"
+}

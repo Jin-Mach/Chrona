@@ -1,8 +1,6 @@
 import json
 import pathlib
 
-from typing import Any
-
 from PyQt6.QtCore import QLocale
 
 from src.providers.config_provider import ConfigProvider
@@ -44,3 +42,17 @@ class LanguageProvider:
         except Exception as e:
             Errorhandler.handle_error(cls.__name__, e)
         return texts_data
+
+    @classmethod
+    def get_error_text(cls, language_code: str | None = None) -> dict[str, str]:
+        errors_data = {}
+        try:
+            if language_code is None:
+                language_code = cls.language_code
+            errors_path = cls.project_path.joinpath("resources", "texts", language_code, "error_texts.json")
+            if errors_path.exists() and errors_path.is_file():
+                with errors_path.open("r", encoding="utf-8") as errors_file:
+                    errors_data = json.load(errors_file)
+        except Exception as e:
+            Errorhandler.handle_error(cls.__name__, e)
+        return errors_data

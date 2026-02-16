@@ -1,0 +1,23 @@
+{
+  "IOError": "Chyba při čtení nebo zápisu souboru",
+  "OSError": "Chyba při čtení nebo zápisu souboru",
+  "FileNotFoundError": "Soubor nebyl nalezen",
+  "ConnectionError": "Chyba při připojení",
+  "ValueError": "Chyba hodnoty",
+  "TypeError": "Chybný typ dat",
+  "KeyError": "Chybějící klíč",
+  "IndexError": "Přístup mimo rozsah seznamu",
+  "AttributeError": "Objekt nemá požadovanou vlastnost nebo metodu",
+  "ZeroDivisionError": "Dělení nulou není povoleno",
+  "RuntimeError": "Obecná chyba běhu programu",
+  "ImportError": "Chyba při importu modulu",
+  "ModuleNotFoundError": "Modul nebyl nalezen",
+  "NameError": "Neznámý název proměnné nebo funkce",
+  "StopIteration": "Konec iterace",
+  "MemoryError": "Nedostatek paměti",
+  "AssertionError": "Neplatné tvrzení (assert) selhalo",
+  "RecursionError": "Překročena maximální hloubka rekurze",
+  "FloatingPointError": "Chyba s desetinnou přesností",
+  "TimeoutError": "Operace vypršela",
+  "UnknownError": "Neznámá chyba"
+}

@@ -65,5 +65,10 @@
     "deleteFileCheckboxText": "Smazat soubor",
     "moveInsteadCopyCheckboxText": "Přesunout místo kopírování",
     "overwriteCheckboxText": "Přepsat existující"
+  },
+  "ErrorDialog": {
+    "titleText": "Chyba",
+    "showHideButtonText": "Zobrazit/skrýt detail",
+    "closeButtonText": "Zavřít"
   }
 }

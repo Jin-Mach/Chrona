@@ -1,7 +1,5 @@
 from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QLineEdit, QMainWindow, QGroupBox, QCheckBox, QRadioButton
 
-from src.utilities.error_handler import Errorhandler
-
 
 def handle_ui_texts(top_widget: QWidget, texts_data: dict[str, str], widgets: list[QWidget] | None = None) -> None:
     try:
@@ -28,6 +26,7 @@ def handle_ui_texts(top_widget: QWidget, texts_data: dict[str, str], widgets: li
                 widget.setToolTip(tooltip)
                 widget.setToolTipDuration(5000)
     except Exception as e:
+        from src.utilities.error_handler import Errorhandler
         Errorhandler.handle_error("UITextsHandler", e)
 
 def handle_ui_widgets(config_data: dict[str, bool], widgets: list[QWidget]) -> None:
@@ -39,4 +38,6 @@ def handle_ui_widgets(config_data: dict[str, bool], widgets: list[QWidget]) -> N
             if key_name in config_data:
                 if isinstance(widget, (QCheckBox, QRadioButton)):
                     widget.setChecked(config_data[key_name])
-    except Exception as e: Errorhandler.handle_error("UIWidgetsHandler", e)
+    except Exception as e:
+        from src.utilities.error_handler import Errorhandler
+        Errorhandler.handle_error("UIWidgetsHandler", e)

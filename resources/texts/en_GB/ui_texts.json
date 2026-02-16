@@ -65,5 +65,10 @@
     "deleteFileCheckboxText": "Delete file",
     "moveInsteadCopyCheckboxText": "Move instead of copy",
     "overwriteCheckboxText": "Overwrite existing"
+  },
+  "ErrorDialog": {
+    "titleText": "Error",
+    "showHideButtonText": "Show/Hide Details",
+    "closeButtonText": "Close"
   }
 }
