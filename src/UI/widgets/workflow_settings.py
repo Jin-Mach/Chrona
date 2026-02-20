@@ -65,7 +65,6 @@ class WorkflowSettings(QWidget):
         self.destination_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         self.output_path_edit = QLineEdit()
         self.output_path_edit.setObjectName("outputPathEdit")
-        self.output_path_edit.setReadOnly(True)
         self.output_path_edit.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         self.output_path_browse = QPushButton()
         self.output_path_browse.setObjectName("outputPathBrowse")
@@ -214,7 +213,7 @@ class WorkflowSettings(QWidget):
             config_data = ConfigProvider.get_config_data(self.__class__.__name__)
             if not config_data:
                 raise IOError("Config data loading failed.")
-            handle_ui_widgets(config_data, self.findChildren((QCheckBox, QRadioButton)))
+            handle_ui_widgets(config_data, self.findChildren((QLineEdit, QCheckBox, QRadioButton)))
             self.input_path_edit.setReadOnly(True)
             self.output_path_edit.setReadOnly(True)
             self.file_name_edit.setEnabled(False)

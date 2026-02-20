@@ -4,9 +4,10 @@ from PyQt6.QtCore import Qt, QSize
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QGroupBox, QLabel, QSizePolicy, QLineEdit, \
     QGridLayout
 
+from src.providers.config_provider import ConfigProvider
 from src.providers.language_provider import LanguageProvider
 from src.utilities.error_handler import Errorhandler
-from src.utilities.setup_handler import handle_ui_texts
+from src.utilities.setup_handler import handle_ui_texts, handle_ui_widgets
 
 if TYPE_CHECKING:
     from src.UI.main_window import MainWindow
@@ -20,6 +21,7 @@ class ProcessingWidget(QWidget):
         self.main_window = main_window
         self.setLayout(self.create_gui())
         self.set_ui_texts()
+        self.set_config_data()
 
     def create_gui(self) -> QVBoxLayout:
         main_layout = QVBoxLayout()
@@ -78,7 +80,6 @@ class ProcessingWidget(QWidget):
         self.source_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         self.input_path_edit = QLineEdit()
         self.input_path_edit.setObjectName("inputPathEdit")
-        self.input_path_edit.setReadOnly(True)
         self.input_path_edit.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         self.input_path_select = QPushButton()
         self.input_path_select.setObjectName("inputPathSelect")
@@ -95,7 +96,6 @@ class ProcessingWidget(QWidget):
         self.destination_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         self.output_path_edit = QLineEdit()
         self.output_path_edit.setObjectName("outputPathEdit")
-        self.output_path_edit.setReadOnly(True)
         self.output_path_edit.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         self.output_path_select = QPushButton()
         self.output_path_select.setObjectName("outputPathSelect")
@@ -158,5 +158,16 @@ class ProcessingWidget(QWidget):
             if not texts_data:
                 raise IOError("texts data loading failed.")
             handle_ui_texts(self, texts_data, self.findChildren((QPushButton, QGroupBox, QLabel)))
+        except Exception as e:
+            Errorhandler.handle_error(self.__class__.__name__, e)
+
+    def set_config_data(self) -> None:
+        try:
+            config_data = ConfigProvider.get_config_data(self.__class__.__name__)
+            if not config_data:
+                raise IOError("config data loading failed.")
+            handle_ui_widgets(config_data, self.findChildren(QLineEdit))
+            self.input_path_edit.setReadOnly(True)
+            self.output_path_edit.setReadOnly(True)
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)

@@ -1,3 +1,5 @@
+import pathlib
+
 from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QLineEdit, QMainWindow, QGroupBox, QCheckBox, QRadioButton
 
 
@@ -29,15 +31,22 @@ def handle_ui_texts(top_widget: QWidget, texts_data: dict[str, str], widgets: li
         from src.utilities.error_handler import Errorhandler
         Errorhandler.handle_error("UITextsHandler", e)
 
-def handle_ui_widgets(config_data: dict[str, bool], widgets: list[QWidget]) -> None:
+def handle_ui_widgets(config_data: dict[str, bool | str], widgets: list[QWidget]) -> None:
     try:
         if not widgets:
             return
         for widget in widgets:
-            key_name = widget.objectName() + "State"
-            if key_name in config_data:
-                if isinstance(widget, (QCheckBox, QRadioButton)):
+            if isinstance(widget, (QCheckBox, QRadioButton)):
+                key_name = widget.objectName() + "State"
+                if key_name in config_data:
                     widget.setChecked(config_data[key_name])
+            if isinstance(widget, QLineEdit):
+                key_name = widget.objectName() + "Path"
+                if key_name in config_data:
+                    path = config_data[key_name]
+                    if not path:
+                        path = str(pathlib.Path.home())
+                    widget.setText(path)
     except Exception as e:
         from src.utilities.error_handler import Errorhandler
         Errorhandler.handle_error("UIWidgetsHandler", e)

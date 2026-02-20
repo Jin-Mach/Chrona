@@ -2,7 +2,13 @@
 default_language = "en_GB"
 supported_languages = ["cs_CZ", "en_GB"]
 
+[ProcessingWidget]
+inputPathEditPath = ""
+outputPathEditPath = ""
+
 [WorkflowSettings]
+inputPathEditPath = ""
+outputPathEditPath = ""
 yearCheckboxState = true
 monthCheckboxState = false
 dayCheckboxState = false

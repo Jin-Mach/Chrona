@@ -32,7 +32,10 @@ class FileProvider:
     SETTINGS_KEYS = [
         "LanguageProvider",
         "default_language", "supported_languages",
+        "ProcessingWidget",
+        "inputPathEditPath", "OutputPathEditPath",
         "WorkflowSettings",
+        "inputPathEditPath", "outputPathEditPath",
         "yearCheckboxState", "monthCheckboxState", "dayCheckboxState", "createSubfoldersDateCheckboxState",
         "createSubfoldersTypeCheckboxState", "includeHiddenFoldersCheckboxState", "filterCheckboxState",
         "documentsFilesCheckboxState", "txtFilesCheckboxState", "officeFilesCheckboxState", "imageFilesCheckboxState",
