@@ -23,7 +23,7 @@ class MainWindow(QMainWindow):
         main_layout = QHBoxLayout()
         self.stacked_widget = QStackedWidget(self)
         self.stacked_widget.setObjectName("stacked_widget")
-        self.files_list_widget = ProcessingWidget(self)
+        self.processing_widget = ProcessingWidget(self)
         self.workflow_settings = WorkflowSettings(self)
         self.side_panel = SidePanel(self.stacked_widget, self)
         main_layout.addWidget(self.side_panel)
@@ -32,7 +32,7 @@ class MainWindow(QMainWindow):
         return central_widget
 
     def setup_stack(self) -> None:
-        widgets = [self.files_list_widget, self.workflow_settings]
+        widgets = [self.processing_widget, self.workflow_settings]
         for widget in widgets:
             self.stacked_widget.addWidget(widget)
 

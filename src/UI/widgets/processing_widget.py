@@ -1,3 +1,5 @@
+import pathlib
+
 from typing import TYPE_CHECKING
 
 from PyQt6.QtCore import Qt, QSize
@@ -7,12 +9,14 @@ from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QGro
 from src.providers.config_provider import ConfigProvider
 from src.providers.language_provider import LanguageProvider
 from src.utilities.error_handler import Errorhandler
-from src.utilities.setup_handler import handle_ui_texts, handle_ui_widgets
+from src.utilities.setup_handler import handle_ui_texts
+from src.utilities.ui_helpers import set_lineedit_text
 
 if TYPE_CHECKING:
     from src.UI.main_window import MainWindow
 
 
+# noinspection PyAttributeOutsideInit
 class ProcessingWidget(QWidget):
     DEFAULT_SPACING = 30
 
@@ -166,8 +170,20 @@ class ProcessingWidget(QWidget):
             config_data = ConfigProvider.get_config_data(self.__class__.__name__)
             if not config_data:
                 raise IOError("config data loading failed.")
-            handle_ui_widgets(config_data, self.findChildren(QLineEdit))
             self.input_path_edit.setReadOnly(True)
             self.output_path_edit.setReadOnly(True)
+
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
+
+    def update_input_path(self, path: str) -> None:
+        if path == "":
+            path = pathlib.Path.home()
+        self.full_input_path = pathlib.Path(path)
+        set_lineedit_text(self.full_input_path, self.input_path_edit)
+
+    def update_output_path(self, path: str) -> None:
+        if path == "":
+            path = pathlib.Path.home()
+        self.full_output_path = pathlib.Path(path)
+        set_lineedit_text(self.full_output_path, self.output_path_edit)

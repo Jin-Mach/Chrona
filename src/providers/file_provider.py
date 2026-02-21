@@ -33,7 +33,7 @@ class FileProvider:
         "LanguageProvider",
         "default_language", "supported_languages",
         "ProcessingWidget",
-        "inputPathEditPath", "OutputPathEditPath",
+        "inputPathEditPath", "outputPathEditPath",
         "WorkflowSettings",
         "inputPathEditPath", "outputPathEditPath",
         "yearCheckboxState", "monthCheckboxState", "dayCheckboxState", "createSubfoldersDateCheckboxState",

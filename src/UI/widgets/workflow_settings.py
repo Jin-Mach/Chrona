@@ -1,3 +1,4 @@
+import pathlib
 from typing import TYPE_CHECKING
 
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QGroupBox, QCheckBox, QRadioButton, QLineEdit,
@@ -7,10 +8,13 @@ from src.providers.config_provider import ConfigProvider
 from src.providers.language_provider import LanguageProvider
 from src.utilities.error_handler import Errorhandler
 from src.utilities.setup_handler import handle_ui_texts, handle_ui_widgets
+from src.utilities.ui_helpers import set_lineedit_text
 
 if TYPE_CHECKING:
     from src.UI.main_window import MainWindow
 
+
+# noinspection PyAttributeOutsideInit
 class WorkflowSettings(QWidget):
     DEFAULT_SPACING = 30
 
@@ -264,3 +268,15 @@ class WorkflowSettings(QWidget):
     def move_toggled(self) -> None:
         if self.move_instead_copy_checkbox.isChecked():
             self.delete_file_checkbox.setChecked(False)
+
+    def update_input_path(self, path: str) -> None:
+        if path == "":
+            path = pathlib.Path.home()
+        self.full_input_path = pathlib.Path(path)
+        set_lineedit_text(self.full_input_path, self.input_path_edit)
+
+    def update_output_path(self, path: str) -> None:
+        if path == "":
+            path = pathlib.Path.home()
+        self.full_output_path = pathlib.Path(path)
+        set_lineedit_text(self.full_output_path, self.output_path_edit)
