@@ -1,5 +1,5 @@
 from PyQt6.QtGui import QShowEvent
-from PyQt6.QtWidgets import QFileDialog, QApplication, QWidget, QPushButton
+from PyQt6.QtWidgets import QFileDialog, QApplication, QWidget
 
 
 class FileDialog(QFileDialog):
@@ -11,7 +11,7 @@ class FileDialog(QFileDialog):
         self.setWindowTitle(title_text)
         self.setFileMode(mode)
         if filters:
-            self.setNameFilters(filters)
+            self.setNameFilter(filters)
         self.setLabelText(self.DialogLabel.Accept, ui_texts.get("labelTextAccept", "Select"))
         self.setLabelText(self.DialogLabel.Reject, ui_texts.get("labelTextReject", "Cancel"))
 

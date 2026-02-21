@@ -76,7 +76,7 @@ class MainWindow(QMainWindow):
                 raise IOError("Texts data loading failed.")
             if filters:
                 current_filter = get_current_filter(self.workflow_settings.findChildren((QCheckBox, QLineEdit)), texts_data)
-            dialog = FileDialog(texts_data.get(FileDialog.__name__, {}), mode, current_filter,
+            dialog = FileDialog(texts_data, mode, current_filter,
                                 parent)
             dialog.exec()
         except Exception as e:
