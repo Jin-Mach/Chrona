@@ -54,7 +54,8 @@
     "musicFilesCheckboxText": "Music",
     "archiveFilesCheckboxText": "Archives",
     "customExtensionsLabelText": "Custom extensions:",
-    "customExtensionsEditPlaceholderText": "e.g. *.pdf; *.csv",
+    "customExtensionsEditPlaceholderText": "e.g. .pdf, .csv",
+    "customExtensionsEditText": "Custom",
     "nameGroupText": "Name",
     "defaultNameRadiobuttonText": "Default",
     "userNameRadiobuttonText": "Custom",
@@ -70,5 +71,11 @@
     "titleText": "Error",
     "showHideButtonText": "Show/Hide Details",
     "closeButtonText": "Close"
-  }
+  },
+  "FileDialog": {
+    "titleTextFolder": "Select Folder",
+    "titleTextFile": "Select File(s)",
+    "labelTextAccept": "Select",
+    "labelTextReject": "Cancel"
+}
 }

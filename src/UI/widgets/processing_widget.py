@@ -172,7 +172,8 @@ class ProcessingWidget(QWidget):
                 raise IOError("config data loading failed.")
             self.input_path_edit.setReadOnly(True)
             self.output_path_edit.setReadOnly(True)
-
+            self.update_input_path(config_data.get(self.__class__.__name__, {}).get("inputPathEdit", ""))
+            self.update_output_path(config_data.get(self.__class__.__name__, {}).get("outputPathEdit", ""))
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
 

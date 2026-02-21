@@ -1,6 +1,7 @@
 {
   "MainWindow": {
-    "titleText": "Chrona"
+    "titleText": "Chrona",
+    "titleTextFolder": "Vybrat složku"
   },
   "SidePanel": {
     "processingButtonText": "Přenos souborů",
@@ -55,6 +56,7 @@
     "archiveFilesCheckboxText": "Archivy",
     "customExtensionsLabelText": "Vlastní přípony:",
     "customExtensionsEditPlaceholderText": "např. *.pdf; *.csv",
+    "customExtensionsEditText": "Vlastní",
     "nameGroupText": "Název",
     "defaultNameRadiobuttonText": "Výchozí",
     "userNameRadiobuttonText": "Vlastní",
@@ -70,5 +72,11 @@
     "titleText": "Chyba",
     "showHideButtonText": "Zobrazit/skrýt detail",
     "closeButtonText": "Zavřít"
+  },
+  "FileDialog": {
+    "titleTextFolder": "Vybrat složku",
+    "titleTextFile": "Vybrat soubor(y)",
+    "labelTextAccept": "Vybrat",
+    "labelTextReject": "Zrušit"
   }
 }

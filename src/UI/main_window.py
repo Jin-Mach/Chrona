@@ -1,6 +1,7 @@
 from PyQt6.QtGui import QShowEvent
-from PyQt6.QtWidgets import QMainWindow, QApplication, QWidget, QHBoxLayout, QStackedWidget
+from PyQt6.QtWidgets import QMainWindow, QApplication, QWidget, QHBoxLayout, QStackedWidget, QFileDialog
 
+from src.UI.dialogs.file_dialog import FileDialog
 from src.UI.widgets.processing_widget import ProcessingWidget
 from src.UI.widgets.workflow_settings import WorkflowSettings
 from src.UI.widgets.side_panel import SidePanel
@@ -17,6 +18,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.create_gui())
         self.setup_stack()
         self.set_ui_texts()
+        self.create_connection()
 
     def create_gui(self) -> QWidget:
         central_widget = QWidget()
@@ -45,6 +47,36 @@ class MainWindow(QMainWindow):
             handle_ui_texts(self, texts_data)
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
+
+    def create_connection(self) -> None:
+        self.processing_widget.input_path_select.clicked.connect(lambda: self.show_dialog(
+            QFileDialog.FileMode.Directory, "", self
+        ))
+        self.processing_widget.input_path_add.clicked.connect(lambda: self.show_dialog(
+            QFileDialog.FileMode.ExistingFiles, "", self
+        ))
+        self.processing_widget.output_path_select.clicked.connect(lambda: self.show_dialog(
+            QFileDialog.FileMode.Directory, "", self
+        ))
+        self.workflow_settings.input_path_browse.clicked.connect(lambda: self.show_dialog(
+            QFileDialog.FileMode.Directory, None, self
+        ))
+        self.workflow_settings.output_path_browse.clicked.connect(lambda: self.show_dialog(
+            QFileDialog.FileMode.Directory, None, self
+        ))
+
+    @classmethod
+    def show_dialog(cls, mode: QFileDialog.FileMode, filters: str | None, parent: QWidget) -> None:
+        try:
+            texts_data = LanguageProvider.get_texts_data("ui_texts", FileDialog.__name__,
+                                                             LanguageProvider.language_code)
+            if not texts_data:
+                raise IOError("Texts data loading failed.")
+            dialog = FileDialog(texts_data.get(FileDialog.__name__, {}), mode, filters,
+                                parent)
+            dialog.exec()
+        except Exception as e:
+            Errorhandler.handle_error(cls.__name__, e)
 
     def showEvent(self, event: QShowEvent) -> None:
         super().showEvent(event)

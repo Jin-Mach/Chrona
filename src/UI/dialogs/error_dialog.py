@@ -11,7 +11,6 @@ class ErrorDialog(QDialog):
     def __init__(self, exception: Exception, parent=None) -> None:
         super().__init__(parent)
         self.exception = exception
-        self.parent = parent
         self._detail_visible = False
         self.setLayout(self.create_gui())
 
@@ -73,7 +72,7 @@ class ErrorDialog(QDialog):
 
     def showEvent(self, event: QShowEvent) -> None:
         super().showEvent(event)
-        if self.parent is None:
+        if self.parentWidget() is None:
             screen = QApplication.primaryScreen().availableGeometry()
             geometry = self.frameGeometry()
             geometry.moveCenter(screen.center())

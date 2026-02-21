@@ -63,7 +63,7 @@ class FileProvider:
         "includeHiddenFoldersCheckboxText", "filterGroupText", "filterCheckboxText",
         "documentsFilesCheckboxText", "txtFilesCheckboxText", "officeFilesCheckboxText",
         "imageFilesCheckboxText", "musicFilesCheckboxText", "archiveFilesCheckboxText",
-        "customExtensionsLabelText", "customExtensionsEditPlaceholderText", "nameGroupText",
+        "customExtensionsLabelText", "customExtensionsEditPlaceholderText", "customExtensionsEditText", "nameGroupText",
         "defaultNameRadiobuttonText", "userNameRadiobuttonText", "fileNameEditText",
         "useTimestampCheckboxText", "useCounterCheckboxText", "actionsGroupText", "deleteFileCheckboxText",
         "moveInsteadCopyCheckboxText", "overwriteCheckboxText",

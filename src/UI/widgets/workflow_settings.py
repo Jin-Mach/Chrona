@@ -1,4 +1,5 @@
 import pathlib
+
 from typing import TYPE_CHECKING
 
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QGroupBox, QCheckBox, QRadioButton, QLineEdit,
@@ -221,6 +222,8 @@ class WorkflowSettings(QWidget):
             self.input_path_edit.setReadOnly(True)
             self.output_path_edit.setReadOnly(True)
             self.file_name_edit.setEnabled(False)
+            self.update_input_path(config_data.get(self.__class__.__name__, {}).get("inputPathEdit", ""))
+            self.update_output_path(config_data.get(self.__class__.__name__, {}).get("outputPathEdit", ""))
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
 
