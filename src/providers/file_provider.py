@@ -45,7 +45,8 @@ class FileProvider:
     ]
 
     TEXTS_KEYS = [
-        "MainWindow", "titleText",
+        "MainWindow",
+        "titleText", "titleTextFolder",
         "SidePanel",
         "processingButtonText", "processingButtonTooltipText", "workflowSettingsButtonText", "workflowSettingsButtonTooltipText",
         "ProcessingWidget",
@@ -69,6 +70,10 @@ class FileProvider:
         "moveInsteadCopyCheckboxText", "overwriteCheckboxText",
         "ErrorDialog",
         "titleText", "showHideButtonText", "closeButtonText"
+        "FileDialog",
+        "titleTextFile", "documentsFilesCheckboxText", "txtFilesCheckboxText",
+        "officeFilesCheckboxText", "imageFilesCheckboxText", "musicFilesCheckboxText", "archiveFilesCheckboxText",
+        "customExtensionsEditText"
     ]
 
     @classmethod

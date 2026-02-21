@@ -228,10 +228,7 @@ class WorkflowSettings(QWidget):
             Errorhandler.handle_error(self.__class__.__name__, e)
 
     def create_connection(self) -> None:
-        files_checkboxes = [self.documents_files_checkbox, self.txt_files_checkbox, self.office_files_checkbox,
-                            self.image_files_checkbox, self.music_files_checkbox, self.archive_files_checkbox]
-        for checkbox in files_checkboxes:
-            self.filter_checkbox.toggled.connect(checkbox.setEnabled)
+        self.filter_checkbox.toggled.connect(self.update_filter_options)
         self.year_checkbox.toggled.connect(self.update_folder_logic)
         self.month_checkbox.toggled.connect(self.update_folder_logic)
         self.default_name_radiobutton.toggled.connect(self.update_name_options)
@@ -263,6 +260,18 @@ class WorkflowSettings(QWidget):
         else:
             self.file_name_edit.setFocus()
             self.file_name_edit.selectAll()
+
+    def update_filter_options(self) -> None:
+        files_checkboxes = [self.documents_files_checkbox, self.txt_files_checkbox, self.office_files_checkbox,
+                            self.image_files_checkbox, self.music_files_checkbox, self.archive_files_checkbox]
+        if self.filter_checkbox.isChecked():
+            for checkbox in files_checkboxes:
+                checkbox.setChecked(True)
+                checkbox.setEnabled(True)
+        else:
+            for checkbox in files_checkboxes:
+                checkbox.setChecked(False)
+                checkbox.setEnabled(False)
 
     def delete_toggled(self) -> None:
         if self.delete_file_checkbox.isChecked():

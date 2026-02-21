@@ -1,5 +1,6 @@
 from PyQt6.QtGui import QShowEvent
-from PyQt6.QtWidgets import QMainWindow, QApplication, QWidget, QHBoxLayout, QStackedWidget, QFileDialog
+from PyQt6.QtWidgets import QMainWindow, QApplication, QWidget, QHBoxLayout, QStackedWidget, QFileDialog, QCheckBox, \
+    QLineEdit
 
 from src.UI.dialogs.file_dialog import FileDialog
 from src.UI.widgets.processing_widget import ProcessingWidget
@@ -8,6 +9,7 @@ from src.UI.widgets.side_panel import SidePanel
 from src.providers.language_provider import LanguageProvider
 from src.utilities.error_handler import Errorhandler
 from src.utilities.setup_handler import handle_ui_texts
+from src.utilities.ui_helpers import get_current_filter
 
 
 class MainWindow(QMainWindow):
@@ -50,33 +52,35 @@ class MainWindow(QMainWindow):
 
     def create_connection(self) -> None:
         self.processing_widget.input_path_select.clicked.connect(lambda: self.show_dialog(
-            QFileDialog.FileMode.Directory, "", self
+            QFileDialog.FileMode.Directory, self
         ))
         self.processing_widget.input_path_add.clicked.connect(lambda: self.show_dialog(
-            QFileDialog.FileMode.ExistingFiles, "", self
+            QFileDialog.FileMode.ExistingFiles, self, filters=True
         ))
         self.processing_widget.output_path_select.clicked.connect(lambda: self.show_dialog(
-            QFileDialog.FileMode.Directory, "", self
+            QFileDialog.FileMode.Directory, self
         ))
         self.workflow_settings.input_path_browse.clicked.connect(lambda: self.show_dialog(
-            QFileDialog.FileMode.Directory, None, self
+            QFileDialog.FileMode.Directory, self
         ))
         self.workflow_settings.output_path_browse.clicked.connect(lambda: self.show_dialog(
-            QFileDialog.FileMode.Directory, None, self
+            QFileDialog.FileMode.Directory, self
         ))
 
-    @classmethod
-    def show_dialog(cls, mode: QFileDialog.FileMode, filters: str | None, parent: QWidget) -> None:
+    def show_dialog(self, mode: QFileDialog.FileMode, parent: QWidget, filters: bool = False) -> None:
         try:
+            current_filter = None
             texts_data = LanguageProvider.get_texts_data("ui_texts", FileDialog.__name__,
                                                              LanguageProvider.language_code)
             if not texts_data:
                 raise IOError("Texts data loading failed.")
-            dialog = FileDialog(texts_data.get(FileDialog.__name__, {}), mode, filters,
+            if filters:
+                current_filter = get_current_filter(self.workflow_settings.findChildren((QCheckBox, QLineEdit)), texts_data)
+            dialog = FileDialog(texts_data.get(FileDialog.__name__, {}), mode, current_filter,
                                 parent)
             dialog.exec()
         except Exception as e:
-            Errorhandler.handle_error(cls.__name__, e)
+            Errorhandler.handle_error(self.__class__.__name__, e)
 
     def showEvent(self, event: QShowEvent) -> None:
         super().showEvent(event)

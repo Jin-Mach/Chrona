@@ -1,7 +1,6 @@
 {
   "MainWindow": {
-    "titleText": "Chrona",
-    "titleTextFolder": "Vybrat složku"
+    "titleText": "Chrona"
   },
   "SidePanel": {
     "processingButtonText": "Přenos souborů",
@@ -55,7 +54,7 @@
     "musicFilesCheckboxText": "Hudba",
     "archiveFilesCheckboxText": "Archivy",
     "customExtensionsLabelText": "Vlastní přípony:",
-    "customExtensionsEditPlaceholderText": "např. *.pdf; *.csv",
+    "customExtensionsEditPlaceholderText": "např. pdf; csv",
     "customExtensionsEditText": "Vlastní",
     "nameGroupText": "Název",
     "defaultNameRadiobuttonText": "Výchozí",
@@ -77,6 +76,13 @@
     "titleTextFolder": "Vybrat složku",
     "titleTextFile": "Vybrat soubor(y)",
     "labelTextAccept": "Vybrat",
-    "labelTextReject": "Zrušit"
+    "labelTextReject": "Zrušit",
+    "documentsFilesCheckboxText": "Dokumenty",
+    "txtFilesCheckboxText": "Texty",
+    "officeFilesCheckboxText": "Office",
+    "imageFilesCheckboxText": "Obrázky",
+    "musicFilesCheckboxText": "Hudba",
+    "archiveFilesCheckboxText": "Archivy",
+    "customExtensionsEditText": "Vlastní"
   }
 }

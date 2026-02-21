@@ -15,6 +15,7 @@ def set_lineedit_text(path: pathlib.Path, line_edit: QLineEdit, tooltip_duration
 
 def get_current_filter(widgets: list[QWidget], texts_data: dict[str, str]) -> str:
     final_filters = ""
+    existing_filters = set()
     filters_config = {
         "documentsFilesCheckboxText": "*.pdf *.doc *.docx *.odt",
         "txtFilesCheckboxText": "*.txt *.log *.md",
@@ -24,19 +25,27 @@ def get_current_filter(widgets: list[QWidget], texts_data: dict[str, str]) -> st
         "archiveFilesCheckboxText": "*.zip *.rar *.7z *.tar *.gz",
     }
     for widget in widgets:
+        name = widget.objectName() + "Text"
         if isinstance(widget, QCheckBox):
-            if widget.isChecked() and widget.objectName() in filters_config:
-                filter_text = texts_data.get(widget.objectName() + "Text", "N/A")
-                final_filters += f"{filter_text} {filters_config.get(widget.objectName())};;"
+            if widget.isChecked() and name in filters_config:
+                filter_text = texts_data.get(name, "N/A")
+                filters = filters_config.get(name)
+                final_filters += f"{filter_text} ({filters});;"
+                for exist_filter in filters.split(" "):
+                    if exist_filter.strip():
+                        existing_filters.add(exist_filter)
         if isinstance(widget, QLineEdit):
             if widget.objectName() == "customExtensionsEdit" and widget.text():
                 extension_filter = ""
                 for extension in widget.text().split(","):
                     if extension.strip():
-                        extension_filter += f"*.{extension.strip()} "
+                        filter_name = f"*.{extension.strip()}"
+                        if filter_name not in existing_filters:
+                            existing_filters.add(filter_name)
+                            extension_filter += filter_name + " "
                 if extension_filter:
-                    filter_text = texts_data.get(widget.objectName() + "Text", "N/A")
-                    final_filters += f"{filter_text} {extension_filter};;"
+                    filter_text = texts_data.get(name, "N/A")
+                    final_filters += f"{filter_text} ({extension_filter});;"
     if final_filters.strip().endswith(";;"):
         final_filters = final_filters[:-2]
     return final_filters.strip()
