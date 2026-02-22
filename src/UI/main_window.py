@@ -19,6 +19,7 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(1200, 700)
         self.centered = False
         self.setCentralWidget(self.create_gui())
+        self.process_provider = ProcessProvider(self)
         self.setup_stack()
         self.set_ui_texts()
         self.create_connection()
@@ -67,7 +68,7 @@ class MainWindow(QMainWindow):
         self.workflow_settings.output_path_browse.clicked.connect(lambda: self.show_dialog(
             QFileDialog.FileMode.Directory, self
         ))
-        self.processing_widget.start_button.clicked.connect(ProcessProvider.start_process)
+        self.processing_widget.start_button.clicked.connect(self.process_provider.start_process)
 
     def show_dialog(self, mode: QFileDialog.FileMode, parent: QWidget, filters: bool = False) -> None:
         try:
@@ -80,7 +81,7 @@ class MainWindow(QMainWindow):
                 current_filter = get_current_filter(self.workflow_settings.findChildren((QCheckBox, QLineEdit)), texts_data)
             dialog = FileDialog(mode, current_filter, parent)
             if dialog.exec():
-                ProcessProvider.selected_files = list(set(ProcessProvider.selected_files + dialog.selectedFiles()))
+                self.process_provider.selected_files = list(set(self.process_provider.selected_files + dialog.selectedFiles()))
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
 
