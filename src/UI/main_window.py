@@ -7,6 +7,7 @@ from src.UI.widgets.processing_widget import ProcessingWidget
 from src.UI.widgets.workflow_settings import WorkflowSettings
 from src.UI.widgets.side_panel import SidePanel
 from src.providers.language_provider import LanguageProvider
+from src.providers.process_provider import ProcessProvider
 from src.utilities.error_handler import Errorhandler
 from src.utilities.setup_handler import handle_ui_texts
 from src.utilities.ui_helpers import get_current_filter
@@ -66,6 +67,7 @@ class MainWindow(QMainWindow):
         self.workflow_settings.output_path_browse.clicked.connect(lambda: self.show_dialog(
             QFileDialog.FileMode.Directory, self
         ))
+        self.processing_widget.start_button.clicked.connect(ProcessProvider.start_process)
 
     def show_dialog(self, mode: QFileDialog.FileMode, parent: QWidget, filters: bool = False) -> None:
         try:
@@ -77,7 +79,8 @@ class MainWindow(QMainWindow):
             if filters:
                 current_filter = get_current_filter(self.workflow_settings.findChildren((QCheckBox, QLineEdit)), texts_data)
             dialog = FileDialog(mode, current_filter, parent)
-            dialog.exec()
+            if dialog.exec():
+                ProcessProvider.selected_files = list(set(ProcessProvider.selected_files + dialog.selectedFiles()))
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
 

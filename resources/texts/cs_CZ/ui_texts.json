@@ -80,5 +80,9 @@
     "musicFilesCheckboxText": "Hudba",
     "archiveFilesCheckboxText": "Archivy",
     "customExtensionsEditText": "Vlastní"
+  },
+  "ProcessProvider": {
+    "titleText": "Chyba",
+    "messageText": "Není vybrán žádný soubor pro přenos."
   }
 }

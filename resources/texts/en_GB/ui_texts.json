@@ -80,5 +80,9 @@
     "musicFilesCheckboxText": "Music",
     "archiveFilesCheckboxText": "Archives",
     "customExtensionsEditText": "Custom"
+  },
+  "ProcessProvider": {
+  "titleText": "Error",
+  "messageText": "No file selected for transfer."
 }
 }

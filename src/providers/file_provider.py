@@ -72,7 +72,9 @@ class FileProvider:
         "titleText", "showHideButtonText", "closeButtonText"
         "FileDialog",
         "documentsFilesCheckboxText", "txtFilesCheckboxText", "officeFilesCheckboxText", "imageFilesCheckboxText",
-        "musicFilesCheckboxText", "archiveFilesCheckboxText", "customExtensionsEditText"
+        "musicFilesCheckboxText", "archiveFilesCheckboxText", "customExtensionsEditText",
+        "ProcessProvider",
+        "titleText", "messageText"
     ]
 
     @classmethod
