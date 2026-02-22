@@ -73,10 +73,6 @@
     "closeButtonText": "Zavřít"
   },
   "FileDialog": {
-    "titleTextFolder": "Vybrat složku",
-    "titleTextFile": "Vybrat soubor(y)",
-    "labelTextAccept": "Vybrat",
-    "labelTextReject": "Zrušit",
     "documentsFilesCheckboxText": "Dokumenty",
     "txtFilesCheckboxText": "Texty",
     "officeFilesCheckboxText": "Office",

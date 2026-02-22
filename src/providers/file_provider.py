@@ -71,9 +71,8 @@ class FileProvider:
         "ErrorDialog",
         "titleText", "showHideButtonText", "closeButtonText"
         "FileDialog",
-        "titleTextFile", "documentsFilesCheckboxText", "txtFilesCheckboxText",
-        "officeFilesCheckboxText", "imageFilesCheckboxText", "musicFilesCheckboxText", "archiveFilesCheckboxText",
-        "customExtensionsEditText"
+        "documentsFilesCheckboxText", "txtFilesCheckboxText", "officeFilesCheckboxText", "imageFilesCheckboxText",
+        "musicFilesCheckboxText", "archiveFilesCheckboxText", "customExtensionsEditText"
     ]
 
     @classmethod

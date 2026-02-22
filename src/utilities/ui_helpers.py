@@ -17,12 +17,12 @@ def get_current_filter(widgets: list[QWidget], texts_data: dict[str, str]) -> st
     final_filters = ""
     existing_filters = set()
     filters_config = {
-        "documentsFilesCheckboxText": "*.pdf *.doc *.docx *.odt",
-        "txtFilesCheckboxText": "*.txt *.log *.md",
-        "officeFilesCheckboxText": "*.xls *.xlsx *.ppt *.pptx *.csv",
-        "imageFilesCheckboxText": "*.jpg *.jpeg *.png *.bmp *.gif *.tiff",
-        "musicFilesCheckboxText": "*.mp3 *.wav *.flac *.aac *.ogg",
-        "archiveFilesCheckboxText": "*.zip *.rar *.7z *.tar *.gz",
+        "documentsFilesCheckboxText": "*.pdf *.doc *.docx *.odt *.rtf *.tex",
+        "txtFilesCheckboxText": "*.txt *.log *.md *.cfg *.ini *.csv",
+        "officeFilesCheckboxText": "*.xls *.xlsx *.ppt *.pptx *.doc *.docx",
+        "imageFilesCheckboxText": "*.jpg *.jpeg *.png *.bmp *.gif *.tiff *.svg *.webp *.heic",
+        "musicFilesCheckboxText": "*.mp3 *.wav *.flac *.aac *.ogg *.m4a *.wma",
+        "archiveFilesCheckboxText": "*.zip *.rar *.7z *.tar *.gz *.bz2 *.xz *.lzma",
     }
     for widget in widgets:
         name = widget.objectName() + "Text"

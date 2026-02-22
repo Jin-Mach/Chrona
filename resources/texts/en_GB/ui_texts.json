@@ -73,10 +73,6 @@
     "closeButtonText": "Close"
   },
   "FileDialog": {
-    "titleTextFolder": "Select Folder",
-    "titleTextFile": "Select File(s)",
-    "labelTextAccept": "Select",
-    "labelTextReject": "Cancel",
     "documentsFilesCheckboxText": "Documents",
     "txtFilesCheckboxText": "Text",
     "officeFilesCheckboxText": "Office",
