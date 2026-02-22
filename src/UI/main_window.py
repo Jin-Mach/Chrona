@@ -69,6 +69,10 @@ class MainWindow(QMainWindow):
 
     def show_dialog(self, mode: QFileDialog.FileMode, parent: QWidget, filters: bool = False) -> None:
         try:
+            texts_data = LanguageProvider.get_texts_data("ui_texts", FileDialog.__name__,
+                                                         LanguageProvider.language_code)
+            if not texts_data:
+                raise IOError("Texts data loading failed.")
             current_filter = None
             if filters:
                 current_filter = get_current_filter(self.workflow_settings.findChildren((QCheckBox, QLineEdit)), texts_data)
