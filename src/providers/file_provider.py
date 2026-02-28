@@ -74,7 +74,9 @@ class FileProvider:
         "documentsFilesCheckboxText", "txtFilesCheckboxText", "officeFilesCheckboxText", "imageFilesCheckboxText",
         "musicFilesCheckboxText", "archiveFilesCheckboxText", "customExtensionsEditText",
         "ProcessProvider",
-        "titleText", "messageText"
+        "titleText", "messageText", "documentsFiles", "documentsSuffixes", "txtFiles", "txtSuffixes",
+        "officeFiles", "officeSuffixes", "imageFiles", "imageSuffixes", "musicFiles", "musicSuffixes",
+        "archiveFiles", "archiveSuffixes", "othersFiles"
     ]
 
     @classmethod

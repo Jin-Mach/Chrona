@@ -83,6 +83,19 @@
   },
   "ProcessProvider": {
     "titleText": "Chyba",
-    "messageText": "Není vybrán žádný soubor pro přenos."
+    "messageText": "Není vybrán žádný soubor pro přenos.",
+    "documentsFiles": "Dokumenty",
+    "documentsSuffixes": ["pdf", "doc", "docx", "odt", "rtf", "tex"],
+    "txtFiles": "Textové dokumenty",
+    "txtSuffixes": ["txt", "log", "md", "cfg", "ini", "csv"],
+    "officeFiles": "Office",
+    "officeSuffixes": ["xls", "xlsx", "ppt", "pptx", "doc", "docx"],
+    "imageFiles": "Obrázky",
+    "imageSuffixes": ["jpg", "jpeg", "png", "bmp", "gif", "tiff", "svg", "webp", "heic"],
+    "musicFiles": "Hudba",
+    "musicSuffixes": ["mp3", "wav", "flac", "aac", "ogg", "m4a", "wma"],
+    "archiveFiles": "Archív",
+    "archiveSuffixes": ["zip", "rar", "7z", "tar", "gz", "bz2", "xz", "lzma"],
+    "othersFiles": "Ostatní"
   }
 }

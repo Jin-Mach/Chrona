@@ -54,23 +54,25 @@ class MainWindow(QMainWindow):
 
     def create_connection(self) -> None:
         self.processing_widget.input_path_select.clicked.connect(lambda: self.show_dialog(
-            QFileDialog.FileMode.Directory, self
+            QFileDialog.FileMode.Directory, self, "input_folder_processing_widget"
         ))
         self.processing_widget.input_path_add.clicked.connect(lambda: self.show_dialog(
-            QFileDialog.FileMode.ExistingFiles, self, filters=True
+            QFileDialog.FileMode.ExistingFiles, self, "add_files_processing_widget", filters=True
         ))
         self.processing_widget.output_path_select.clicked.connect(lambda: self.show_dialog(
-            QFileDialog.FileMode.Directory, self
+            QFileDialog.FileMode.Directory, self, "output_folder_processing_widget"
         ))
         self.workflow_settings.input_path_browse.clicked.connect(lambda: self.show_dialog(
-            QFileDialog.FileMode.Directory, self
+            QFileDialog.FileMode.Directory, self, "input_folder_workflow_settings"
         ))
         self.workflow_settings.output_path_browse.clicked.connect(lambda: self.show_dialog(
-            QFileDialog.FileMode.Directory, self
+            QFileDialog.FileMode.Directory, self, "output_folder_workflow_settings"
         ))
-        self.processing_widget.start_button.clicked.connect(self.process_provider.start_process)
+        self.processing_widget.start_button.clicked.connect(lambda: self.process_provider.start_process(
+            self
+        ))
 
-    def show_dialog(self, mode: QFileDialog.FileMode, parent: QWidget, filters: bool = False) -> None:
+    def show_dialog(self, mode: QFileDialog.FileMode, parent: QWidget, action: str, filters: bool = False) -> None:
         try:
             texts_data = LanguageProvider.get_texts_data("ui_texts", FileDialog.__name__,
                                                          LanguageProvider.language_code)
@@ -81,9 +83,29 @@ class MainWindow(QMainWindow):
                 current_filter = get_current_filter(self.workflow_settings.findChildren((QCheckBox, QLineEdit)), texts_data)
             dialog = FileDialog(mode, current_filter, parent)
             if dialog.exec():
-                self.process_provider.selected_files = list(set(self.process_provider.selected_files + dialog.selectedFiles()))
+                selected = dialog.selectedFiles()
+                if selected:
+                    if mode == QFileDialog.FileMode.Directory:
+                        self.handle_dialog_result(selected[0], action)
+                    else:
+                        self.handle_dialog_result(selected, action)
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
+
+    def handle_dialog_result(self, path: list[str] | str, action: str) -> None:
+        if action in ["input_folder_processing_widget", "add_files_processing_widget"]:
+            if isinstance(path, list):
+                self.process_provider.selected_files = list(set(self.process_provider.selected_files + path))
+            elif isinstance(path, str) and path not in self.process_provider.selected_files:
+                self.process_provider.selected_files.append(path)
+        elif action == "output_folder_processing_widget":
+            self.processing_widget.update_output_path(path)
+        elif action == "input_folder_workflow_settings":
+            self.workflow_settings.update_input_path(path)
+            self.processing_widget.update_input_path(path)
+        elif action == "output_folder_workflow_settings":
+            self.workflow_settings.update_output_path(path)
+            self.processing_widget.update_output_path(path)
 
     def showEvent(self, event: QShowEvent) -> None:
         super().showEvent(event)

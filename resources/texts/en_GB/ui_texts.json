@@ -82,7 +82,20 @@
     "customExtensionsEditText": "Custom"
   },
   "ProcessProvider": {
-  "titleText": "Error",
-  "messageText": "No file selected for transfer."
-}
+    "titleText": "Error",
+    "messageText": "No file selected for transfer.",
+    "documentsFiles": "Documents",
+    "documentsSuffixes": ["pdf", "doc", "docx", "odt", "rtf", "tex"],
+    "txtFiles": "Text files",
+    "txtSuffixes": ["txt", "log", "md", "cfg", "ini", "csv"],
+    "officeFiles": "Office",
+    "officeSuffixes": ["xls", "xlsx", "ppt", "pptx", "doc", "docx"],
+    "imageFiles": "Images",
+    "imageSuffixes": ["jpg", "jpeg", "png", "bmp", "gif", "tiff", "svg", "webp", "heic"],
+    "musicFiles": "Music",
+    "musicSuffixes": ["mp3", "wav", "flac", "aac", "ogg", "m4a", "wma"],
+    "archiveFiles": "Archive",
+    "archiveSuffixes": ["zip", "rar", "7z", "tar", "gz", "bz2", "xz", "lzma"],
+    "othersFiles": "Ostatní"
+  }
 }
