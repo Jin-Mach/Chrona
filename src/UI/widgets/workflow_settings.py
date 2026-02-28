@@ -104,15 +104,12 @@ class WorkflowSettings(QWidget):
         self.day_checkbox.setObjectName("dayCheckbox")
         day_layout.addWidget(self.day_checkbox)
         layout.addLayout(day_layout)
-        self.create_subfolders_date_checkbox = QCheckBox()
-        self.create_subfolders_date_checkbox.setObjectName("createSubfoldersDateCheckbox")
-        layout.addWidget(self.create_subfolders_date_checkbox)
-        self.create_subfolders_type_checkbox = QCheckBox()
-        self.create_subfolders_type_checkbox.setObjectName("createSubfoldersTypeCheckbox")
-        layout.addWidget(self.create_subfolders_type_checkbox)
-        self.include_hidden_folders_checkbox = QCheckBox()
-        self.include_hidden_folders_checkbox.setObjectName("includeHiddenFoldersCheckbox")
-        layout.addWidget(self.include_hidden_folders_checkbox)
+        self.subfolders_type_checkbox = QCheckBox()
+        self.subfolders_type_checkbox.setObjectName("subfoldersTypeCheckbox")
+        layout.addWidget(self.subfolders_type_checkbox)
+        self.hidden_folders_checkbox = QCheckBox()
+        self.hidden_folders_checkbox.setObjectName("hiddenFoldersCheckbox")
+        layout.addWidget(self.hidden_folders_checkbox)
         layout.addStretch()
         self.folder_group.setLayout(layout)
         return self.folder_group
@@ -236,16 +233,30 @@ class WorkflowSettings(QWidget):
         self.delete_file_checkbox.toggled.connect(self.delete_toggled)
         self.move_instead_copy_checkbox.toggled.connect(self.move_toggled)
 
+    def active_filter(self) -> dict[str, bool | str]:
+        return {
+            "year": self.year_checkbox.isChecked(),
+            "month": self.month_checkbox.isChecked(),
+            "day": self.day_checkbox.isChecked(),
+            "type_subfolder": self.subfolders_type_checkbox.isChecked(),
+            "hidden_folders": self.hidden_folders_checkbox.isChecked(),
+            "default_name": self.default_name_radiobutton.isChecked(),
+            "custom_name": self.file_name_edit.text().strip(),
+            "timestamp": self.use_timestamp_checkbox.isChecked(),
+            "counter": self.use_counter_checkbox.isChecked(),
+            "delete_file": self.delete_file_checkbox.isChecked(),
+            "move_instead_copy": self.move_instead_copy_checkbox.isChecked(),
+            "overwrite": self.overwrite_checkbox.isChecked(),
+        }
+
     def update_folder_logic(self) -> None:
         if not self.year_checkbox.isChecked():
             self.month_checkbox.setChecked(False)
             self.month_checkbox.setEnabled(False)
             self.day_checkbox.setChecked(False)
             self.day_checkbox.setEnabled(False)
-            self.create_subfolders_date_checkbox.setEnabled(False)
         else:
             self.month_checkbox.setEnabled(True)
-            self.create_subfolders_date_checkbox.setEnabled(True)
             if not self.month_checkbox.isChecked():
                 self.day_checkbox.setChecked(False)
                 self.day_checkbox.setEnabled(False)
