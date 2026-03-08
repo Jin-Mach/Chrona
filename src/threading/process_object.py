@@ -1,5 +1,6 @@
 import pathlib
 import datetime
+import sys
 
 from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
 
@@ -21,9 +22,10 @@ class ProcessObject(QObject):
     @pyqtSlot()
     def run_process(self) -> None:
         try:
-            validated_list = self.check_dir_folders(self.selected_paths)
+            validated_list = self.check_dir_folders(self.selected_paths, self.active_filter.get("hidden_folders", False))
             if not validated_list:
                 raise ValueError("Validate folders failed")
+            print("validated list:", validated_list)
             for path in validated_list:
                 self.move_file_to_path(self.output_path, path, self.active_filter, self.documents_texts)
             self.finished.emit()
@@ -31,14 +33,29 @@ class ProcessObject(QObject):
             self.failed.emit(e)
 
     @classmethod
-    def check_dir_folders(cls, paths_list: list[str]) -> list[pathlib.Path]:
+    def check_dir_folders(cls, paths_list: list[str], include_hidden: bool) -> list[pathlib.Path]:
         validated_list = []
-        for path in paths_list:
-            path = pathlib.Path(path)
+        for path_str in paths_list:
+            path = pathlib.Path(path_str)
+            skip_path = False
+            if not include_hidden:
+                for part in path.parts:
+                    if part.startswith("."):
+                        skip_path = True
+                        break
+            if skip_path:
+                continue
             if path.is_dir():
                 for child in path.rglob("*"):
                     if child.is_file():
-                        validated_list.append(child)
+                        skip_child = False
+                        if not include_hidden:
+                            for part in child.parts:
+                                if part.startswith("."):
+                                    skip_child = True
+                                    break
+                        if not skip_child:
+                            validated_list.append(child)
             elif path.is_file():
                 validated_list.append(path)
         return validated_list
@@ -46,7 +63,6 @@ class ProcessObject(QObject):
     @classmethod
     def move_file_to_path(cls, output_path: pathlib.Path, path: pathlib.Path, active_filters: dict[str, bool | str],
                           documents_texts: dict[str, str]) -> bool:
-        output_path = output_path
         metadata = ProcessObject.get_file_metadata(path)
         if not metadata:
             return False
@@ -57,13 +73,13 @@ class ProcessObject(QObject):
                                             metadata["created"], output_path)
         output_path = ProcessObject.get_file_type(active_filters.get("type", False), documents_texts,
                                         metadata["type"], output_path)
-        print(output_path)
+        print("output path:", output_path)
         return True
 
     @staticmethod
     def get_file_metadata(file_path: pathlib.Path) -> dict[str, str | datetime.datetime]:
         return {
-                "created": datetime.datetime.fromtimestamp(file_path.stat().st_mtime),
+                "created": ProcessObject.get_creation_time(file_path),
                 "type": file_path.suffix.lstrip(".").lower(),
                 "hidden": file_path.name.startswith(".")
         }
@@ -98,3 +114,12 @@ class ProcessObject(QObject):
                     break
             output_path = output_path.joinpath(folder_name)
         return output_path
+
+    @staticmethod
+    def get_creation_time(file_path: pathlib.Path) -> datetime.datetime:
+        if sys.platform == "win32":
+            timestamp = file_path.stat().st_ctime
+        else:
+            stat = file_path.stat()
+            timestamp = getattr(stat, "st_birthtime", stat.st_mtime)
+        return datetime.datetime.fromtimestamp(timestamp)
