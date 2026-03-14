@@ -219,6 +219,8 @@ class WorkflowSettings(QWidget):
             self.input_path_edit.setReadOnly(True)
             self.output_path_edit.setReadOnly(True)
             self.file_name_edit.setEnabled(False)
+            self.use_timestamp_checkbox.setEnabled(False)
+            self.use_counter_checkbox.setEnabled(False)
             self.update_input_path(config_data.get(self.__class__.__name__, {}).get("inputPathEdit", ""))
             self.update_output_path(config_data.get(self.__class__.__name__, {}).get("outputPathEdit", ""))
         except Exception as e:
@@ -230,6 +232,8 @@ class WorkflowSettings(QWidget):
         self.month_checkbox.toggled.connect(self.update_folder_logic)
         self.default_name_radiobutton.toggled.connect(self.update_name_options)
         self.user_name_radiobutton.toggled.connect(self.update_name_options)
+        self.use_timestamp_checkbox.toggled.connect(lambda _: self.validate_name_options(self.use_timestamp_checkbox))
+        self.use_counter_checkbox.toggled.connect(lambda _: self.validate_name_options(self.use_counter_checkbox))
         self.delete_file_checkbox.toggled.connect(self.delete_toggled)
         self.move_instead_copy_checkbox.toggled.connect(self.move_toggled)
 
@@ -266,11 +270,26 @@ class WorkflowSettings(QWidget):
     def update_name_options(self) -> None:
         user_checked = self.user_name_radiobutton.isChecked()
         self.file_name_edit.setEnabled(user_checked)
+        self.use_timestamp_checkbox.setEnabled(user_checked)
+        self.use_counter_checkbox.setEnabled(user_checked)
         if not user_checked:
             self.use_counter_checkbox.setChecked(False)
+            self.use_timestamp_checkbox.setChecked(False)
+            self.use_counter_checkbox.setEnabled(False)
         else:
             self.file_name_edit.setFocus()
             self.file_name_edit.selectAll()
+            self.use_timestamp_checkbox.setChecked(True)
+
+    def validate_name_options(self, changed_checkbox: QCheckBox) -> None:
+        if self.user_name_radiobutton.isChecked():
+            if changed_checkbox == self.use_timestamp_checkbox:
+                other_checkbox = self.use_counter_checkbox
+            else:
+                other_checkbox = self.use_timestamp_checkbox
+            if not changed_checkbox.isChecked() and not other_checkbox.isChecked():
+                changed_checkbox.setChecked(True)
+
 
     def update_filter_options(self) -> None:
         files_checkboxes = [self.documents_files_checkbox, self.txt_files_checkbox, self.office_files_checkbox,
