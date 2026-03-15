@@ -48,7 +48,7 @@ def test_get_datetime_tree(base_folder, month_checked, day_checked, timestamp, m
             expected_path = expected_path.joinpath(day)
     assert result == expected_path
 
-@pytest.mark.parametrize("sufix, folder_name", [
+@pytest.mark.parametrize("suffix, folder_name", [
         ("pdf", "Documents"),
         ("txt", "Text_files"),
         ("xls", "Office"),
@@ -61,7 +61,7 @@ def test_get_datetime_tree(base_folder, month_checked, day_checked, timestamp, m
     ]
 )
 
-def test_get_file_type(base_folder, sufix, folder_name) -> None:
+def test_get_file_type(base_folder, suffix, folder_name) -> None:
     documents_texts = {
         "documentsFiles": "Documents",
         "documentsSuffixes": ["pdf", "doc", "docx", "odt", "rtf", "tex"],
@@ -77,5 +77,24 @@ def test_get_file_type(base_folder, sufix, folder_name) -> None:
         "archiveSuffixes": ["zip", "rar", "7z", "tar", "gz", "bz2", "xz", "lzma"],
         "othersFiles": "Others"
     }
-    result = ProcessObject.get_file_type(documents_texts, sufix, base_folder)
+    result = ProcessObject.get_file_type(documents_texts, suffix, base_folder)
     assert result == base_folder.joinpath(folder_name)
+
+@pytest.mark.parametrize("file_name, custom_name, timestamp_checked, timestamp, counter_checked, counter, counter_result", [
+    ("default", "new", True, None, True, 0, 1),
+    ("default", "new", True, None, False, 1, 1),
+    ("default", "new", False, None, True, 2, 3),
+    ("default", "new", False, None, False, 3, 3),
+], ids=["full_name", "timestamp_name", "counter_name", "default_name"])
+
+def test_get_file_name(file_name, custom_name, timestamp_checked, timestamp, counter_checked, counter, counter_result) -> None:
+    if timestamp_checked:
+        timestamp = datetime.datetime.now()
+    result_name, result_timestamp, result_counter = ProcessObject.get_file_name(
+                                                    file_name, custom_name, timestamp_checked, counter_checked, counter)
+    assert result_name == custom_name
+    if timestamp_checked:
+        assert abs((result_timestamp - timestamp).total_seconds()) < 0.1
+    else:
+        assert result_timestamp == timestamp
+    assert result_counter == counter_result
