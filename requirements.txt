@@ -1,3 +1,4 @@
 PyQt6>=6.10.2
 pyqt6-sip
 requests>=2.32.5
+pytest>=9.0
