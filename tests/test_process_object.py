@@ -47,3 +47,35 @@ def test_get_datetime_tree(base_folder, month_checked, day_checked, timestamp, m
         if day_checked:
             expected_path = expected_path.joinpath(day)
     assert result == expected_path
+
+@pytest.mark.parametrize("sufix, folder_name", [
+        ("pdf", "Documents"),
+        ("txt", "Text_files"),
+        ("xls", "Office"),
+        ("jpg", "Images"),
+        ("mp3", "Music"),
+        ("zip", "Archive"),
+        ("xyz", "Others")
+    ],
+    ids=["documents_file", "txt_file", "office_file", "images_file", "music_file", "archive_file", "others_file"
+    ]
+)
+
+def test_get_file_type(base_folder, sufix, folder_name) -> None:
+    documents_texts = {
+        "documentsFiles": "Documents",
+        "documentsSuffixes": ["pdf", "doc", "docx", "odt", "rtf", "tex"],
+        "txtFiles": "Text_files",
+        "txtSuffixes": ["txt", "log", "md", "cfg", "ini", "csv"],
+        "officeFiles": "Office",
+        "officeSuffixes": ["xls", "xlsx", "ppt", "pptx", "doc", "docx"],
+        "imageFiles": "Images",
+        "imageSuffixes": ["jpg", "jpeg", "png", "bmp", "gif", "tiff", "svg", "webp", "heic"],
+        "musicFiles": "Music",
+        "musicSuffixes": ["mp3", "wav", "flac", "aac", "ogg", "m4a", "wma"],
+        "archiveFiles": "Archive",
+        "archiveSuffixes": ["zip", "rar", "7z", "tar", "gz", "bz2", "xz", "lzma"],
+        "othersFiles": "Others"
+    }
+    result = ProcessObject.get_file_type(documents_texts, sufix, base_folder)
+    assert result == base_folder.joinpath(folder_name)

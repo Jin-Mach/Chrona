@@ -85,7 +85,7 @@
     "messageText": "Není vybrán žádný soubor pro přenos.",
     "documentsFiles": "Dokumenty",
     "documentsSuffixes": ["pdf", "doc", "docx", "odt", "rtf", "tex"],
-    "txtFiles": "Textové dokumenty",
+    "txtFiles": "Textové_dokumenty",
     "txtSuffixes": ["txt", "log", "md", "cfg", "ini", "csv"],
     "officeFiles": "Office",
     "officeSuffixes": ["xls", "xlsx", "ppt", "pptx", "doc", "docx"],

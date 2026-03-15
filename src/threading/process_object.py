@@ -18,7 +18,8 @@ class ProcessObject(QObject):
         self.output_path = output_path
         self.selected_paths = selected_paths
         self.active_filter = active_filter
-        print(active_filter)
+        print("active_filter:", self.active_filter)
+        print("documents_texts:", self.documents_texts)
 
     @pyqtSlot()
     def run_process(self) -> None:
@@ -62,7 +63,7 @@ class ProcessObject(QObject):
 
     @classmethod
     def move_file_to_path(cls, index: int, output_path: pathlib.Path, path: pathlib.Path,
-                          active_filters: dict[str, bool | str], documents_texts: dict[str, str]) -> bool:
+                          active_filters: dict[str, bool | str], documents_texts: dict[str, str | list[str]]) -> bool:
         file_name = path.stem
         file_timestamp = None
         file_counter = -1
@@ -81,7 +82,7 @@ class ProcessObject(QObject):
                 file_created,
                 output_path
             )
-        if active_filters.get("type", False):
+        if active_filters.get("type_subfolder", False):
             output_path = ProcessObject.get_file_type(documents_texts, metadata["type"], output_path)
         if not active_filters.get("default_name", True):
             new_name, file_timestamp, counter = ProcessObject.get_file_name(
@@ -99,7 +100,7 @@ class ProcessObject(QObject):
         if file_counter > 0:
             name_parts.append(str(file_counter))
         output_path = output_path.joinpath("_".join(name_parts)).with_suffix(file_suffix)
-        print("output path:", output_path)
+        print("output_path:", output_path)
         return True
 
     @staticmethod
@@ -120,7 +121,7 @@ class ProcessObject(QObject):
         return output_path
 
     @staticmethod
-    def get_file_type(documents_texts: dict[str, str], file_suffix: str, output_path: pathlib.Path) -> pathlib.Path:
+    def get_file_type(documents_texts: dict[str, str | list[str]], file_suffix: str, output_path: pathlib.Path) -> pathlib.Path:
         type_filter = {
             documents_texts["documentsFiles"]: documents_texts["documentsSuffixes"],
             documents_texts["txtFiles"]: documents_texts["txtSuffixes"],
@@ -129,7 +130,7 @@ class ProcessObject(QObject):
             documents_texts["musicFiles"]: documents_texts["musicSuffixes"],
             documents_texts["archiveFiles"]: documents_texts["archiveSuffixes"],
         }
-        folder_name = documents_texts["otherFiles"]
+        folder_name = documents_texts["othersFiles"]
         for key, value in type_filter.items():
             if file_suffix in value:
                 folder_name = key
