@@ -1,20 +1,49 @@
+import datetime
 import pytest
 
+from pathlib import Path
+
 from src.threading.process_object import ProcessObject
+
+@pytest.fixture
+def base_folder(tmp_path) -> Path:
+    folder = tmp_path.joinpath("folder")
+    folder.mkdir()
+    return folder
+
+@pytest.fixture
+def folder_with_files(base_folder) -> Path:
+    file_1 = base_folder.joinpath("file_1.txt")
+    file_1.write_text("file_1")
+    file_2 = base_folder.joinpath("file_2.txt")
+    file_2.write_text("file_2")
+    hidden_file = base_folder.joinpath(".hidden_file.txt")
+    hidden_file.write_text("hidden_file")
+    return base_folder
 
 @pytest.mark.parametrize("include_hidden, files_count", [
     (True, 3),
     (False, 2),
 ], ids=["include_hidden", "without_hidden"])
 
-def test_check_dir_folders(tmp_path, include_hidden, files_count) -> None:
-    folder = tmp_path.joinpath("folder")
-    folder.mkdir()
-    file_1 = folder.joinpath("file_1.txt")
-    file_1.write_text("file_1")
-    file_2 = folder.joinpath("file_2.txt")
-    file_2.write_text("file_2")
-    hidden_file = folder.joinpath(".hidden_file.txt")
-    hidden_file.write_text("hidden_file")
-    result = ProcessObject.check_dir_folders([str(folder)], include_hidden=include_hidden)
+def test_check_dir_folders(folder_with_files, include_hidden, files_count) -> None:
+    expected_path = folder_with_files
+    result = ProcessObject.check_dir_folders([str(expected_path)], include_hidden=include_hidden)
     assert len(result) == files_count
+
+@pytest.mark.parametrize("month_checked, day_checked, timestamp, month, day", [
+    (True, True, datetime.datetime(2021, 1, 1), "1", "1"),
+    (True, False, datetime.datetime(2022, 2, 2), "2", None),
+    (False, False, datetime.datetime(2023, 3, 3), None, None),
+    (False, True, datetime.datetime(2024, 4, 4), None, "4"),
+    (True, True, datetime.datetime(2025, 12, 24), "12", "24"),
+], ids=["full_date", "month_date", "no_date", "wrong_setup", "double_date"])
+
+def test_get_datetime_tree(base_folder, month_checked, day_checked, timestamp, month, day) -> None:
+    expected_path = base_folder
+    result = ProcessObject.get_datetime_tree(month_checked, day_checked, timestamp, base_folder)
+    if month_checked:
+        expected_path = expected_path.joinpath(month)
+        if day_checked:
+            expected_path = expected_path.joinpath(day)
+    assert result == expected_path
