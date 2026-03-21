@@ -2,6 +2,8 @@ import pathlib
 
 from typing import TYPE_CHECKING
 
+from PyQt6.QtGui import QRegularExpressionValidator
+from PyQt6.QtCore import QRegularExpression
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QGroupBox, QCheckBox, QRadioButton, QLineEdit,
                              QPushButton, QGridLayout, QLabel, QSizePolicy)
 
@@ -25,6 +27,7 @@ class WorkflowSettings(QWidget):
         self.setLayout(self.create_gui())
         self.set_ui_texts()
         self.set_config_data()
+        self.set_validators()
         self.create_connection()
 
     def create_gui(self) -> QVBoxLayout:
@@ -226,6 +229,14 @@ class WorkflowSettings(QWidget):
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
 
+    def set_validators(self) -> None:
+        extension_regex = QRegularExpression(r"[A-Za-z;]*")
+        extension_validator = QRegularExpressionValidator(extension_regex)
+        name_regex = QRegularExpression(r"[A-Za-z0-9_]*")
+        name_validator = QRegularExpressionValidator(name_regex)
+        self.custom_extensions_edit.setValidator(extension_validator)
+        self.file_name_edit.setValidator(name_validator)
+
     def create_connection(self) -> None:
         self.filter_checkbox.toggled.connect(self.update_filter_options)
         self.year_checkbox.toggled.connect(self.update_folder_logic)
@@ -289,7 +300,6 @@ class WorkflowSettings(QWidget):
                 other_checkbox = self.use_timestamp_checkbox
             if not changed_checkbox.isChecked() and not other_checkbox.isChecked():
                 changed_checkbox.setChecked(True)
-
 
     def update_filter_options(self) -> None:
         files_checkboxes = [self.documents_files_checkbox, self.txt_files_checkbox, self.office_files_checkbox,

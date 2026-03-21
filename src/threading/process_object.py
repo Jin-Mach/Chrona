@@ -19,7 +19,6 @@ class ProcessObject(QObject):
         self.selected_paths = selected_paths
         self.active_filter = active_filter
         print("active_filter:", self.active_filter)
-        print("documents_texts:", self.documents_texts)
 
     @pyqtSlot()
     def run_process(self) -> None:
@@ -100,7 +99,6 @@ class ProcessObject(QObject):
         if file_counter > 0:
             name_parts.append(str(file_counter))
         output_path = output_path.joinpath("_".join(name_parts)).with_suffix(file_suffix)
-        print("output_path:", output_path)
         return True
 
     @staticmethod
