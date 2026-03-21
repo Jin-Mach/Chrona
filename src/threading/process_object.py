@@ -34,7 +34,7 @@ class ProcessObject(QObject):
 
     @classmethod
     def check_dir_folders(cls, paths_list: list[str], include_hidden: bool) -> list[pathlib.Path]:
-        validated_list = []
+        validated_set = set()
         for path_str in paths_list:
             path = pathlib.Path(path_str)
             skip_path = False
@@ -55,10 +55,10 @@ class ProcessObject(QObject):
                                     skip_child = True
                                     break
                         if not skip_child:
-                            validated_list.append(child)
+                            validated_set.add(child)
             elif path.is_file():
-                validated_list.append(path)
-        return validated_list
+                validated_set.add(path)
+        return list(validated_set)
 
     @classmethod
     def move_file_to_path(cls, index: int, output_path: pathlib.Path, path: pathlib.Path,
