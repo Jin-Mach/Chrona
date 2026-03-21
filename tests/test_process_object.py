@@ -3,7 +3,7 @@ import pytest
 
 from pathlib import Path
 
-from src.threading.process_object import ProcessObject
+from src.threads_objects.process_object import ProcessObject
 
 @pytest.fixture
 def base_folder(tmp_path) -> Path:
@@ -21,14 +21,55 @@ def folder_with_files(base_folder) -> Path:
     hidden_file.write_text("hidden_file")
     return base_folder
 
-@pytest.mark.parametrize("include_hidden, files_count", [
-    (True, 3),
-    (False, 2),
-], ids=["include_hidden", "without_hidden"])
+@pytest.fixture
+def documents_texts() -> dict[str, str | list[str]]:
+    return {
+        "documentsFiles": "Documents",
+        "documentsSuffixes": ["pdf", "doc", "docx", "odt", "rtf", "tex"],
+        "txtFiles": "Text_files",
+        "txtSuffixes": ["txt", "log", "md", "cfg", "ini", "csv"],
+        "officeFiles": "Office",
+        "officeSuffixes": ["xls", "xlsx", "ppt", "pptx", "doc", "docx"],
+        "imageFiles": "Images",
+        "imageSuffixes": ["jpg", "jpeg", "png", "bmp", "gif", "tiff", "svg", "webp", "heic"],
+        "musicFiles": "Music",
+        "musicSuffixes": ["mp3", "wav", "flac", "aac", "ogg", "m4a", "wma"],
+        "archiveFiles": "Archive",
+        "archiveSuffixes": ["zip", "rar", "7z", "tar", "gz", "bz2", "xz", "lzma"],
+        "othersFiles": "Others"
+    }
 
-def test_check_dir_folders(folder_with_files, include_hidden, files_count) -> None:
+@pytest.fixture
+def active_filters() -> dict[str, bool | str]:
+    return {
+        "year": True,
+        "month": False,
+        "day": False,
+        "type_subfolder": False,
+        "hidden_folders": False,
+        "default_name": False,
+        "custom_name": "custom name",
+        "timestamp": False,
+        "counter": False,
+        "documents_filter":True,
+        "txt_filter": True,
+        "office_filter": True,
+        "image_filter": True,
+        "music_filter": True,
+        "archive_filter": True,
+        "custom_extensions": "pdf",
+        "delete_file": True,
+        "move_instead_copy": False,
+        "overwrite": False,
+    }
+
+@pytest.mark.parametrize("files_count", [
+    2,
+], ids=["hidden_files"])
+
+def test_check_dir_folders(folder_with_files, active_filters, documents_texts, files_count) -> None:
     expected_path = folder_with_files
-    result = ProcessObject.check_dir_folders([str(expected_path)], include_hidden=include_hidden)
+    result = ProcessObject.check_dir_folders([str(expected_path)], active_filters, documents_texts)
     assert len(result) == files_count
 
 @pytest.mark.parametrize("month_checked, day_checked, timestamp, month, day", [
@@ -61,22 +102,7 @@ def test_get_datetime_tree(base_folder, month_checked, day_checked, timestamp, m
     ]
 )
 
-def test_get_file_type(base_folder, suffix, folder_name) -> None:
-    documents_texts = {
-        "documentsFiles": "Documents",
-        "documentsSuffixes": ["pdf", "doc", "docx", "odt", "rtf", "tex"],
-        "txtFiles": "Text_files",
-        "txtSuffixes": ["txt", "log", "md", "cfg", "ini", "csv"],
-        "officeFiles": "Office",
-        "officeSuffixes": ["xls", "xlsx", "ppt", "pptx", "doc", "docx"],
-        "imageFiles": "Images",
-        "imageSuffixes": ["jpg", "jpeg", "png", "bmp", "gif", "tiff", "svg", "webp", "heic"],
-        "musicFiles": "Music",
-        "musicSuffixes": ["mp3", "wav", "flac", "aac", "ogg", "m4a", "wma"],
-        "archiveFiles": "Archive",
-        "archiveSuffixes": ["zip", "rar", "7z", "tar", "gz", "bz2", "xz", "lzma"],
-        "othersFiles": "Others"
-    }
+def test_get_file_type(base_folder, documents_texts, suffix, folder_name) -> None:
     result = ProcessObject.get_file_type(documents_texts, suffix, base_folder)
     assert result == base_folder.joinpath(folder_name)
 

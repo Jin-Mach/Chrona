@@ -4,7 +4,7 @@ from PyQt6.QtCore import QObject, QThread
 from PyQt6.QtWidgets import QMessageBox
 
 from src.providers.language_provider import LanguageProvider
-from src.threading.process_object import ProcessObject
+from src.threads_objects.process_object import ProcessObject
 from src.utilities.error_handler import Errorhandler
 
 if TYPE_CHECKING:

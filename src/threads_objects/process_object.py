@@ -23,7 +23,7 @@ class ProcessObject(QObject):
     @pyqtSlot()
     def run_process(self) -> None:
         try:
-            validated_list = self.check_dir_folders(self.selected_paths, self.active_filter.get("hidden_folders", False))
+            validated_list = self.check_dir_folders(self.selected_paths, self.active_filter, self.documents_texts)
             if not validated_list:
                 raise ValueError("Validate folders failed")
             for index, path in enumerate(validated_list):
@@ -33,7 +33,8 @@ class ProcessObject(QObject):
             self.failed.emit(e)
 
     @classmethod
-    def check_dir_folders(cls, paths_list: list[str], include_hidden: bool) -> list[pathlib.Path]:
+    def check_dir_folders(cls, paths_list: list[str], active_filters: dict[str, bool | str], documents_texts: dict[str, str]) -> list[pathlib.Path]:
+        include_hidden = active_filters.get("hidden_folders", False)
         validated_set = set()
         for path_str in paths_list:
             path = pathlib.Path(path_str)
@@ -147,6 +148,10 @@ class ProcessObject(QObject):
             if counter_checked:
                 counter = counter + 1
         return file_name, timestamp, counter
+
+    @staticmethod
+    def is_document_type_checked(file: pathlib.Path, active_filters: dict[str, bool | str], documents_texts: dict[str, str]) -> bool:
+        pass
 
     @staticmethod
     def get_creation_time(file_path: pathlib.Path) -> datetime.datetime:
