@@ -34,10 +34,16 @@ def handle_ui_widgets(config_data: dict[str, bool | str], widgets: list[QWidget]
         if not widgets:
             return
         for widget in widgets:
+            key_name = widget.objectName() + "State"
             if isinstance(widget, (QCheckBox, QRadioButton)):
-                key_name = widget.objectName() + "State"
                 if key_name in config_data:
                     widget.setChecked(config_data[key_name])
+            if isinstance(widget, QLineEdit):
+                if key_name in config_data:
+                    if key_name.startswith("input") or key_name.startswith("output"):
+                        widget.setReadOnly(config_data[key_name])
+                    else:
+                        widget.setDisabled(config_data[key_name])
     except Exception as e:
         from src.utilities.error_handler import Errorhandler
         Errorhandler.handle_error("UIWidgetsHandler", e)

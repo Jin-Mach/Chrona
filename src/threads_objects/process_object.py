@@ -18,6 +18,7 @@ class ProcessObject(QObject):
         self.output_path = output_path
         self.selected_paths = selected_paths
         self.active_filter = active_filter
+        print("documents_texts: ", self.documents_texts)
         print("active_filter:", self.active_filter)
 
     @pyqtSlot()
@@ -55,9 +56,9 @@ class ProcessObject(QObject):
                                 if part.startswith("."):
                                     skip_child = True
                                     break
-                        if not skip_child:
+                        if not skip_child and ProcessObject.is_file_type_included(child, active_filters, documents_texts):
                             validated_set.add(child)
-            elif path.is_file():
+            elif path.is_file() and ProcessObject.is_file_type_included(path, active_filters, documents_texts):
                 validated_set.add(path)
         return list(validated_set)
 
@@ -150,8 +151,20 @@ class ProcessObject(QObject):
         return file_name, timestamp, counter
 
     @staticmethod
-    def is_document_type_checked(file: pathlib.Path, active_filters: dict[str, bool | str], documents_texts: dict[str, str]) -> bool:
-        pass
+    def is_file_type_included(file: pathlib.Path, active_filters: dict[str, bool | str], documents_texts: dict[str, str]) -> bool:
+        suffix = file.suffix.lstrip(".")
+        if active_filters.get("main_filter", False):
+            for key, value in documents_texts.items():
+                if key.endswith("Suffixes"):
+                    if suffix in value:
+                        filter_key = key.replace("Suffixes", "_filter")
+                        return active_filters.get(filter_key, False)
+        extensions = active_filters.get("custom_extensions", "")
+        if extensions:
+            for extension in extensions.split(";"):
+                if suffix == extension.strip():
+                    return True
+        return False
 
     @staticmethod
     def get_creation_time(file_path: pathlib.Path) -> datetime.datetime:

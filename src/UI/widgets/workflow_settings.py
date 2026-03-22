@@ -219,11 +219,6 @@ class WorkflowSettings(QWidget):
             if not config_data:
                 raise IOError("Config data loading failed.")
             handle_ui_widgets(config_data, self.findChildren((QLineEdit, QCheckBox, QRadioButton)))
-            self.input_path_edit.setReadOnly(True)
-            self.output_path_edit.setReadOnly(True)
-            self.file_name_edit.setEnabled(False)
-            self.use_timestamp_checkbox.setEnabled(False)
-            self.use_counter_checkbox.setEnabled(False)
             self.update_input_path(config_data.get(self.__class__.__name__, {}).get("inputPathEdit", ""))
             self.update_output_path(config_data.get(self.__class__.__name__, {}).get("outputPathEdit", ""))
         except Exception as e:
@@ -259,6 +254,7 @@ class WorkflowSettings(QWidget):
             "custom_name": self.file_name_edit.text().strip(),
             "timestamp": self.use_timestamp_checkbox.isChecked(),
             "counter": self.use_counter_checkbox.isChecked(),
+            "main_filter": self.filter_checkbox.isChecked(),
             "documents_filter": self.documents_files_checkbox.isChecked(),
             "txt_filter": self.txt_files_checkbox.isChecked(),
             "office_filter": self.office_files_checkbox.isChecked(),
@@ -319,6 +315,7 @@ class WorkflowSettings(QWidget):
             for checkbox in files_checkboxes:
                 checkbox.setChecked(False)
                 checkbox.setEnabled(False)
+        self.custom_extensions_edit.setDisabled(self.filter_checkbox.isChecked())
 
     def delete_toggled(self) -> None:
         if self.delete_file_checkbox.isChecked():

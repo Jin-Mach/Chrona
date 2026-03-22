@@ -1,4 +1,5 @@
 import datetime
+import pathlib
 import pytest
 
 from pathlib import Path
@@ -51,6 +52,7 @@ def active_filters() -> dict[str, bool | str]:
         "custom_name": "custom name",
         "timestamp": False,
         "counter": False,
+        "main_filter": True,
         "documents_filter":True,
         "txt_filter": True,
         "office_filter": True,
@@ -63,13 +65,16 @@ def active_filters() -> dict[str, bool | str]:
         "overwrite": False,
     }
 
-@pytest.mark.parametrize("files_count", [
-    2,
-], ids=["hidden_files"])
+@pytest.mark.parametrize("hidden_bool, files_count", [
+    (True, 3),
+    (False, 2),
+], ids=["hidden_files", "without hidden_files"])
 
-def test_check_dir_folders(folder_with_files, active_filters, documents_texts, files_count) -> None:
+def test_check_dir_folders(folder_with_files, active_filters, documents_texts, hidden_bool, files_count) -> None:
+    test_filters = active_filters.copy()
+    test_filters["hidden_folders"] = hidden_bool
     expected_path = folder_with_files
-    result = ProcessObject.check_dir_folders([str(expected_path)], active_filters, documents_texts)
+    result = ProcessObject.check_dir_folders([str(expected_path)], test_filters, documents_texts)
     assert len(result) == files_count
 
 @pytest.mark.parametrize("month_checked, day_checked, timestamp, month, day", [
@@ -124,3 +129,42 @@ def test_get_file_name(file_name, custom_name, timestamp_checked, timestamp, cou
     else:
         assert result_timestamp == timestamp
     assert result_counter == counter_result
+
+@pytest.mark.parametrize("file_path, main_filter, documents_filter, txt_filter, office_filter, image_filter, music_filter,"
+                         "archive_filter, extension, expected_bool", [
+    (pathlib.Path("/fake/path/file1.pdf"), True, True, True, True, True, True, True, "", True),
+    (pathlib.Path("/fake/path/file2.pdf"), True, False, True, True, True, True, True, "", False),
+    (pathlib.Path("/fake/path/file1.txt"), True, True, True, True, True, True, True, "", True),
+    (pathlib.Path("/fake/path/file2.txt"), True, True, False, True, True, True, True, "", False),
+    (pathlib.Path("/fake/path/image1.jpg"), True, True, True, True, True, True, True, "", True),
+    (pathlib.Path("/fake/path/image2.png"), True, True, True, True, False, True, True, "", False),
+    (pathlib.Path("/fake/path/song1.mp3"), True, True, True, True, True, True, True, "", True),
+    (pathlib.Path("/fake/path/song2.wav"), True, True, True, True, True, False, True, "", False),
+    (pathlib.Path("/fake/path/archive1.zip"), True, True, True, True, True, True, True, "", True),
+    (pathlib.Path("/fake/path/archive2.rar"), True, True, True, True, True, True, False, "", False),
+    (pathlib.Path("/fake/path/file1.xyz"), True, True, True, True, True, True, True, "", False),
+    (pathlib.Path("/fake/path/file2.xyz"), False, False, False, False, False, False, False, "", False),
+    (pathlib.Path("/fake/path/extension1.xyz"), False, False, False, False, False, False, False, "xyz;zyx", True),
+    (pathlib.Path("/fake/path/extension2.xyz"), True, False, False, False, False, False, False, "pdf;txt", False),
+    (pathlib.Path("/fake/path/extension3.xyz"), False, False, False, False, False, False, False, " ", False),
+    (pathlib.Path("/fake/path/extension4.xyz"), False, False, False, False, False, False, False, "abc;bca", False)
+], ids=["document-True", "document-False", "txt-True", "txt-False", "image-True", "image-False", "music-True", "music-False",
+        "archive-True", "archive-False", "others-False", "others-False", "extension-True", "extension-False",
+        "empty extension-False", "wrong extension-False"])
+def test_is_file_type_included(file_path, main_filter, documents_filter, txt_filter,
+                               office_filter, image_filter, music_filter, archive_filter, extension, expected_bool,
+                               active_filters, documents_texts) -> None:
+    test_filters = active_filters.copy()
+    test_filters.update({
+        "main_filter": main_filter,
+        "documents_filter": documents_filter,
+        "txt_filter": txt_filter,
+        "office_filter": office_filter,
+        "image_filter": image_filter,
+        "music_filter": music_filter,
+        "archive_filter": archive_filter,
+        "custom_extensions": extension,
+    })
+
+    result = ProcessObject.is_file_type_included(file_path, test_filters, documents_texts)
+    assert result == expected_bool

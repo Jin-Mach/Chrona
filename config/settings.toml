@@ -8,12 +8,15 @@ outputPathEditPath = ""
 
 [WorkflowSettings]
 inputPathEditPath = ""
+inputPathEditState = true
 outputPathEditPath = ""
+outputPathBrowseState = true
 yearCheckboxState = true
 monthCheckboxState = false
 dayCheckboxState = false
 subfoldersTypeCheckboxState = false
 hiddenFoldersCheckboxState = false
+fileNameEditState = true
 filterCheckboxState = true
 documentsFilesCheckboxState = true
 txtFilesCheckboxState = true
@@ -21,6 +24,7 @@ officeFilesCheckboxState = true
 imageFilesCheckboxState = true
 musicFilesCheckboxState = true
 archiveFilesCheckboxState = true
+customExtensionsEditState = true
 useTimestampCheckboxState = false
 useCounterCheckboxState = false
 deleteFileCheckboxState = true
