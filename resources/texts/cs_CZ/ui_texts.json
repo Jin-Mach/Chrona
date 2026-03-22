@@ -63,8 +63,7 @@
     "useCounterCheckboxText": "Použít čítač",
     "actionsGroupText": "Akce",
     "deleteFileCheckboxText": "Smazat soubor",
-    "moveInsteadCopyCheckboxText": "Přesunout místo kopírování",
-    "overwriteCheckboxText": "Přepsat existující"
+    "showFailedFilesCheckboxText": "Zobrazit nezkopírované soubory"
   },
   "ErrorDialog": {
     "titleText": "Chyba",

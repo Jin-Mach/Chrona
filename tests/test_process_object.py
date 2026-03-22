@@ -61,8 +61,7 @@ def active_filters() -> dict[str, bool | str]:
         "archive_filter": True,
         "custom_extensions": "pdf",
         "delete_file": True,
-        "move_instead_copy": False,
-        "overwrite": False,
+        "failed_files": True,
     }
 
 @pytest.mark.parametrize("hidden_bool, files_count", [

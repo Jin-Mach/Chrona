@@ -191,13 +191,10 @@ class WorkflowSettings(QWidget):
         layout.setSpacing(self.DEFAULT_SPACING)
         self.delete_file_checkbox = QCheckBox()
         self.delete_file_checkbox.setObjectName("deleteFileCheckbox")
-        self.move_instead_copy_checkbox = QCheckBox()
-        self.move_instead_copy_checkbox.setObjectName("moveInsteadCopyCheckbox")
-        self.overwrite_checkbox = QCheckBox()
-        self.overwrite_checkbox.setObjectName("overwriteCheckbox")
+        self.show_failed_files = QCheckBox()
+        self.show_failed_files.setObjectName("showFailedFilesCheckbox")
         layout.addWidget(self.delete_file_checkbox)
-        layout.addWidget(self.move_instead_copy_checkbox)
-        layout.addWidget(self.overwrite_checkbox)
+        layout.addWidget(self.show_failed_files)
         layout.addStretch()
         self.actions_group.setLayout(layout)
         return self.actions_group
@@ -241,7 +238,7 @@ class WorkflowSettings(QWidget):
         self.use_timestamp_checkbox.toggled.connect(lambda _: self.validate_name_options(self.use_timestamp_checkbox))
         self.use_counter_checkbox.toggled.connect(lambda _: self.validate_name_options(self.use_counter_checkbox))
         self.delete_file_checkbox.toggled.connect(self.delete_toggled)
-        self.move_instead_copy_checkbox.toggled.connect(self.move_toggled)
+        self.show_failed_files.toggled.connect(self.move_toggled)
 
     def active_filter(self) -> dict[str, bool | str]:
         return {
@@ -263,8 +260,7 @@ class WorkflowSettings(QWidget):
             "archive_filter": self.archive_files_checkbox.isChecked(),
             "custom_extensions": self.custom_extensions_edit.text().strip(),
             "delete_file": self.delete_file_checkbox.isChecked(),
-            "move_instead_copy": self.move_instead_copy_checkbox.isChecked(),
-            "overwrite": self.overwrite_checkbox.isChecked(),
+            "failed_files": self.show_failed_files.isChecked()
         }
 
     def update_folder_logic(self) -> None:
@@ -319,10 +315,10 @@ class WorkflowSettings(QWidget):
 
     def delete_toggled(self) -> None:
         if self.delete_file_checkbox.isChecked():
-            self.move_instead_copy_checkbox.setChecked(False)
+            self.show_failed_files.setChecked(False)
 
     def move_toggled(self) -> None:
-        if self.move_instead_copy_checkbox.isChecked():
+        if self.show_failed_files.isChecked():
             self.delete_file_checkbox.setChecked(False)
 
     def update_input_path(self, path: str) -> None:

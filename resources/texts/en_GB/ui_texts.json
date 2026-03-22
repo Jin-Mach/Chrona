@@ -63,8 +63,7 @@
     "useCounterCheckboxText": "Use counter",
     "actionsGroupText": "Actions",
     "deleteFileCheckboxText": "Delete file",
-    "moveInsteadCopyCheckboxText": "Move instead of copy",
-    "overwriteCheckboxText": "Overwrite existing"
+    "showFailedFilesCheckboxText": "Show files that failed to copy"
   },
   "ErrorDialog": {
     "titleText": "Error",
