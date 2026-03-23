@@ -1,13 +1,16 @@
 import pathlib
 import datetime
+import shutil
 import sys
 
 from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
 
+from src.utilities.logging_provider import get_logger
+
 
 # noinspection PyBroadException
 class ProcessObject(QObject):
-    finished = pyqtSignal()
+    finished = pyqtSignal(list)
     failed = pyqtSignal(Exception)
     progress = pyqtSignal(int)
 
@@ -18,19 +21,30 @@ class ProcessObject(QObject):
         self.output_path = output_path
         self.selected_paths = selected_paths
         self.active_filter = active_filter
-        print("documents_texts: ", self.documents_texts)
-        print("active_filter:", self.active_filter)
+        self.logger = get_logger()
 
     @pyqtSlot()
     def run_process(self) -> None:
+        failed_list = []
         try:
             validated_list = self.check_dir_folders(self.selected_paths, self.active_filter, self.documents_texts)
             if not validated_list:
                 raise ValueError("Validate folders failed")
             for index, path in enumerate(validated_list):
-                self.move_file_to_path(index, self.output_path, path, self.active_filter, self.documents_texts)
-            self.finished.emit()
+                output_path = self.get_output_path(index, self.output_path, path, self.active_filter, self.documents_texts)
+                if not output_path:
+                    failed_list.append((path, FileNotFoundError("Output path not created")))
+                    self.logger.error(f"{self.__class__.__name__}: Output {path} not created", exc_info=True)
+                    continue
+                error = self.copy_file(path, output_path, self.active_filter.get("delete_file", False))
+                if not error is None:
+                    failed_list.append((path, error))
+                    self.logger.error(f"{self.__class__.__name__}: {error}", exc_info=True)
+                    continue
+                self.progress.emit(index + 1)
+            self.finished.emit(failed_list)
         except Exception as e:
+            self.logger.error(f"{self.__class__.__name__}: {e}", exc_info=True)
             self.failed.emit(e)
 
     @classmethod
@@ -63,8 +77,8 @@ class ProcessObject(QObject):
         return list(validated_set)
 
     @classmethod
-    def move_file_to_path(cls, index: int, output_path: pathlib.Path, path: pathlib.Path,
-                          active_filters: dict[str, bool | str], documents_texts: dict[str, str | list[str]]) -> bool:
+    def get_output_path(cls, index: int, output_path: pathlib.Path, path: pathlib.Path,
+                        active_filters: dict[str, bool | str], documents_texts: dict[str, str | list[str]]) -> pathlib.Path | None:
         file_name = path.stem
         file_timestamp = None
         file_counter = -1
@@ -72,9 +86,8 @@ class ProcessObject(QObject):
         name_parts = []
         metadata = ProcessObject.get_file_metadata(path)
         if not metadata:
-            return False
+            return None
         file_created = metadata["created"]
-        output_path.parent.mkdir(parents=True, exist_ok=True)
         if active_filters.get("year", True):
             output_path = output_path.joinpath(f"{file_created.year}")
             output_path = ProcessObject.get_datetime_tree(
@@ -101,7 +114,20 @@ class ProcessObject(QObject):
         if file_counter > 0:
             name_parts.append(str(file_counter))
         output_path = output_path.joinpath("_".join(name_parts)).with_suffix(file_suffix)
-        return True
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        return output_path
+
+    @classmethod
+    def copy_file(cls, path: pathlib.Path, output_path: pathlib.Path, delete_file: bool) -> Exception | None:
+        try:
+            if path.resolve() == output_path.resolve():
+                return ValueError("Source and destination are the same")
+            shutil.copy2(path, output_path)
+            if delete_file:
+                path.unlink()
+            return None
+        except (PermissionError, FileNotFoundError, IOError, OSError) as e:
+            return e
 
     @staticmethod
     def get_file_metadata(file_path: pathlib.Path) -> dict[str, str | datetime.datetime]:
