@@ -76,6 +76,40 @@ def test_check_dir_folders(folder_with_files, active_filters, documents_texts, h
     result = ProcessObject.check_dir_folders([str(expected_path)], test_filters, documents_texts)
     assert len(result) == files_count
 
+@pytest.mark.parametrize("src, dest, delete_file, return_value", [
+    ("test_folder1.txt", "test_folder2.txt", True, None),
+    ("test_folder1.txt", "test_folder2.txt", False, None),
+    ("test_folder1.txt", "test_folder1.txt", True, ValueError),
+    ("test_folder1.txt", "test_folder2.txt", True, PermissionError),
+], ids=["copy+delete", "copy_only", "same_path_error", "permission_error"])
+
+def test_copy_file(base_folder, monkeypatch, src, dest, delete_file, return_value) -> None:
+    path = base_folder.joinpath(src)
+    path.touch()
+    output_path = base_folder.joinpath(dest)
+
+    def fake_copy(src_path, dest_path) -> None:
+        pass
+
+    def fake_copy_error(src_path, dest_path) -> None:
+        raise PermissionError("Simulated permission error")
+
+    def fake_unlink(path_to_remove) -> None:
+        pass
+
+    if return_value == PermissionError:
+        monkeypatch.setattr("shutil.copy2", fake_copy_error)
+    else:
+        monkeypatch.setattr("shutil.copy2", fake_copy)
+    monkeypatch.setattr(pathlib.Path, "unlink", fake_unlink)
+    result = ProcessObject.copy_file(path, output_path, delete_file)
+    if return_value is ValueError:
+        assert isinstance(result, ValueError)
+    elif return_value is PermissionError:
+        assert isinstance(result, PermissionError)
+    else:
+        assert result is None
+
 @pytest.mark.parametrize("month_checked, day_checked, timestamp, month, day", [
     (True, True, datetime.datetime(2021, 1, 1), "1", "1"),
     (True, False, datetime.datetime(2022, 2, 2), "2", None),
