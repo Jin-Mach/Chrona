@@ -76,6 +76,79 @@ def test_check_dir_folders(folder_with_files, active_filters, documents_texts, h
     result = ProcessObject.check_dir_folders([str(expected_path)], test_filters, documents_texts)
     assert len(result) == files_count
 
+
+@pytest.mark.parametrize(
+    "year, month, day, type_subfolder, default_name, custom_name, timestamp, counter, return_value",
+    [
+        (False, False, False, False, True, "", False, False, pathlib.Path("test_file.txt")),
+        (True, False, False, False, False, "testname", False, False, pathlib.Path("2026/testname.txt")),
+        (True, True, False, False, False, "testname", False, False, pathlib.Path("2026/12/testname.txt")),
+        (True, True, True, False, False, "testname", False, False, pathlib.Path("2026/12/31/testname.txt")),
+        (True, True, True, True, False, "testname", False, False, pathlib.Path("2026/12/31/Text_files/testname.txt")),
+        (True, False, False, False, True, "", False, False, pathlib.Path("2026/test_file.txt")),
+        (True, False, False, False, False, "testname", True, False, pathlib.Path("2026/testname_2026-12-31_23-59-59_999999.txt")),
+        (True, False, False, False, False, "testname", False, True, pathlib.Path("2026/testname_1.txt")),
+        (True, True, True, True, False, "testname", True, True, pathlib.Path("2026/12/31/Text_files/testname_2026-12-31_23-59-59_999999_1.txt")),
+    ],
+    ids=[
+        "no_date",
+        "year_only",
+        "year_month",
+        "year_month_day",
+        "year_custom_folder",
+        "year_default_name",
+        "year_custom_name_timestamp",
+        "year_custom_name_counter",
+        "full_setup",
+    ]
+)
+def test_get_output_path(base_folder, monkeypatch, active_filters, documents_texts,
+                         year, month, day, type_subfolder, default_name,
+                         custom_name, timestamp, counter, return_value):
+    path = base_folder.joinpath("test_file.txt")
+    output_path = base_folder.joinpath("output")
+
+    def fake_metadata(path):
+        return {
+            "created": datetime.datetime(2026, 12, 31, 23, 59, 59, 999999),
+            "type": "txt",
+        }
+
+    def fake_get_file_name(file_name, custom_name_value, timestamp_checked, counter_checked, counter_val):
+        if custom_name_value:
+            file_name_to_use = custom_name_value
+        else:
+            file_name_to_use = file_name
+
+        if timestamp_checked:
+            timestamp_value = datetime.datetime(2026, 12, 31, 23, 59, 59, 999999)
+        else:
+            timestamp_value = None
+
+        if counter_checked:
+            counter_value = 1
+        else:
+            counter_value = -1
+
+        return file_name_to_use, timestamp_value, counter_value
+
+    monkeypatch.setattr(ProcessObject, "get_file_metadata", fake_metadata)
+    monkeypatch.setattr(ProcessObject, "get_file_name", fake_get_file_name)
+    test_filters = active_filters.copy()
+    test_filters.update({
+        "year": year,
+        "month": month,
+        "day": day,
+        "type_subfolder": type_subfolder,
+        "default_name": default_name,
+        "custom_name": custom_name,
+        "timestamp": timestamp,
+        "counter": counter,
+    })
+    result = ProcessObject.get_output_path(0, path, output_path, test_filters, documents_texts)
+    expected_path = output_path.joinpath(*return_value.parts)
+    assert result == expected_path
+
 @pytest.mark.parametrize("src, dest, delete_file, return_value", [
     ("test_folder1.txt", "test_folder2.txt", True, None),
     ("test_folder1.txt", "test_folder2.txt", False, None),

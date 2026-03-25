@@ -31,7 +31,7 @@ class ProcessObject(QObject):
             if not validated_list:
                 raise ValueError("Validate folders failed")
             for index, path in enumerate(validated_list):
-                output_path = self.get_output_path(index, self.output_path, path, self.active_filter, self.documents_texts)
+                output_path = self.get_output_path(index, path, self.output_path, self.active_filter, self.documents_texts)
                 if not output_path:
                     failed_list.append((path, FileNotFoundError("Output path not created")))
                     self.logger.error(f"{self.__class__.__name__}: Output {path} not created", exc_info=True)
@@ -77,7 +77,7 @@ class ProcessObject(QObject):
         return list(validated_set)
 
     @classmethod
-    def get_output_path(cls, index: int, output_path: pathlib.Path, path: pathlib.Path,
+    def get_output_path(cls, index: int, path: pathlib.Path, output_path: pathlib.Path,
                         active_filters: dict[str, bool | str], documents_texts: dict[str, str | list[str]]) -> pathlib.Path | None:
         file_name = path.stem
         file_timestamp = None
