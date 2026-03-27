@@ -62,8 +62,8 @@
     "useTimestampCheckboxText": "Use timestamp",
     "useCounterCheckboxText": "Use counter",
     "optionsGroupText": "Options",
-    "modifiedRadioButtonText": "Modified date",
-    "createdRadioButtonText": "Created date",
+    "modifiedRadiobuttonText": "Modified date",
+    "createdRadiobuttonText": "Created date",
     "deleteFileCheckboxText": "Delete file",
     "showFailedFilesCheckboxText": "Show files that failed to copy"
   },
