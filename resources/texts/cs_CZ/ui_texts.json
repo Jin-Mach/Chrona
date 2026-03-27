@@ -97,5 +97,11 @@
     "archiveFiles": "Archív",
     "archiveSuffixes": ["zip", "rar", "7z", "tar", "gz", "bz2", "xz", "lzma"],
     "othersFiles": "Ostatní"
+  },
+  "ProgressDialog": {
+    "titleLabelText": "Načítám soubory...",
+    "progressText": "Pracuji...",
+    "cancelProgressButtonText": "Zrušit",
+    "cancelProgressButtonTooltipText": "Zrušit přenos souborů"
   }
 }

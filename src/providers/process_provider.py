@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 from PyQt6.QtCore import QObject, QThread
 from PyQt6.QtWidgets import QMessageBox
 
+from src.UI.dialogs.progress_dialog import ProgressDialog
 from src.providers.language_provider import LanguageProvider
 from src.threads_objects.process_object import ProcessObject
 from src.utilities.error_handler import Errorhandler
@@ -35,16 +36,26 @@ class ProcessProvider(QObject):
             active_filter = main_window.workflow_settings.active_filter()
             self.thread = QThread()
             self.object = ProcessObject(ui_texts, output_path, self.selected_files, active_filter)
+            self.dialog = ProgressDialog(main_window)
+            self.dialog.cancel_progress_button.clicked.connect(self.object.cancel_thread)
             self.object.moveToThread(self.thread)
             self.thread.started.connect(self.object.run_process)
-            self.object.finished.connect(self.thread.quit)
-            self.object.finished.connect(self.object.deleteLater)
-            self.thread.finished.connect(self.thread.deleteLater)
-            self.object.finished.connect(lambda: self.selected_files.clear())
+            self.object.files_count.connect(self.dialog.set_progress_bar_range)
+            self.object.progress.connect(self.dialog.update_progress_value_label)
+            self.object.finished.connect(self.stop_thread)
             self.object.failed.connect(self.show_dialog)
             self.thread.start()
+            self.dialog.exec()
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
 
+    def stop_thread(self) -> None:
+        self.thread.quit()
+        self.object.deleteLater()
+        self.thread.deleteLater()
+        self.selected_files.clear()
+        self.dialog.close()
+
     def show_dialog(self, exception: Exception) -> None:
+        self.dialog.close()
         Errorhandler.handle_error(self.__class__.__name__, exception)

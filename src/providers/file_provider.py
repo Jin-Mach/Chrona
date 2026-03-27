@@ -75,7 +75,9 @@ class FileProvider:
         "ProcessProvider",
         "titleText", "messageText", "documentsFiles", "documentsSuffixes", "txtFiles", "txtSuffixes",
         "officeFiles", "officeSuffixes", "imageFiles", "imageSuffixes", "musicFiles", "musicSuffixes",
-        "archiveFiles", "archiveSuffixes", "othersFiles"
+        "archiveFiles", "archiveSuffixes", "othersFiles",
+        "ProgressDialog,"
+        "titleLabelText", "progressText", "cancelProgressButton"
     ]
 
     @classmethod

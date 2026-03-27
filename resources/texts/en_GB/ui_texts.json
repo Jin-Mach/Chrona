@@ -97,5 +97,11 @@
     "archiveFiles": "Archive",
     "archiveSuffixes": ["zip", "rar", "7z", "tar", "gz", "bz2", "xz", "lzma"],
     "othersFiles": "Others"
+  },
+  "ProgressDialog": {
+    "titleLabelText": "Loading files...",
+    "progressText": "Processing...",
+    "cancelProgressButtonText": "Cancel",
+    "cancelProgressButtonTooltipText": "Cancel file transfer"
   }
 }

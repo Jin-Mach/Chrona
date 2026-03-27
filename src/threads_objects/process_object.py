@@ -3,7 +3,7 @@ import datetime
 import shutil
 import sys
 
-from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
+from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot, QThread
 
 from src.utilities.logging_provider import get_logger
 
@@ -12,6 +12,7 @@ from src.utilities.logging_provider import get_logger
 class ProcessObject(QObject):
     finished = pyqtSignal(list)
     failed = pyqtSignal(Exception)
+    files_count = pyqtSignal(int)
     progress = pyqtSignal(int)
 
     def __init__(self, documents_texts: dict[str, str], output_path: pathlib.Path, selected_paths: list[str],
@@ -22,6 +23,7 @@ class ProcessObject(QObject):
         self.selected_paths = selected_paths
         self.active_filter = active_filter
         self.logger = get_logger()
+        self._cancel_thread = False
 
     @pyqtSlot()
     def run_process(self) -> None:
@@ -30,18 +32,22 @@ class ProcessObject(QObject):
             validated_list = self.check_dir_folders(self.selected_paths, self.active_filter, self.documents_texts)
             if not validated_list:
                 raise ValueError("Validate folders failed")
+            self.files_count.emit(len(validated_list))
             for index, path in enumerate(validated_list):
+                if self._cancel_thread:
+                    break
                 output_path = self.get_output_path(index, path, self.output_path, self.active_filter, self.documents_texts)
                 if not output_path:
                     failed_list.append((path, FileNotFoundError("Output path not created")))
                     self.logger.error(f"{self.__class__.__name__}: Output {path} not created", exc_info=True)
                     continue
                 error = self.copy_file(path, output_path, self.active_filter.get("delete_file", False))
-                if not error is None:
+                if error is not None:
                     failed_list.append((path, error))
                     self.logger.error(f"{self.__class__.__name__}: {error}", exc_info=True)
                     continue
                 self.progress.emit(index + 1)
+                QThread.msleep(1000)
             self.finished.emit(failed_list)
         except Exception as e:
             self.logger.error(f"{self.__class__.__name__}: {e}", exc_info=True)
@@ -203,3 +209,6 @@ class ProcessObject(QObject):
             stat = file_path.stat()
             timestamp = getattr(stat, "st_birthtime", stat.st_mtime)
         return datetime.datetime.fromtimestamp(timestamp)
+
+    def cancel_thread(self) -> None:
+        self._cancel_thread = True
