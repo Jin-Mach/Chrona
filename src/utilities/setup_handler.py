@@ -37,7 +37,10 @@ def handle_ui_widgets(config_data: dict[str, bool | str], widgets: list[QWidget]
             key_name = widget.objectName() + "State"
             if isinstance(widget, (QCheckBox, QRadioButton)):
                 if key_name in config_data:
-                    widget.setChecked(config_data[key_name])
+                    if key_name == "useTimestampCheckboxState" or key_name == "useCounterCheckboxState":
+                        widget.setDisabled(config_data[key_name])
+                    else:
+                        widget.setChecked(config_data[key_name])
             if isinstance(widget, QLineEdit):
                 if key_name in config_data:
                     if key_name.startswith("input") or key_name.startswith("output"):

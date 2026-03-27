@@ -230,7 +230,7 @@ class WorkflowSettings(QWidget):
             Errorhandler.handle_error(self.__class__.__name__, e)
 
     def set_validators(self) -> None:
-        extension_regex = QRegularExpression(r"[A-Za-z;]*")
+        extension_regex = QRegularExpression(r"[A-Za-z0-9;]*")
         extension_validator = QRegularExpressionValidator(extension_regex)
         name_regex = QRegularExpression(r"[A-Za-z0-9_]*")
         name_validator = QRegularExpressionValidator(name_regex)
