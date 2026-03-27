@@ -65,7 +65,7 @@ class FileProvider:
         "imageFilesCheckboxText", "musicFilesCheckboxText", "archiveFilesCheckboxText",
         "customExtensionsLabelText", "customExtensionsEditPlaceholderText", "customExtensionsEditText", "nameGroupText",
         "defaultNameRadiobuttonText", "userNameRadiobuttonText", "fileNameEditText",
-        "useTimestampCheckboxText", "useCounterCheckboxText", "actionsGroupText", "deleteFileCheckboxText",
+        "useTimestampCheckboxText", "useCounterCheckboxText", "optionsGroupText", "deleteFileCheckboxText",
         "moveInsteadCopyCheckboxText", "overwriteCheckboxText",
         "ErrorDialog",
         "titleText", "showHideButtonText", "closeButtonText"

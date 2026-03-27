@@ -61,7 +61,7 @@
     "fileNameEditText": "Enter custom name...",
     "useTimestampCheckboxText": "Use timestamp",
     "useCounterCheckboxText": "Use counter",
-    "actionsGroupText": "Actions",
+    "optionsGroupText": "Options",
     "deleteFileCheckboxText": "Delete file",
     "showFailedFilesCheckboxText": "Show files that failed to copy"
   },

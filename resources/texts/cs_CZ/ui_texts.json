@@ -61,7 +61,7 @@
     "fileNameEditText": "Zadej vlastní název...",
     "useTimestampCheckboxText": "Použít časové razítko",
     "useCounterCheckboxText": "Použít čítač",
-    "actionsGroupText": "Akce",
+    "optionsGroupText": "Nastavení",
     "deleteFileCheckboxText": "Smazat soubor",
     "showFailedFilesCheckboxText": "Zobrazit nezkopírované soubory"
   },

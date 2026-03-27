@@ -87,13 +87,16 @@ class ProcessObject(QObject):
         metadata = ProcessObject.get_file_metadata(path)
         if not metadata:
             return None
-        file_created = metadata["created"]
+        if active_filters.get("file_created", False):
+            timestamp = metadata["created"]
+        else:
+            timestamp = datetime.fromtimestamp(path.stat().st_mtime)
         if active_filters.get("year", True):
-            output_path = output_path.joinpath(f"{file_created.year}")
+            output_path = output_path.joinpath(f"{timestamp.year}")
             output_path = ProcessObject.get_datetime_tree(
                 active_filters.get("month", False),
                 active_filters.get("day", False),
-                file_created,
+                timestamp,
                 output_path
             )
         if active_filters.get("type_subfolder", False):
