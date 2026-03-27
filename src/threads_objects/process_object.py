@@ -90,7 +90,7 @@ class ProcessObject(QObject):
         if active_filters.get("file_created", False):
             timestamp = metadata["created"]
         else:
-            timestamp = datetime.fromtimestamp(path.stat().st_mtime)
+            timestamp = datetime.datetime.fromtimestamp(path.stat().st_mtime)
         if active_filters.get("year", True):
             output_path = output_path.joinpath(f"{timestamp.year}")
             output_path = ProcessObject.get_datetime_tree(
