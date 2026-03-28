@@ -84,6 +84,8 @@
   "ProcessProvider": {
     "titleText": "Chyba",
     "messageText": "Není vybrán žádný soubor pro přenos.",
+    "questionTitleText": "Chrona",
+    "questionMessageText": "Opravdu zrušit přesun souborů?",
     "documentsFiles": "Dokumenty",
     "documentsSuffixes": ["pdf", "doc", "docx", "odt", "rtf", "tex"],
     "txtFiles": "Textové_dokumenty",

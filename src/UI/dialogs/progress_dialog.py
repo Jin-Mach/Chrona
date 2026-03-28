@@ -26,6 +26,7 @@ class ProgressDialog(QDialog):
         progress_layout = QHBoxLayout()
         self.progress_bar = QProgressBar()
         self.progress_bar.setObjectName("progressBar")
+        self.progress_bar.setTextVisible(False)
         self.progress_value_label = QLabel()
         self.progress_value_label.setObjectName("progressValueLabel")
         self.progress_value_label.setVisible(False)

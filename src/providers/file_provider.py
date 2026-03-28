@@ -73,9 +73,9 @@ class FileProvider:
         "documentsFilesCheckboxText", "txtFilesCheckboxText", "officeFilesCheckboxText", "imageFilesCheckboxText",
         "musicFilesCheckboxText", "archiveFilesCheckboxText", "customExtensionsEditText",
         "ProcessProvider",
-        "titleText", "messageText", "documentsFiles", "documentsSuffixes", "txtFiles", "txtSuffixes",
-        "officeFiles", "officeSuffixes", "imageFiles", "imageSuffixes", "musicFiles", "musicSuffixes",
-        "archiveFiles", "archiveSuffixes", "othersFiles",
+        "titleText", "messageText", "questionTitleText", "questionMessageText", "documentsFiles", "documentsSuffixes",
+        "txtFiles", "txtSuffixes", "officeFiles", "officeSuffixes", "imageFiles", "imageSuffixes", "musicFiles",
+        "musicSuffixes", "archiveFiles", "archiveSuffixes", "othersFiles",
         "ProgressDialog,"
         "titleLabelText", "progressText", "cancelProgressButton"
     ]

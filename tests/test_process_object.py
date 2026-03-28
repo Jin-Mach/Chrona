@@ -76,7 +76,6 @@ def test_check_dir_folders(folder_with_files, active_filters, documents_texts, h
     result = ProcessObject.check_dir_folders([str(expected_path)], test_filters, documents_texts)
     assert len(result) == files_count
 
-
 @pytest.mark.parametrize(
     "year, month, day, type_subfolder, default_name, custom_name, timestamp, counter, return_value",
     [

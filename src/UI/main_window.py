@@ -68,9 +68,7 @@ class MainWindow(QMainWindow):
         self.workflow_settings.output_path_browse.clicked.connect(lambda: self.show_dialog(
             QFileDialog.FileMode.Directory, self, "output_folder_workflow_settings"
         ))
-        self.processing_widget.start_button.clicked.connect(lambda: self.process_provider.start_process(
-            self
-        ))
+        self.processing_widget.start_button.clicked.connect(self.process_provider.start_process)
 
     def show_dialog(self, mode: QFileDialog.FileMode, parent: QWidget, action: str, filters: bool = False) -> None:
         try:

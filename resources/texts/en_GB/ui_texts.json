@@ -84,6 +84,8 @@
   "ProcessProvider": {
     "titleText": "Error",
     "messageText": "No file selected for transfer.",
+    "questionTitleText": "Chrona",
+    "questionMessageText": "Do you really want to cancel the file transfer?",
     "documentsFiles": "Documents",
     "documentsSuffixes": ["pdf", "doc", "docx", "odt", "rtf", "tex"],
     "txtFiles": "Text_files",
