@@ -3,7 +3,7 @@ import datetime
 import shutil
 import sys
 
-from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot, QThread, QMutex, QWaitCondition
+from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot, QMutex, QWaitCondition
 
 from src.utilities.logging_provider import get_logger
 
@@ -57,7 +57,6 @@ class ProcessObject(QObject):
                     self.logger.error(f"{self.__class__.__name__}: {error}", exc_info=True)
                     continue
                 self.progress.emit(index + 1)
-                QThread.msleep(1000)
             self.finished.emit(failed_list)
         except Exception as e:
             self.logger.error(f"{self.__class__.__name__}: {e}", exc_info=True)

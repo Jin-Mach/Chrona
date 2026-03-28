@@ -105,5 +105,10 @@
     "progressText": "Pracuji...",
     "cancelProgressButtonText": "Zrušit",
     "cancelProgressButtonTooltipText": "Zrušit přenos souborů"
+  },
+  "FailedListDialog": {
+    "titleLabelText": "Následující soubory se nepodařilo zpracovat\nZkontrolujte oprávnění nebo cestu k souborům.",
+    "countLabelText": "Počet souborů:",
+    "closeButtonText": "Zavřít"
   }
 }

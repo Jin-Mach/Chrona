@@ -77,7 +77,8 @@ class FileProvider:
         "txtFiles", "txtSuffixes", "officeFiles", "officeSuffixes", "imageFiles", "imageSuffixes", "musicFiles",
         "musicSuffixes", "archiveFiles", "archiveSuffixes", "othersFiles",
         "ProgressDialog,"
-        "titleLabelText", "progressText", "cancelProgressButton"
+        "titleLabelText", "progressText", "cancelProgressButton",
+        "FailedListDialog", "titleLabelText", "countLabelText", "closeButtonText"
     ]
 
     @classmethod

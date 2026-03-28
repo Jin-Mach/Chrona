@@ -11,8 +11,9 @@ if TYPE_CHECKING:
 
 
 class ProgressDialog(QDialog):
-    def __init__(self, main_window: "MainWindow"):
+    def __init__(self, main_window: "MainWindow") -> None:
         super().__init__(main_window)
+        self.setWindowFlags(Qt.WindowType.Dialog | Qt.WindowType.FramelessWindowHint)
         self.main_window = main_window
         self.setLayout(self.create_gui())
         self.set_ui_texts()
@@ -62,3 +63,6 @@ class ProgressDialog(QDialog):
         if not self.progress_value_label.isVisible():
             self.progress_value_label.setVisible(True)
         self.progress_value_label.setText(f"{value}/{self._file_count}")
+
+    def set_failed_list_text(self) -> None:
+        self.title_label.setText("Loading failed list...")

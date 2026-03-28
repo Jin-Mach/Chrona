@@ -2,8 +2,9 @@ import pathlib
 
 from typing import TYPE_CHECKING
 
-from PyQt6.QtCore import QObject, QThread
+from PyQt6.QtCore import QObject, QThread, QTimer
 
+from src.UI.dialogs.failed_list_dialog import FailedListDialog
 from src.UI.dialogs.progress_dialog import ProgressDialog
 from src.UI.dialogs.messagebox_dialogs import show_question_dialog, show_error_dialog
 from src.providers.language_provider import LanguageProvider
@@ -52,15 +53,18 @@ class ProcessProvider(QObject):
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
 
-    def stop_thread(self, failed_list: list[pathlib.Path]) -> None:
+    def stop_thread(self, failed_list: list[tuple[pathlib.Path, Exception]]) -> None:
         self.progress_thread.quit()
         self.progress_thread.wait()
         self.progress_object.deleteLater()
         self.progress_thread.deleteLater()
         self.selected_files.clear()
-        self.progress_dialog.reject()
         if failed_list:
-            print(failed_list)
+            self.progress_dialog.set_failed_list_text()
+            failed_dialog = FailedListDialog(self.main_window)
+            failed_dialog.set_list_widget(failed_list)
+            QTimer.singleShot(500, failed_dialog.open)
+        self.progress_dialog.reject()
 
     def cancel_thread(self) -> None:
         self.progress_object.pause_thread()
