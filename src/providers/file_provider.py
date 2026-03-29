@@ -79,9 +79,9 @@ class FileProvider:
         "ProgressDialog,"
         "titleLabelText", "progressText", "cancelProgressButton",
         "NotificationDialog",
-        "infoLabelText", "processedText", "failedText",
+        "infoLabelText", "processedText", "failedText", "loadingLabelText"
         "FailedListDialog",
-        "titleLabelText", "countLabelText", "closeButtonText"
+        "titleLabelText", "countLabelText", "showPathButtonText", "closeButtonText"
     ]
 
     @classmethod

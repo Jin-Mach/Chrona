@@ -52,11 +52,11 @@ class ErrorDialog(QDialog):
         try:
             from src.providers.language_provider import LanguageProvider
             errors_data = LanguageProvider.get_error_text(LanguageProvider.language_code)
+            if not errors_data:
+                raise IOError("No error_texts data loaded.")
             key = type(self.exception).__name__
             if not key in errors_data.keys():
                 key = "UnknownError"
-            if not errors_data:
-                raise IOError("No error_texts data loaded.")
             self.error_label.setText(errors_data.get(key, "Unknown error"))
             self.detail_edit.setPlainText(str(self.exception))
         except Exception:

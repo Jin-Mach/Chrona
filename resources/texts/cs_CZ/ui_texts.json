@@ -109,11 +109,13 @@
   "NotificationDialog": {
     "infoLabelText": "Přenos dokončen",
     "processedText": "Zpracované soubory:",
-    "failedText": "Nezpracované soubory:"
+    "failedText": "Nezpracované soubory:",
+    "loadingLabelText": "Načítám nezpracované soubory..."
   },
   "FailedListDialog": {
     "titleLabelText": "Následující soubory se nepodařilo zpracovat\nZkontrolujte oprávnění nebo cestu k souborům.",
     "countLabelText": "Počet souborů:",
+    "showPathButtonText": "Otevřít umístění",
     "closeButtonText": "Zavřít"
   }
 }

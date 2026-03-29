@@ -109,11 +109,13 @@
   "NotificationDialog": {
     "infoLabelText": "File transfer completed",
     "processedText": "Processed files:",
-    "failedText": "Unprocessed files:"
+    "failedText": "Unprocessed files:",
+    "loadingLabelText": "Loading unprocessed files…"
 },
   "FailedListDialog": {
     "titleLabelText": "The following files could not be processed.\nPlease check permissions or the file paths.",
     "countLabelText": "Files count:",
+    "showPathButtonText": "Open file location",
     "closeButtonText": "Close"
 }
 }

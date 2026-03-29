@@ -18,6 +18,7 @@ class NotificationDialog(QDialog):
         self.main_window = main_window
         self.setLayout(self.create_gui())
         self.set_ui_texts()
+        QTimer.singleShot(3000, self.reject)
 
     def create_gui(self) -> QLayout:
         main_layout = QVBoxLayout()
@@ -27,8 +28,13 @@ class NotificationDialog(QDialog):
         self.count_label = QLabel()
         self.count_label.setObjectName("countLabel")
         self.count_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.loading_label = QLabel()
+        self.loading_label.setObjectName("loadingLabel")
+        self.loading_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.loading_label.setVisible(False)
         main_layout.addWidget(self.info_label)
         main_layout.addWidget(self.count_label)
+        main_layout.addWidget(self.loading_label)
         return main_layout
 
     def set_ui_texts(self) -> None:
@@ -42,9 +48,8 @@ class NotificationDialog(QDialog):
 
     def update_label_text(self, processed_count: int, failed_count: int) -> None:
         self.count_label.setText(f"{self.processed_text} {processed_count}\n{self.failed_text} {failed_count}")
-
-    def close_dialog(self) -> None:
-        QTimer.singleShot(3000, self.reject)
+        if failed_count > 0:
+            self.loading_label.setVisible(True)
 
     def showEvent(self, event: QShowEvent) -> None:
         super().showEvent(event)
@@ -54,4 +59,3 @@ class NotificationDialog(QDialog):
         x_pos = (geometry.x() + geometry.width()) - (self.size().width() + 10)
         y_pos = (geometry.y() + geometry.height()) - (self.size().height() + 10)
         self.move(x_pos, y_pos)
-        self.close_dialog()

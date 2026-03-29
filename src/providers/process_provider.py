@@ -48,7 +48,7 @@ class ProcessProvider(QObject):
             self.progress_object.files_count.connect(self.progress_dialog.set_progress_bar_range)
             self.progress_object.progress.connect(self.progress_dialog.update_progress_value_label)
             self.progress_object.finished.connect(self.stop_thread)
-            self.progress_object.failed.connect(self.show_dialog)
+            self.progress_object.failed.connect(self.show_error_dialog)
             self.progress_dialog.show()
             QTimer.singleShot(0, self.progress_thread.start)
         except Exception as e:
@@ -61,14 +61,7 @@ class ProcessProvider(QObject):
         self.progress_thread.deleteLater()
         self.selected_files.clear()
         QTimer.singleShot(50, self.progress_dialog.reject)
-        notification_dialog = NotificationDialog(self.main_window)
-        notification_dialog.update_label_text(files_count - len(failed_list), len(failed_list))
-        QTimer.singleShot(50, notification_dialog.show)
-        if failed_list:
-            self.progress_dialog.set_failed_list_text()
-            failed_dialog = FailedListDialog(self.main_window)
-            failed_dialog.set_list_widget(failed_list)
-            QTimer.singleShot(300, failed_dialog.open)
+        QTimer.singleShot(100, lambda: self.show_dialogs(files_count, failed_list))
 
     def cancel_thread(self) -> None:
         self.progress_object.pause_thread()
@@ -79,6 +72,15 @@ class ProcessProvider(QObject):
         else:
             self.progress_object.resume_thread()
 
-    def show_dialog(self, exception: Exception) -> None:
+    def show_dialogs(self, files_count: int, failed_list: list[tuple[pathlib.Path, Exception]]) -> None:
+        self.notification_dialog = NotificationDialog(self.main_window)
+        self.notification_dialog.update_label_text(files_count - len(failed_list), len(failed_list))
+        self.notification_dialog.show()
+        if failed_list:
+            self.failed_dialog = FailedListDialog(self.main_window)
+            self.failed_dialog.set_list_widget(failed_list)
+            QTimer.singleShot(3000, self.failed_dialog.show)
+
+    def show_error_dialog(self, exception: Exception) -> None:
         QTimer.singleShot(50, self.progress_dialog.reject)
         Errorhandler.handle_error(self.__class__.__name__, exception)

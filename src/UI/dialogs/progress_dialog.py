@@ -64,6 +64,3 @@ class ProgressDialog(QDialog):
         if not self.progress_value_label.isVisible():
             self.progress_value_label.setVisible(True)
         self.progress_value_label.setText(f"{value}/{self._file_count}")
-
-    def set_failed_list_text(self) -> None:
-        self.title_label.setText("Loading failed list...")
