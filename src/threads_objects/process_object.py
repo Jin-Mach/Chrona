@@ -10,7 +10,7 @@ from src.utilities.logging_provider import get_logger
 
 # noinspection PyBroadException
 class ProcessObject(QObject):
-    finished = pyqtSignal(list)
+    finished = pyqtSignal(int, list)
     failed = pyqtSignal(Exception)
     files_count = pyqtSignal(int)
     progress = pyqtSignal(int)
@@ -57,7 +57,7 @@ class ProcessObject(QObject):
                     self.logger.error(f"{self.__class__.__name__}: {error}", exc_info=True)
                     continue
                 self.progress.emit(index + 1)
-            self.finished.emit(failed_list)
+            self.finished.emit(len(validated_list), failed_list)
         except Exception as e:
             self.logger.error(f"{self.__class__.__name__}: {e}", exc_info=True)
             self.failed.emit(e)

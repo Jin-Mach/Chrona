@@ -78,7 +78,10 @@ class FileProvider:
         "musicSuffixes", "archiveFiles", "archiveSuffixes", "othersFiles",
         "ProgressDialog,"
         "titleLabelText", "progressText", "cancelProgressButton",
-        "FailedListDialog", "titleLabelText", "countLabelText", "closeButtonText"
+        "NotificationDialog",
+        "infoLabelText", "processedText", "failedText",
+        "FailedListDialog",
+        "titleLabelText", "countLabelText", "closeButtonText"
     ]
 
     @classmethod
