@@ -5,6 +5,7 @@ from PyQt6.QtWidgets import QFileDialog, QApplication, QWidget
 class FileDialog(QFileDialog):
     def __init__(self, mode: QFileDialog.FileMode, filters: str | None, parent: QWidget) -> None:
         super().__init__(parent)
+        self.setModal(True)
         self.setFileMode(mode)
         if filters:
             self.setNameFilter(filters)

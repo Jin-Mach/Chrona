@@ -48,8 +48,8 @@ class ProcessProvider(QObject):
             self.progress_object.progress.connect(self.progress_dialog.update_progress_value_label)
             self.progress_object.finished.connect(self.stop_thread)
             self.progress_object.failed.connect(self.show_dialog)
-            self.progress_thread.start()
-            self.progress_dialog.exec()
+            self.progress_dialog.show()
+            QTimer.singleShot(0, self.progress_thread.start)
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
 
@@ -63,18 +63,18 @@ class ProcessProvider(QObject):
             self.progress_dialog.set_failed_list_text()
             failed_dialog = FailedListDialog(self.main_window)
             failed_dialog.set_list_widget(failed_list)
-            QTimer.singleShot(500, failed_dialog.open)
-        self.progress_dialog.reject()
+            QTimer.singleShot(300, failed_dialog.open)
+        QTimer.singleShot(50, self.progress_dialog.reject)
 
     def cancel_thread(self) -> None:
         self.progress_object.pause_thread()
         result = show_question_dialog(self.question_title, self.question_message, self.main_window)
         if result:
             self.progress_object.cancel_thread()
-            self.progress_dialog.reject()
+            QTimer.singleShot(50, self.progress_dialog.reject)
         else:
             self.progress_object.resume_thread()
 
     def show_dialog(self, exception: Exception) -> None:
-        self.progress_dialog.close()
+        QTimer.singleShot(50, self.progress_dialog.reject)
         Errorhandler.handle_error(self.__class__.__name__, exception)

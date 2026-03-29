@@ -14,6 +14,7 @@ class ProgressDialog(QDialog):
     def __init__(self, main_window: "MainWindow") -> None:
         super().__init__(main_window)
         self.setWindowFlags(Qt.WindowType.Dialog | Qt.WindowType.FramelessWindowHint)
+        self.setModal(True)
         self.main_window = main_window
         self.setLayout(self.create_gui())
         self.set_ui_texts()

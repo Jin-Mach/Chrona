@@ -18,6 +18,7 @@ if TYPE_CHECKING:
 class FailedListDialog(QDialog):
     def __init__(self, main_window: "MainWindow") -> None:
         super().__init__(main_window)
+        self.setModal(True)
         self.setLayout(self.create_gui())
         self.set_ui_texts()
 

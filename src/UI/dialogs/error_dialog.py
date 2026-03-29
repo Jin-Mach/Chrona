@@ -10,6 +10,7 @@ from src.utilities.setup_handler import handle_ui_texts
 class ErrorDialog(QDialog):
     def __init__(self, exception: Exception, parent=None) -> None:
         super().__init__(parent)
+        self.setModal(True)
         self.exception = exception
         self._detail_visible = False
         self.setLayout(self.create_gui())
