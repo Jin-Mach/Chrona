@@ -93,9 +93,9 @@ class MainWindow(QMainWindow):
     def handle_dialog_result(self, path: list[str] | str, action: str) -> None:
         if action in ["input_folder_processing_widget", "add_files_processing_widget"]:
             if isinstance(path, list):
-                self.process_provider.selected_files = list(set(self.process_provider.selected_files + path))
-            elif isinstance(path, str) and path not in self.process_provider.selected_files:
-                self.process_provider.selected_files.append(path)
+                self.process_provider.selected_files.update(path)
+            elif isinstance(path, str):
+                self.process_provider.selected_files.add(path)
         elif action == "output_folder_processing_widget":
             self.processing_widget.update_output_path(path)
         elif action == "input_folder_workflow_settings":

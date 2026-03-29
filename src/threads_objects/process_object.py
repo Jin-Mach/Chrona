@@ -15,7 +15,7 @@ class ProcessObject(QObject):
     files_count = pyqtSignal(int)
     progress = pyqtSignal(int)
 
-    def __init__(self, documents_texts: dict[str, str], output_path: pathlib.Path, selected_paths: list[str],
+    def __init__(self, documents_texts: dict[str, str], output_path: pathlib.Path, selected_paths: set[str],
                  active_filter: dict[str, bool | str]) -> None:
         super().__init__()
         self.documents_texts = documents_texts
@@ -32,14 +32,14 @@ class ProcessObject(QObject):
     def run_process(self) -> None:
         failed_list = []
         try:
-            validated_list, cancel_status = self.check_dir_folders(self.selected_paths, self.active_filter, self.documents_texts)
+            validated_set, cancel_status = self.check_dir_folders(self.selected_paths, self.active_filter, self.documents_texts)
             if cancel_status:
                 self.finished.emit([])
                 return
-            if not validated_list:
+            if not validated_set:
                 raise ValueError("Validate folders failed")
-            self.files_count.emit(len(validated_list))
-            for index, path in enumerate(validated_list):
+            self.files_count.emit(len(validated_set))
+            for index, path in enumerate(validated_set):
                 self._mutex.lock()
                 while self._pause:
                     self._wait_condition.wait(self._mutex)
@@ -57,18 +57,18 @@ class ProcessObject(QObject):
                     self.logger.error(f"{self.__class__.__name__}: {error}", exc_info=True)
                     continue
                 self.progress.emit(index + 1)
-            self.finished.emit(len(validated_list), failed_list)
+            self.finished.emit(len(validated_set), failed_list)
         except Exception as e:
             self.logger.error(f"{self.__class__.__name__}: {e}", exc_info=True)
             self.failed.emit(e)
 
-    def check_dir_folders(self, paths_list: list[str], active_filters: dict[str, bool | str],
-                          documents_texts: dict[str, str]) -> tuple[list[pathlib.Path], bool]:
+    def check_dir_folders(self, paths_list: set[str], active_filters: dict[str, bool | str],
+                          documents_texts: dict[str, str]) -> tuple[set[pathlib.Path], bool]:
         include_hidden = active_filters.get("hidden_folders", False)
         validated_set = set()
         for path_str in paths_list:
             if self._cancel_thread:
-                return [], True
+                return set(), True
             self._mutex.lock()
             while self._pause:
                 self._wait_condition.wait(self._mutex)
@@ -95,7 +95,7 @@ class ProcessObject(QObject):
                             validated_set.add(child)
             elif path.is_file() and ProcessObject.is_file_type_included(path, active_filters, documents_texts):
                 validated_set.add(path)
-        return list(validated_set), False
+        return validated_set, False
 
     @classmethod
     def get_output_path(cls, index: int, path: pathlib.Path, output_path: pathlib.Path,

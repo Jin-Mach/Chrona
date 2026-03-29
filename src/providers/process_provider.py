@@ -20,7 +20,7 @@ class ProcessProvider(QObject):
     def __init__(self, main_window: "MainWindow"):
         super().__init__(main_window)
         self.main_window = main_window
-        self.selected_files = []
+        self.selected_files = set()
 
     def start_process(self) -> None:
         try:
