@@ -2,10 +2,11 @@ import pathlib
 
 from typing import TYPE_CHECKING
 
-from PyQt6.QtCore import Qt, QSize
+from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QGroupBox, QLabel, QSizePolicy, QLineEdit, \
     QGridLayout
 
+from src.UI.widgets.drag_drop_widget import DragDropWidget
 from src.providers.config_provider import ConfigProvider
 from src.providers.language_provider import LanguageProvider
 from src.utilities.error_handler import Errorhandler
@@ -50,16 +51,7 @@ class ProcessingWidget(QWidget):
         drag_layout.setSpacing(self.DEFAULT_SPACING)
         drag_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         drag_widget_layout = QHBoxLayout()
-        self.drag_widget = QWidget()
-        self.drag_widget.setObjectName("dragWidget")
-        self.drag_widget.setMinimumSize(QSize(150, 150))
-        self.drag_widget.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        self.drag_widget.setStyleSheet("""
-        QWidget#dragWidget {
-            border: 2px dashed #666;
-            border-radius: 6px;
-        }
-        """)
+        self.drag_widget = DragDropWidget(self.main_window)
         drag_widget_layout.addStretch()
         drag_widget_layout.addWidget(self.drag_widget)
         drag_widget_layout.addStretch()
