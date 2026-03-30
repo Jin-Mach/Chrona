@@ -23,13 +23,13 @@
     "outputPathSelectText": "Vybrat složku",
     "outputPathSelectTooltipText": "Vybere cílovou složku",
     "detailsGroupText": "Informace",
-    "filesCountLabelText": "Počet souborů:",
-    "filesSizeLabelText": "Velikost souborů:",
-    "filesTypeLabelText": "Typy souborů:",
-    "showFilesButtonText": "Zobrazit soubory",
-    "showFilesButtonTooltipText": "Zobrazí seznam vybraných souborů",
-    "clearButtonText": "Vyčistit",
-    "clearButtonTooltipText": "Odstraní všechny soubory z výběru"
+    "totalCountLabelText": "Celkem:",
+    "foldersCountLabelText": "Složky:",
+    "filesCountLabelText": "Soubory:",
+    "showItemsButtonText": "Zobrazit položky",
+    "showItemsButtonTooltipText": "Zobrazí seznam vybraných položek v samostatném okně",
+    "clearItemsButtonText": "Vyčistit seznam",
+    "clearItemsButtonTooltipText": "Odstraní všechny vybrané položky ze seznamu"
   },
   "WorkflowSettings": {
     "sourceLabelText": "Vstupní soubory:",

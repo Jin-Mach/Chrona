@@ -22,14 +22,14 @@
     "destinationLabelText": "Target folder:",
     "outputPathSelectText": "Select Folder",
     "outputPathSelectTooltipText": "Select the target folder",
-    "detailsGroupText": "Details",
-    "filesCountLabelText": "File count:",
-    "filesSizeLabelText": "Files size:",
-    "filesTypeLabelText": "File types:",
-    "showFilesButtonText": "Show Files",
-    "showFilesButtonTooltipText": "Displays the list of selected files",
-    "clearButtonText": "Clear",
-    "clearButtonTooltipText": "Removes all files from selection"
+    "detailsGroupText": "Information",
+    "totalCountLabelText": "Total:",
+    "foldersCountLabelText": "Folders:",
+    "filesCountLabelText": "Files:",
+    "showItemsButtonText": "Show items",
+    "showItemsButtonTooltipText": "Displays the list of selected items in a separate window",
+    "clearItemsButtonText": "Clear list",
+    "clearItemsButtonTooltipText": "Removes all selected items from the list"
   },
   "WorkflowSettings": {
     "sourceLabelText": "Input files:",
