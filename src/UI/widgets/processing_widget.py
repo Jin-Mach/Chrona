@@ -142,6 +142,15 @@ class ProcessingWidget(QWidget):
             if not texts_data:
                 raise IOError("texts data loading failed.")
             handle_ui_texts(self, texts_data, self.findChildren((QPushButton, QGroupBox, QLabel)))
+            self.total_count_text = texts_data.get(self.total_count_label.objectName() + "Text", "Total:")
+            self.total_count_value = 0
+            self.folders_count_text = texts_data.get(self.folders_count_label.objectName() + "Text", "Folders:")
+            self.folders_count_value = 0
+            self.files_count_text = texts_data.get(self.files_count_label.objectName() + "Text", "Files:")
+            self.files_count_value = 0
+            self.total_count_label.setText(f"{self.total_count_text} {self.total_count_value}")
+            self.folders_count_label.setText(f"{self.folders_count_text} {self.folders_count_value}")
+            self.files_count_label.setText(f"{self.files_count_text} {self.files_count_value}")
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
 
@@ -168,3 +177,12 @@ class ProcessingWidget(QWidget):
             path = pathlib.Path.home()
         self.full_output_path = pathlib.Path(path)
         set_lineedit_text(self.full_output_path, self.output_path_edit)
+
+    def update_count_labels(self, folders_count: int = 0, files_count: int = 0) -> None:
+        total_increment = folders_count + files_count
+        self.total_count_value += total_increment
+        self.folders_count_value += folders_count
+        self.files_count_value += files_count
+        self.total_count_label.setText(f"{self.total_count_text} {self.total_count_value}")
+        self.folders_count_label.setText(f"{self.folders_count_text} {self.folders_count_value}")
+        self.files_count_label.setText(f"{self.files_count_text} {self.files_count_value}")

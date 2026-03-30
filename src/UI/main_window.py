@@ -94,8 +94,10 @@ class MainWindow(QMainWindow):
         if action in ["input_folder_processing_widget", "add_files_processing_widget"]:
             if isinstance(path, list):
                 self.process_provider.selected_files.update(path)
+                self.processing_widget.update_count_labels(files_count=len(path))
             elif isinstance(path, str):
                 self.process_provider.selected_files.add(path)
+                self.processing_widget.update_count_labels(folders_count=1)
         elif action == "output_folder_processing_widget":
             self.processing_widget.update_output_path(path)
         elif action == "input_folder_workflow_settings":

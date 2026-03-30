@@ -59,9 +59,14 @@ class DragDropWidget(QWidget):
         if event.mimeData().hasUrls():
             paths = set()
             for url in event.mimeData().urls():
-                path = url.toLocalFile()
-                if path and pathlib.Path(path).exists():
-                    paths.add(path)
+                local_file = url.toLocalFile()
+                path = pathlib.Path(local_file)
+                if local_file and path.exists():
+                    if path.is_dir():
+                        self.main_window.processing_widget.update_count_labels(folders_count=1)
+                    else:
+                        self.main_window.processing_widget.update_count_labels(files_count=1)
+                    paths.add(local_file)
             self.main_window.process_provider.selected_files.update(paths)
             self.setStyleSheet(self.NO_DRAG_STYLE)
             event.acceptProposedAction()
