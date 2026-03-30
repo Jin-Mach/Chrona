@@ -55,6 +55,7 @@ class FileProvider:
         "inputPathAddTooltipText", "destinationLabelText", "outputPathSelectText",
         "outputPathSelectTooltipText", "detailsGroupText", "totalCountLabelText", "foldersCountLabelText", "filesCountLabelText",
         "showItemsButtonText", "showItemsButtonTooltipText", "clearItemsButtonText", "clearItemsButtonTooltipText",
+        "titleText", "messageText", "questionTitleText", "clearItemText",
         "WorkflowSettings",
         "sourceLabelText", "inputPathBrowseText",
         "inputPathBrowseTooltipText", "destinationLabelText", "outputPathBrowseText",

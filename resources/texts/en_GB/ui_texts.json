@@ -29,7 +29,11 @@
     "showItemsButtonText": "Show items",
     "showItemsButtonTooltipText": "Displays the list of selected items in a separate window",
     "clearItemsButtonText": "Clear list",
-    "clearItemsButtonTooltipText": "Removes all selected items from the list"
+    "clearItemsButtonTooltipText": "Removes all selected items from the list",
+    "titleText": "Error",
+    "messageText": "No items to delete",
+    "questionTitleText": "Confirmation",
+    "clearItemText": "Are you sure you want to clear all items?"
   },
   "WorkflowSettings": {
     "sourceLabelText": "Input files:",

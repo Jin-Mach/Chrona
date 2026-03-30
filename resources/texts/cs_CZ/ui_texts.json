@@ -29,7 +29,11 @@
     "showItemsButtonText": "Zobrazit položky",
     "showItemsButtonTooltipText": "Zobrazí seznam vybraných položek v samostatném okně",
     "clearItemsButtonText": "Vyčistit seznam",
-    "clearItemsButtonTooltipText": "Odstraní všechny vybrané položky ze seznamu"
+    "clearItemsButtonTooltipText": "Odstraní všechny vybrané položky ze seznamu",
+    "titleText": "Chyba",
+    "messageText": "Žádné položky ke smazání",
+    "questionTitleText": "Potvrzení",
+    "clearItemText": "Opravdu odstranit všechny položky?"
   },
   "WorkflowSettings": {
     "sourceLabelText": "Vstupní soubory:",

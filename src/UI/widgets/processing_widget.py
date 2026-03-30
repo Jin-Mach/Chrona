@@ -6,6 +6,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QGroupBox, QLabel, QSizePolicy, QLineEdit, \
     QGridLayout
 
+from src.UI.dialogs.messagebox_dialogs import show_error_dialog, show_question_dialog
 from src.UI.widgets.drag_drop_widget import DragDropWidget
 from src.providers.config_provider import ConfigProvider
 from src.providers.language_provider import LanguageProvider
@@ -27,6 +28,7 @@ class ProcessingWidget(QWidget):
         self.setLayout(self.create_gui())
         self.set_ui_texts()
         self.set_config_data()
+        self.create_connection()
 
     def create_gui(self) -> QVBoxLayout:
         main_layout = QVBoxLayout()
@@ -151,6 +153,10 @@ class ProcessingWidget(QWidget):
             self.total_count_label.setText(f"{self.total_count_text} {self.total_count_value}")
             self.folders_count_label.setText(f"{self.folders_count_text} {self.folders_count_value}")
             self.files_count_label.setText(f"{self.files_count_text} {self.files_count_value}")
+            self.no_items_title = texts_data.get("titleText", "Error")
+            self.no_items_text = texts_data.get("messageText", "No items to delete")
+            self.clear_title = texts_data.get("questionTitleText", "Chrona")
+            self.clear_items_text = texts_data.get("clearItemText", "Delete all selected items?")
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
 
@@ -165,6 +171,9 @@ class ProcessingWidget(QWidget):
             self.update_output_path(config_data.get(self.__class__.__name__, {}).get("outputPathEdit", ""))
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
+
+    def create_connection(self) -> None:
+        self.clear_items_button.clicked.connect(self.show_clear_items_dialog)
 
     def update_input_path(self, path: str) -> None:
         if path == "":
@@ -186,3 +195,20 @@ class ProcessingWidget(QWidget):
         self.total_count_label.setText(f"{self.total_count_text} {self.total_count_value}")
         self.folders_count_label.setText(f"{self.folders_count_text} {self.folders_count_value}")
         self.files_count_label.setText(f"{self.files_count_text} {self.files_count_value}")
+
+    def reset_count_labels(self) -> None:
+        self.total_count_value = 0
+        self.folders_count_value = 0
+        self.files_count_value = 0
+        self.total_count_label.setText(f"{self.total_count_text} {self.total_count_value}")
+        self.folders_count_label.setText(f"{self.folders_count_text} {self.folders_count_value}")
+        self.files_count_label.setText(f"{self.files_count_text} {self.files_count_value}")
+
+    def show_clear_items_dialog(self) -> None:
+        if not self.main_window.process_provider.selected_files:
+            show_error_dialog(self.no_items_title, self.no_items_text, self.main_window)
+            return
+        result = show_question_dialog(self.clear_title, self.clear_items_text, self.main_window)
+        if result:
+            self.main_window.process_provider.selected_files.clear()
+            self.reset_count_labels()
