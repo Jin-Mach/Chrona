@@ -28,8 +28,8 @@
     "filesCountLabelText": "Soubory:",
     "showItemsButtonText": "Zobrazit položky",
     "showItemsButtonTooltipText": "Zobrazí seznam vybraných položek v samostatném okně",
-    "clearItemsButtonText": "Vyčistit seznam",
-    "clearItemsButtonTooltipText": "Odstraní všechny vybrané položky ze seznamu",
+    "clearItemsButtonText": "Smazat vše",
+    "clearItemsButtonTooltipText": "Trvale odstraní všechny položky ze seznamu",
     "titleText": "Chyba",
     "messageText": "Žádné položky ke smazání",
     "questionTitleText": "Potvrzení",
@@ -121,5 +121,13 @@
     "countLabelText": "Počet souborů:",
     "showPathButtonText": "Otevřít umístění",
     "closeButtonText": "Zavřít"
+  },
+  "SelectedItemsDialog": {
+    "titleLabelText": "Seznam vybraných položek",
+    "showPathButtonText": "Otevřít umístění",
+    "clearItemsButtonText": "Smazat vše",
+    "clearItemsButtonTooltipText": "Smaže všechny položky ze seznamu",
+    "closeButtonText": "Zavřít",
+    "itemButtonText": "Odstranit položku"
   }
 }

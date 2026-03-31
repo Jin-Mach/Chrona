@@ -81,7 +81,10 @@ class FileProvider:
         "NotificationDialog",
         "infoLabelText", "processedText", "failedText", "loadingLabelText"
         "FailedListDialog",
-        "titleLabelText", "countLabelText", "showPathButtonText", "closeButtonText"
+        "titleLabelText", "countLabelText", "showPathButtonText", "closeButtonText",
+        "SelectedItemsDialog",
+        "titleLabelText", "showPathButtonText", "clearItemsButtonText", "clearItemsButtonTooltipText", "closeButtonText",
+        "itemButtonText"
     ]
 
     @classmethod

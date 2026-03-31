@@ -60,6 +60,7 @@ class ProcessProvider(QObject):
         self.progress_object.deleteLater()
         self.progress_thread.deleteLater()
         self.selected_files.clear()
+        self.main_window.processing_widget.reset_count_labels()
         QTimer.singleShot(50, self.progress_dialog.reject)
         QTimer.singleShot(100, lambda: self.show_dialogs(files_count, failed_list))
 
@@ -82,5 +83,6 @@ class ProcessProvider(QObject):
             QTimer.singleShot(3000, self.failed_dialog.show)
 
     def show_error_dialog(self, exception: Exception) -> None:
+        self.main_window.processing_widget.reset_count_labels()
         QTimer.singleShot(50, self.progress_dialog.reject)
         Errorhandler.handle_error(self.__class__.__name__, exception)

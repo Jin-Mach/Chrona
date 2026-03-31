@@ -70,11 +70,12 @@ def active_filters() -> dict[str, bool | str]:
 ], ids=["hidden_files", "without hidden_files"])
 
 def test_check_dir_folders(folder_with_files, active_filters, documents_texts, hidden_bool, files_count) -> None:
+    process = ProcessObject(documents_texts, folder_with_files, set(), active_filters)
     test_filters = active_filters.copy()
     test_filters["hidden_folders"] = hidden_bool
-    expected_path = folder_with_files
-    result = ProcessObject.check_dir_folders([str(expected_path)], test_filters, documents_texts)
+    result, cancelled = process.check_dir_folders({str(folder_with_files)}, test_filters, documents_texts)
     assert len(result) == files_count
+    assert cancelled is False
 
 @pytest.mark.parametrize(
     "year, month, day, type_subfolder, default_name, custom_name, timestamp, counter, return_value",

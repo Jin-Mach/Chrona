@@ -28,8 +28,8 @@
     "filesCountLabelText": "Files:",
     "showItemsButtonText": "Show items",
     "showItemsButtonTooltipText": "Displays the list of selected items in a separate window",
-    "clearItemsButtonText": "Clear list",
-    "clearItemsButtonTooltipText": "Removes all selected items from the list",
+    "clearItemsButtonText": "Clear all",
+    "clearItemsButtonTooltipText": "Permanently removes all items from the list",
     "titleText": "Error",
     "messageText": "No items to delete",
     "questionTitleText": "Confirmation",
@@ -119,7 +119,15 @@
   "FailedListDialog": {
     "titleLabelText": "The following files could not be processed.\nPlease check permissions or the file paths.",
     "countLabelText": "Files count:",
-    "showPathButtonText": "Open file location",
+    "showPathButtonText": "Open Location",
     "closeButtonText": "Close"
-}
+  },
+  "SelectedItemsDialog": {
+    "titleLabelText": "Selected Items",
+    "showPathButtonText": "Open Location",
+    "clearItemsButtonText": "Clear All",
+    "clearItemsButtonTooltipText": "Permanently removes all items from the list",
+    "closeButtonText": "Close",
+    "itemButtonText": "Remove Item"
+  }
 }
