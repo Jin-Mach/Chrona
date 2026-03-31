@@ -6,8 +6,10 @@ from PyQt6.QtCore import QFileInfo, Qt
 from PyQt6.QtWidgets import QDialog, QLayout, QVBoxLayout, QFileIconProvider, QListWidgetItem, QListWidget, QPushButton, \
     QWidget, QHBoxLayout, QLabel, QDialogButtonBox, QSizePolicy
 
+from src.UI.dialogs.messagebox_dialogs import show_question_dialog
 from src.providers.language_provider import LanguageProvider
 from src.utilities.error_handler import Errorhandler
+from src.utilities.path_helpers import show_selected_path
 from src.utilities.setup_handler import handle_ui_texts
 
 if TYPE_CHECKING:
@@ -23,6 +25,7 @@ class SelectedItemsDialog(QDialog):
         self.setModal(True)
         self.setLayout(self.create_gui())
         self.set_ui_texts()
+        self.create_connections()
         self.set_items_list()
 
     def create_gui(self) -> QLayout:
@@ -57,8 +60,14 @@ class SelectedItemsDialog(QDialog):
                 raise IOError("Texts data loading failed.")
             handle_ui_texts(self, texts_data, self.findChildren((QLabel, QPushButton)))
             self.item_button_text = texts_data.get("itemButtonText", "Remove item")
+            self.clear_title = texts_data.get("questionTitleText", "Chrona")
+            self.clear_items_text = texts_data.get("clearItemText", "Delete all selected items?")
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
+
+    def create_connections(self) -> None:
+        self.show_path_button.clicked.connect(self.show_path)
+        self.clear_items_button.clicked.connect(self.show_clear_items_dialog)
 
     def set_items_list(self) -> None:
         provider = QFileIconProvider()
@@ -68,7 +77,7 @@ class SelectedItemsDialog(QDialog):
             icon = provider.icon(icon_type)
             item = QListWidgetItem()
             item.setIcon(icon)
-            item.setData(Qt.ItemDataRole.UserRole, item_path)
+            item.setData(Qt.ItemDataRole.UserRole, path)
             item_widget = QWidget()
             item_widget.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
             item_layout = QHBoxLayout()
@@ -92,6 +101,24 @@ class SelectedItemsDialog(QDialog):
 
     def delete_selected_item(self, item: QListWidgetItem) -> None:
         item_path = item.data(Qt.ItemDataRole.UserRole)
-        if item_path in self.selected_files:
-            self.selected_files.remove(item_path)
+        if str(item_path) in self.selected_files:
+            self.selected_files.remove(str(item_path))
+            if item_path.is_dir():
+                self.main_window.processing_widget.update_count_labels(folders_count=-1)
+            if item_path.is_file():
+                self.main_window.processing_widget.update_count_labels(files_count=-1)
         self.list_widget.takeItem(self.list_widget.row(item))
+
+    def show_path(self) -> None:
+        item = self.list_widget.currentItem()
+        if item is not None:
+            path = item.data(Qt.ItemDataRole.UserRole)
+            show_selected_path(path)
+
+    def show_clear_items_dialog(self) -> None:
+        result = show_question_dialog(self.clear_title, self.clear_items_text, self.main_window)
+        if result:
+            self.list_widget.clear()
+            self.main_window.process_provider.selected_files.clear()
+            self.main_window.processing_widget.reset_count_labels()
+            self.accept()

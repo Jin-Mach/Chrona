@@ -128,6 +128,8 @@
     "clearItemsButtonText": "Clear All",
     "clearItemsButtonTooltipText": "Permanently removes all items from the list",
     "closeButtonText": "Close",
-    "itemButtonText": "Remove Item"
+    "itemButtonText": "Remove Item",
+    "questionTitleText": "Confirmation",
+    "clearItemText": "Are you sure you want to clear all items?"
   }
 }

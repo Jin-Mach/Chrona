@@ -156,8 +156,8 @@ class ProcessingWidget(QWidget):
             self.files_count_label.setText(f"{self.files_count_text} {self.files_count_value}")
             self.no_items_title = texts_data.get("titleText", "Error")
             self.no_items_text = texts_data.get("messageText", "No items to delete")
-            self.clear_title = texts_data.get("questionTitleText", "Chrona")
-            self.clear_items_text = texts_data.get("clearItemText", "Delete all selected items?")
+            self.clear_title = texts_data.get("questionTitleText", "Confirmation")
+            self.clear_items_text = texts_data.get("clearItemText", "Are you sure you want to clear all items?")
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
 
