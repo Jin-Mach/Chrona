@@ -1,5 +1,7 @@
 import pathlib
 
+from PyQt6.QtWidgets import QApplication
+
 from src.providers.config_provider import ConfigProvider
 from src.providers.download_provider import DownloadProvider
 from src.providers.file_provider import FileProvider
@@ -10,10 +12,16 @@ from src.utilities.error_handler import Errorhandler
 
 
 class ApplicationInitProvider:
+    APP_NAME = "Chrona"
+    APP_VERSION = "1.0.0"
+    ORGANIZATION_NAME = "Jin-Mach"
 
-    @staticmethod
-    def initialize_application() -> bool:
+    @classmethod
+    def initialize_application(cls, application: QApplication) -> bool:
         try:
+            application.setOrganizationName(cls.ORGANIZATION_NAME)
+            application.setApplicationName(cls.APP_NAME)
+            application.setApplicationVersion(cls.APP_VERSION)
             project_path = set_project_path()
             if project_path is None or not project_path.is_dir():
                 raise FileNotFoundError("Default application directory not found")

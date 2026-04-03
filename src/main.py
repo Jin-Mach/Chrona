@@ -6,9 +6,9 @@ from src.UI.main_window import MainWindow
 from src.providers.application_init_provider import ApplicationInitProvider
 
 
-def create_application() -> None:
+def run_application() -> None:
     application = QApplication(sys.argv)
-    if not ApplicationInitProvider.initialize_application():
+    if not ApplicationInitProvider.initialize_application(application):
         sys.exit(1)
     main_window = MainWindow()
     main_window.show()
