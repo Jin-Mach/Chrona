@@ -2,6 +2,7 @@ import pathlib
 import datetime
 import shutil
 import sys
+import os
 
 from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot, QMutex, QWaitCondition
 
@@ -32,12 +33,17 @@ class ProcessObject(QObject):
     def run_process(self) -> None:
         failed_list = []
         try:
-            validated_set, cancel_status = self.check_dir_folders(self.selected_paths, self.active_filter, self.documents_texts)
+            validated_set, validated_set_size, cancel_status = self.check_dir_folders(self.selected_paths, self.active_filter, self.documents_texts)
             if cancel_status:
                 self.finished.emit([])
                 return
             if not validated_set:
                 raise ValueError("Validate folders failed")
+            print(validated_set_size)
+            check_error = self.check_hdd_setup(self.output_path, validated_set_size)
+            if check_error is not None:
+                self.failed.emit(check_error)
+                return
             self.files_count.emit(len(validated_set))
             for index, path in enumerate(validated_set):
                 self._mutex.lock()
@@ -51,10 +57,10 @@ class ProcessObject(QObject):
                     failed_list.append((path, FileNotFoundError("Output path not created")))
                     self.logger.error(f"{self.__class__.__name__}: Output {path} not created", exc_info=True)
                     continue
-                error = self.copy_file(path, output_path, self.active_filter.get("delete_file", False))
-                if error is not None:
-                    failed_list.append((path, error))
-                    self.logger.error(f"{self.__class__.__name__}: {error}", exc_info=True)
+                copy_error = self.copy_file(path, output_path, self.active_filter.get("delete_file", False))
+                if copy_error is not None:
+                    failed_list.append((path, copy_error))
+                    self.logger.error(f"{self.__class__.__name__}: {copy_error}", exc_info=True)
                     continue
                 self.progress.emit(index + 1)
             self.finished.emit(len(validated_set), failed_list)
@@ -63,12 +69,13 @@ class ProcessObject(QObject):
             self.failed.emit(e)
 
     def check_dir_folders(self, paths_list: set[pathlib.Path], active_filters: dict[str, bool | str],
-                          documents_texts: dict[str, str]) -> tuple[set[pathlib.Path], bool]:
+                          documents_texts: dict[str, str]) -> tuple[set[pathlib.Path], int, bool]:
         include_hidden = active_filters.get("hidden_folders", False)
         validated_set = set()
+        validated_set_size = 0
         for path_str in paths_list:
             if self._cancel_thread:
-                return set(), True
+                return set(), 0, True
             self._mutex.lock()
             while self._pause:
                 self._wait_condition.wait(self._mutex)
@@ -93,9 +100,11 @@ class ProcessObject(QObject):
                                     break
                         if not skip_child and ProcessObject.is_file_type_included(child, active_filters, documents_texts):
                             validated_set.add(child)
+                            validated_set_size += child.stat().st_size
             elif path.is_file() and ProcessObject.is_file_type_included(path, active_filters, documents_texts):
                 validated_set.add(path)
-        return validated_set, False
+                validated_set_size += path.stat().st_size
+        return validated_set, validated_set_size, False
 
     @classmethod
     def get_output_path(cls, index: int, path: pathlib.Path, output_path: pathlib.Path,
@@ -147,8 +156,17 @@ class ProcessObject(QObject):
             if delete_file:
                 path.unlink()
             return None
-        except (PermissionError, FileNotFoundError, IOError, OSError) as e:
+        except (PermissionError, FileNotFoundError) as e:
             return e
+
+    @staticmethod
+    def check_hdd_setup(output_path: pathlib.Path, validated_list_size: int) -> Exception | None:
+        free_space = shutil.disk_usage(output_path).free
+        if not os.access(output_path.parent, os.W_OK):
+            return PermissionError("Permission denied")
+        if free_space < validated_list_size * 1.10:
+            return OSError("Disk usage exceeds limit")
+        return None
 
     @staticmethod
     def get_file_metadata(file_path: pathlib.Path) -> dict[str, str | datetime.datetime]:
