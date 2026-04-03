@@ -1,3 +1,5 @@
+import pathlib
+
 from PyQt6.QtGui import QShowEvent
 from PyQt6.QtWidgets import QMainWindow, QApplication, QWidget, QHBoxLayout, QStackedWidget, QFileDialog, QCheckBox, \
     QLineEdit
@@ -93,10 +95,11 @@ class MainWindow(QMainWindow):
     def handle_dialog_result(self, path: list[str] | str, action: str) -> None:
         if action in ["input_folder_processing_widget", "add_files_processing_widget"]:
             if isinstance(path, list):
-                self.process_provider.selected_files.update(path)
+                for str_pah in path:
+                    self.process_provider.selected_files.add(pathlib.Path(str_pah))
                 self.processing_widget.update_count_labels(files_count=len(path))
             elif isinstance(path, str):
-                self.process_provider.selected_files.add(path)
+                self.process_provider.selected_files.add(pathlib.Path(path))
                 self.processing_widget.update_count_labels(folders_count=1)
         elif action == "output_folder_processing_widget":
             self.processing_widget.update_output_path(path)

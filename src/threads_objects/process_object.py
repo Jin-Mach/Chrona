@@ -15,7 +15,7 @@ class ProcessObject(QObject):
     files_count = pyqtSignal(int)
     progress = pyqtSignal(int)
 
-    def __init__(self, documents_texts: dict[str, str], output_path: pathlib.Path, selected_paths: set[str],
+    def __init__(self, documents_texts: dict[str, str], output_path: pathlib.Path, selected_paths: set[pathlib.Path],
                  active_filter: dict[str, bool | str]) -> None:
         super().__init__()
         self.documents_texts = documents_texts
@@ -62,7 +62,7 @@ class ProcessObject(QObject):
             self.logger.error(f"{self.__class__.__name__}: {e}", exc_info=True)
             self.failed.emit(e)
 
-    def check_dir_folders(self, paths_list: set[str], active_filters: dict[str, bool | str],
+    def check_dir_folders(self, paths_list: set[pathlib.Path], active_filters: dict[str, bool | str],
                           documents_texts: dict[str, str]) -> tuple[set[pathlib.Path], bool]:
         include_hidden = active_filters.get("hidden_folders", False)
         validated_set = set()
@@ -108,10 +108,7 @@ class ProcessObject(QObject):
         metadata = ProcessObject.get_file_metadata(path)
         if not metadata:
             return None
-        if active_filters.get("file_created", False):
-            timestamp = metadata["created"]
-        else:
-            timestamp = datetime.datetime.fromtimestamp(path.stat().st_mtime)
+        timestamp = metadata["created"]
         if active_filters.get("year", True):
             output_path = output_path.joinpath(f"{timestamp.year}")
             output_path = ProcessObject.get_datetime_tree(

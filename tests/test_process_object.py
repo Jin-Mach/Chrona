@@ -73,7 +73,7 @@ def test_check_dir_folders(folder_with_files, active_filters, documents_texts, h
     process = ProcessObject(documents_texts, folder_with_files, set(), active_filters)
     test_filters = active_filters.copy()
     test_filters["hidden_folders"] = hidden_bool
-    result, cancelled = process.check_dir_folders({str(folder_with_files)}, test_filters, documents_texts)
+    result, cancelled = process.check_dir_folders({folder_with_files}, test_filters, documents_texts)
     assert len(result) == files_count
     assert cancelled is False
 

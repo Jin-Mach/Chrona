@@ -1,5 +1,3 @@
-import pathlib
-
 from typing import TYPE_CHECKING
 
 from PyQt6.QtCore import QFileInfo, Qt
@@ -71,8 +69,7 @@ class SelectedItemsDialog(QDialog):
 
     def set_items_list(self) -> None:
         provider = QFileIconProvider()
-        for index, item_path in enumerate(self.selected_files):
-            path = pathlib.Path(item_path)
+        for index, path in enumerate(sorted(self.selected_files)):
             icon_type = QFileInfo(str(path))
             icon = provider.icon(icon_type)
             item = QListWidgetItem()
@@ -101,8 +98,8 @@ class SelectedItemsDialog(QDialog):
 
     def delete_selected_item(self, item: QListWidgetItem) -> None:
         item_path = item.data(Qt.ItemDataRole.UserRole)
-        if str(item_path) in self.selected_files:
-            self.selected_files.remove(str(item_path))
+        if item_path in self.selected_files:
+            self.selected_files.remove(item_path)
             if item_path.is_dir():
                 self.main_window.processing_widget.update_count_labels(folders_count=-1)
             if item_path.is_file():
