@@ -44,6 +44,31 @@ class FileProvider:
         "userNameRadiobuttonState"
     ]
 
+    ERROR_TEXTS_KEYS = [
+        "IOError",
+        "PermissionError",
+        "OSError",
+        "FileNotFoundError",
+        "ConnectionError",
+        "ValueError",
+        "TypeError",
+        "KeyError",
+        "IndexError",
+        "AttributeError",
+        "ZeroDivisionError",
+        "RuntimeError",
+        "ImportError",
+        "ModuleNotFoundError",
+        "NameError",
+        "StopIteration",
+        "MemoryError",
+        "AssertionError",
+        "RecursionError",
+        "FloatingPointError",
+        "TimeoutError",
+        "UnknownError"
+    ]
+
     TEXTS_KEYS = [
         "MainWindow",
         "titleText", "titleTextFolder",
@@ -68,7 +93,7 @@ class FileProvider:
         "useTimestampCheckboxText", "useCounterCheckboxText", "optionsGroupText", "deleteFileCheckboxText",
         "moveInsteadCopyCheckboxText", "overwriteCheckboxText",
         "ErrorDialog",
-        "titleText", "showHideButtonText", "closeButtonText"
+        "titleText", "showHideButtonText", "closeButtonText",
         "FileDialog",
         "documentsFilesCheckboxText", "txtFilesCheckboxText", "officeFilesCheckboxText", "imageFilesCheckboxText",
         "musicFilesCheckboxText", "archiveFilesCheckboxText", "customExtensionsEditText",
@@ -76,10 +101,10 @@ class FileProvider:
         "titleText", "messageText", "questionTitleText", "questionMessageText", "documentsFiles", "documentsSuffixes",
         "txtFiles", "txtSuffixes", "officeFiles", "officeSuffixes", "imageFiles", "imageSuffixes", "musicFiles",
         "musicSuffixes", "archiveFiles", "archiveSuffixes", "othersFiles",
-        "ProgressDialog,"
+        "ProgressDialog",
         "titleLabelText", "progressText", "cancelProgressButton",
         "NotificationDialog",
-        "infoLabelText", "processedText", "failedText", "loadingLabelText"
+        "infoLabelText", "processedText", "failedText", "loadingLabelText",
         "FailedListDialog",
         "titleLabelText", "countLabelText", "showPathButtonText", "closeButtonText",
         "SelectedItemsDialog",
@@ -103,8 +128,13 @@ class FileProvider:
                         if not cls.check_keys(file, cls.SETTINGS_KEYS, file_type="toml"):
                             missing_files[category][file] = url
                     if suffix == ".json":
-                        if not cls.check_keys(file, cls.TEXTS_KEYS, file_type="json"):
-                            missing_files[category][file] = url
+                        if suffix == ".json":
+                            if "error_texts" in file.name:
+                                if not cls.check_keys(file, cls.ERROR_TEXTS_KEYS, file_type="json"):
+                                    missing_files[category][file] = url
+                            elif "ui_texts" in file.name:
+                                if not cls.check_keys(file, cls.TEXTS_KEYS, file_type="json"):
+                                    missing_files[category][file] = url
             return missing_files
         except Exception as e:
             Errorhandler.handle_error(cls.__name__, e)
