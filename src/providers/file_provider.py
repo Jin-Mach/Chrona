@@ -74,7 +74,7 @@ class FileProvider:
         "titleText", "titleTextFolder",
         "SidePanel",
         "processingButtonText", "processingButtonTooltipText", "workflowSettingsButtonText", "workflowSettingsButtonTooltipText",
-        "ProcessingWidget",
+        "ProcessingWidget", "aboutButtonText", "aboutButtonTooltipText",
         "startButtonText", "startButtonTooltipText", "dragGroupText", "dragLabelText", "pathGroupText",
         "sourceLabelText", "inputPathSelectText", "inputPathSelectTooltipText", "inputPathAddText",
         "inputPathAddTooltipText", "destinationLabelText", "outputPathSelectText",
@@ -109,7 +109,9 @@ class FileProvider:
         "titleLabelText", "countLabelText", "showPathButtonText", "closeButtonText",
         "SelectedItemsDialog",
         "titleLabelText", "showPathButtonText", "clearItemsButtonText", "clearItemsButtonTooltipText", "closeButtonText",
-        "itemButtonText"
+        "itemButtonText",
+        "AboutDialog",
+        "titleLabelText", "textLabelText", "closeButtonText"
     ]
 
     @classmethod

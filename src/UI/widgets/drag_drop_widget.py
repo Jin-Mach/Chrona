@@ -66,7 +66,7 @@ class DragDropWidget(QWidget):
                         self.main_window.processing_widget.update_count_labels(folders_count=1)
                     else:
                         self.main_window.processing_widget.update_count_labels(files_count=1)
-                    paths.add(local_file)
+                    paths.add(path)
             self.main_window.process_provider.selected_files.update(paths)
             self.setStyleSheet(self.NO_DRAG_STYLE)
             event.acceptProposedAction()

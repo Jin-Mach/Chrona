@@ -6,7 +6,9 @@
     "processingButtonText": "Přenos souborů",
     "processingButtonTooltipText": "Záložka přenosu souborů",
     "workflowSettingsButtonText": "Nastavení aktuálního přenosu",
-    "workflowSettingsButtonTooltipText": "Otevře dialog pro nastavení workflow"
+    "workflowSettingsButtonTooltipText": "Záložka nastavení přenosu",
+    "aboutButtonText": "O aplikaci",
+    "aboutButtonTooltipText": "Otevře okno O aplikaci"
   },
   "ProcessingWidget": {
     "startButtonText": "Spustit přenos",
@@ -131,5 +133,10 @@
     "itemButtonText": "Odstranit položku",
     "questionTitleText": "Potvrzení",
     "clearItemText": "Opravdu odstranit všechny položky?"
+  },
+  "AboutDialog": {
+    "titleLabelText": "Chrona",
+    "textLabelText": "<b>Autor:</b> Jin-Mach<br><b>Verze:</b> 1.0.0<br><b>Odkaz:</b> <a href=\"https://github.com/Jin-Mach/Chrona\">https://github.com/Jin-Mach/Chrona</a>",
+    "closeButtonText": "Zavřít"
   }
 }

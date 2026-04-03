@@ -30,7 +30,7 @@ class MainWindow(QMainWindow):
         central_widget = QWidget()
         main_layout = QHBoxLayout()
         self.stacked_widget = QStackedWidget(self)
-        self.stacked_widget.setObjectName("stacked_widget")
+        self.stacked_widget.setObjectName("stackedWidget")
         self.processing_widget = ProcessingWidget(self)
         self.workflow_settings = WorkflowSettings(self)
         self.side_panel = SidePanel(self.stacked_widget, self)

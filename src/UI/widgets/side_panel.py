@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING
 
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QStackedWidget
 
+from src.UI.dialogs.about_dialog import AboutDialog
 from src.providers.language_provider import LanguageProvider
 from src.utilities.error_handler import Errorhandler
 from src.utilities.setup_handler import handle_ui_texts
@@ -26,14 +27,18 @@ class SidePanel(QWidget):
             self.processing_button.setObjectName("processingButton")
             self.workflow_settings_button = QPushButton()
             self.workflow_settings_button.setObjectName("workflowSettingsButton")
+            self.about_button = QPushButton()
+            self.about_button.setObjectName("aboutButton")
             main_layout.addWidget(self.processing_button)
             main_layout.addWidget(self.workflow_settings_button)
             main_layout.addStretch()
+            main_layout.addWidget(self.about_button)
             return main_layout
 
     def create_connection(self) -> None:
         self.processing_button.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
         self.workflow_settings_button.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(1))
+        self.about_button.clicked.connect(self.show_about_dialog)
 
     def set_ui_texts(self) -> None:
         try:
@@ -44,3 +49,7 @@ class SidePanel(QWidget):
             handle_ui_texts(self, texts_data, self.findChildren(QPushButton))
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
+
+    def show_about_dialog(self) -> None:
+        dialog = AboutDialog(self.main_window)
+        dialog.exec()

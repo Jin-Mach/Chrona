@@ -3,10 +3,12 @@
     "titleText": "Chrona"
   },
   "SidePanel": {
-    "processingButtonText": "File Transfer",
-    "processingButtonTooltipText": "File transfer tab",
-    "workflowSettingsButtonText": "Current transfer settings",
-    "workflowSettingsButtonTooltipText": "Opens workflow settings dialog"
+  "processingButtonText": "File Transfer",
+  "processingButtonTooltipText": "File transfer tab",
+  "workflowSettingsButtonText": "Current Transfer Settings",
+  "workflowSettingsButtonTooltipText": "Transfer settings tab",
+  "aboutButtonText": "About",
+  "aboutButtonTooltipText": "Opens the About dialog"
   },
   "ProcessingWidget": {
     "startButtonText": "Start Transfer",
@@ -131,5 +133,10 @@
     "itemButtonText": "Remove Item",
     "questionTitleText": "Confirmation",
     "clearItemText": "Are you sure you want to clear all items?"
-  }
+  },
+  "AboutDialog": {
+    "titleLabelText": "Chrona",
+    "textLabelText": "<b>Author:</b> Jin-Mach<br><b>Version:</b> 1.0.0<br><b>Link:</b> <a href=\"https://github.com/Jin-Mach/Chrona\">https://github.com/Jin-Mach/Chrona</a>",
+    "closeButtonText": "Close"
+}
 }
