@@ -71,10 +71,14 @@ def active_filters() -> dict[str, bool | str]:
 
 def test_check_dir_folders(folder_with_files, active_filters, documents_texts, hidden_bool, files_count) -> None:
     process = ProcessObject(documents_texts, folder_with_files, set(), active_filters)
+    excepted_size = 0
     test_filters = active_filters.copy()
     test_filters["hidden_folders"] = hidden_bool
-    result, cancelled = process.check_dir_folders({folder_with_files}, test_filters, documents_texts)
+    result, size, cancelled = process.check_dir_folders({folder_with_files}, test_filters, documents_texts)
     assert len(result) == files_count
+    for file in result:
+        excepted_size += len(file.read_bytes())
+    assert excepted_size == size
     assert cancelled is False
 
 @pytest.mark.parametrize(
