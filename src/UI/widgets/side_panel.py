@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from PyQt6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QStackedWidget
+from PyQt6.QtWidgets import QWidget, QVBoxLayout, QPushButton, QStackedWidget, QSizePolicy
 
 from src.UI.dialogs.about_dialog import AboutDialog
 from src.providers.language_provider import LanguageProvider
@@ -14,6 +14,7 @@ if TYPE_CHECKING:
 class SidePanel(QWidget):
     def __init__(self, stacked_widget: QStackedWidget, main_window: "MainWindow"):
         super().__init__(main_window)
+        self.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
         self.stacked_widget = stacked_widget
         self.main_window = main_window
         self.setLayout(self.create_gui())

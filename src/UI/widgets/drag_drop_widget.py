@@ -31,7 +31,6 @@ class DragDropWidget(QWidget):
     def __init__(self, main_window: "MainWindow") -> None:
         QWidget.__init__(self, main_window)
         self.main_window = main_window
-        self.setMinimumSize(200, 200)
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.setAcceptDrops(True)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)

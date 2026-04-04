@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 
 # noinspection PyAttributeOutsideInit
 class WorkflowSettings(QWidget):
-    DEFAULT_SPACING = 30
+    DEFAULT_SPACING = 10
 
     def __init__(self, main_window: "MainWindow") -> None:
         super().__init__(main_window)
@@ -33,7 +33,6 @@ class WorkflowSettings(QWidget):
     def create_gui(self) -> QVBoxLayout:
         main_layout = QVBoxLayout()
         main_layout.setSpacing(self.DEFAULT_SPACING)
-        main_layout.setContentsMargins(10, 10, 10, 10)
         main_layout.addLayout(self.create_paths_section())
         top_groups_layout = QHBoxLayout()
         top_groups_layout.addWidget(self.create_folder_group())
@@ -47,7 +46,6 @@ class WorkflowSettings(QWidget):
         bottom_groups_layout.setStretch(0, 1)
         bottom_groups_layout.setStretch(1, 1)
         main_layout.addLayout(bottom_groups_layout)
-        main_layout.addStretch()
         return main_layout
 
     def create_paths_section(self) -> QVBoxLayout:
@@ -89,7 +87,7 @@ class WorkflowSettings(QWidget):
     def create_folder_group(self) -> QGroupBox:
         self.folder_group = QGroupBox()
         self.folder_group.setObjectName("folderGroup")
-        self.folder_group.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.folder_group.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         layout = QVBoxLayout()
         layout.setSpacing(self.DEFAULT_SPACING)
         self.year_checkbox = QCheckBox()
@@ -120,7 +118,7 @@ class WorkflowSettings(QWidget):
     def create_filter_group(self) -> QGroupBox:
         self.filter_group = QGroupBox()
         self.filter_group.setObjectName("filterGroup")
-        self.filter_group.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.filter_group.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         layout = QVBoxLayout()
         layout.setSpacing(self.DEFAULT_SPACING)
         self.filter_checkbox = QCheckBox()
@@ -159,7 +157,7 @@ class WorkflowSettings(QWidget):
     def create_name_group(self) -> QGroupBox:
         self.name_group = QGroupBox()
         self.name_group.setObjectName("nameGroup")
-        self.name_group.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.name_group.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         layout = QVBoxLayout()
         layout.setSpacing(self.DEFAULT_SPACING)
         radio_layout = QHBoxLayout()
@@ -186,7 +184,7 @@ class WorkflowSettings(QWidget):
     def create_options_group(self) -> QGroupBox:
         self.options_group = QGroupBox()
         self.options_group.setObjectName("optionsGroup")
-        self.options_group.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.options_group.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         layout = QVBoxLayout()
         layout.setSpacing(self.DEFAULT_SPACING)
         timestamp_layout = QHBoxLayout()

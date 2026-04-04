@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 
 # noinspection PyAttributeOutsideInit
 class ProcessingWidget(QWidget):
-    DEFAULT_SPACING = 30
+    DEFAULT_SPACING = 10
 
     def __init__(self, main_window: "MainWindow"):
         super().__init__(main_window)
@@ -34,7 +34,6 @@ class ProcessingWidget(QWidget):
     def create_gui(self) -> QVBoxLayout:
         main_layout = QVBoxLayout()
         main_layout.setSpacing(self.DEFAULT_SPACING)
-        main_layout.setContentsMargins(0, 0, 0, 0)
         button_layout = QHBoxLayout()
         button_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.start_button = QPushButton()

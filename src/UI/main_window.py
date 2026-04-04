@@ -34,8 +34,8 @@ class MainWindow(QMainWindow):
         self.processing_widget = ProcessingWidget(self)
         self.workflow_settings = WorkflowSettings(self)
         self.side_panel = SidePanel(self.stacked_widget, self)
-        main_layout.addWidget(self.side_panel)
-        main_layout.addWidget(self.stacked_widget)
+        main_layout.addWidget(self.side_panel, 0)
+        main_layout.addWidget(self.stacked_widget, 1)
         central_widget.setLayout(main_layout)
         return central_widget
 

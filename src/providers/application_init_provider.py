@@ -9,6 +9,7 @@ from src.providers.language_provider import LanguageProvider
 from src.utilities.connection_handler import check_connection
 from src.utilities.current_path_provider import set_project_path
 from src.utilities.error_handler import Errorhandler
+from src.utilities.style_provider import set_application_style
 
 
 class ApplicationInitProvider:
@@ -33,6 +34,7 @@ class ApplicationInitProvider:
                 if not DownloadProvider.download_files(missing_files):
                     raise ConnectionError(f"Download failed: {missing_files}")
             ApplicationInitProvider.basic_setup(project_path)
+            set_application_style(application)
         except Exception as e:
             Errorhandler.handle_error(ApplicationInitProvider.__name__, e)
             return False
