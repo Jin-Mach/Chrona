@@ -48,8 +48,7 @@ class MainWindow(QMainWindow):
 
     def set_ui_texts(self) -> None:
         try:
-            texts_data = LanguageProvider.get_widgets_texts("ui_texts", self.__class__.__name__,
-                                                            LanguageProvider.language_code)
+            texts_data = LanguageProvider.get_widgets_texts(self.__class__.__name__, LanguageProvider.language_code)
             if not texts_data:
                 raise IOError("Texts data loading failed.")
             handle_ui_texts(self, texts_data)
@@ -81,8 +80,7 @@ class MainWindow(QMainWindow):
 
     def show_dialog(self, directory: pathlib.Path, mode: QFileDialog.FileMode, parent: QWidget, action: str, filters: bool = False) -> None:
         try:
-            texts_data = LanguageProvider.get_widgets_texts("ui_texts", FileDialog.__name__,
-                                                            LanguageProvider.language_code)
+            texts_data = LanguageProvider.get_widgets_texts(FileDialog.__name__, LanguageProvider.language_code)
             if not texts_data:
                 raise IOError("Texts data loading failed.")
             current_filter = None

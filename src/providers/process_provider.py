@@ -24,8 +24,7 @@ class ProcessProvider(QObject):
 
     def start_process(self) -> None:
         try:
-            ui_texts = LanguageProvider.get_widgets_texts("ui_texts", self.__class__.__name__,
-                                                          LanguageProvider.language_code)
+            ui_texts = LanguageProvider.get_widgets_texts(self.__class__.__name__, LanguageProvider.language_code)
             if not ui_texts:
                 raise IOError("Texts data loading failed.")
             if not self.selected_files:

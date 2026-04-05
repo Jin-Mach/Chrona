@@ -29,13 +29,12 @@ class LanguageProvider:
             return cls.default_code
 
     @classmethod
-    def get_widgets_texts(cls, file_name: str, widget_name: str, language_code: str | None = None) -> dict[str, str]:
+    def get_widgets_texts(cls, widget_name: str, language_code: str | None = None) -> dict[str, str]:
         texts_data = {}
         try:
-            json_file = file_name + ".json"
             if language_code is None:
                 language_code = cls.language_code
-            texts_path = cls.project_path.joinpath("resources", "texts", language_code, json_file)
+            texts_path = cls.project_path.joinpath("resources", "texts", language_code, "ui_texts.json")
             if texts_path.exists() and texts_path.is_file():
                 with texts_path.open("r", encoding="utf-8") as texts_file:
                     texts_data = json.load(texts_file).get(widget_name, {})
