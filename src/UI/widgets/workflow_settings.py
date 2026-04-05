@@ -187,18 +187,10 @@ class WorkflowSettings(QWidget):
         self.options_group.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         layout = QVBoxLayout()
         layout.setSpacing(self.DEFAULT_SPACING)
-        timestamp_layout = QHBoxLayout()
-        self.modified_radiobutton = QRadioButton()
-        self.modified_radiobutton.setObjectName("modifiedRadiobutton")
-        self.created_radiobutton = QRadioButton()
-        self.created_radiobutton.setObjectName("createdRadiobutton")
-        timestamp_layout.addWidget(self.modified_radiobutton)
-        timestamp_layout.addWidget(self.created_radiobutton)
         self.delete_file_checkbox = QCheckBox()
         self.delete_file_checkbox.setObjectName("deleteFileCheckbox")
         self.show_failed_files = QCheckBox()
         self.show_failed_files.setObjectName("showFailedFilesCheckbox")
-        layout.addLayout(timestamp_layout)
         layout.addWidget(self.delete_file_checkbox)
         layout.addWidget(self.show_failed_files)
         layout.addStretch()
@@ -264,8 +256,6 @@ class WorkflowSettings(QWidget):
             "music_filter": self.music_files_checkbox.isChecked(),
             "archive_filter": self.archive_files_checkbox.isChecked(),
             "custom_extensions": self.custom_extensions_edit.text().strip(),
-            "file_modified": self.modified_radiobutton.isChecked(),
-            "file_created": self.created_radiobutton.isChecked(),
             "delete_file": self.delete_file_checkbox.isChecked(),
             "failed_files": self.show_failed_files.isChecked()
         }

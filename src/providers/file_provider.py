@@ -41,13 +41,18 @@ class FileProvider:
         "ProcessingWidget",
         "inputPathEditPath", "outputPathEditPath",
         "WorkflowSettings",
-        "inputPathEditPath", "outputPathEditPath",
-        "yearCheckboxState", "monthCheckboxState", "dayCheckboxState", "createSubfoldersDateCheckboxState",
-        "createSubfoldersTypeCheckboxState", "includeHiddenFoldersCheckboxState", "filterCheckboxState",
-        "documentsFilesCheckboxState", "txtFilesCheckboxState", "officeFilesCheckboxState", "imageFilesCheckboxState",
-        "musicFilesCheckboxState", "archiveFilesCheckboxState", "useTimestampCheckboxState", "useCounterCheckboxState",
-        "deleteFileCheckboxState", "moveInsteadCopyCheckboxState", "overwriteCheckboxState", "defaultNameRadiobuttonState",
-        "userNameRadiobuttonState"
+        "inputPathEditPath", "inputPathEditState",
+        "outputPathEditPath", "outputPathEditState",
+        "yearCheckboxState", "monthCheckboxState", "dayCheckboxState",
+        "subfoldersTypeCheckboxState", "hiddenFoldersCheckboxState",
+        "fileNameEditState", "customExtensionsEditState",
+        "filterCheckboxState",
+        "documentsFilesCheckboxState", "txtFilesCheckboxState", "officeFilesCheckboxState",
+        "imageFilesCheckboxState", "musicFilesCheckboxState", "archiveFilesCheckboxState",
+        "useTimestampCheckboxState", "useCounterCheckboxState",
+        "deleteFileCheckboxState", "showFailedFilesCheckboxState",
+        "moveInsteadCopyCheckboxState", "overwriteCheckboxState",
+        "defaultNameRadiobuttonState", "userNameRadiobuttonState"
     ]
 
     ERROR_TEXTS_KEYS = [
