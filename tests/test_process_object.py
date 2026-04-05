@@ -123,17 +123,14 @@ def test_get_output_path(base_folder, monkeypatch, active_filters, documents_tex
             file_name_to_use = custom_name_value
         else:
             file_name_to_use = file_name
-
         if timestamp_checked:
             timestamp_value = datetime.datetime(2026, 12, 31, 23, 59, 59, 999999)
         else:
             timestamp_value = None
-
         if counter_checked:
             counter_value = 1
         else:
             counter_value = -1
-
         return file_name_to_use, timestamp_value, counter_value
 
     monkeypatch.setattr(ProcessObject, "get_file_metadata", fake_metadata)
@@ -261,6 +258,7 @@ def test_get_file_name(file_name, custom_name, timestamp_checked, timestamp, cou
 ], ids=["document-True", "document-False", "txt-True", "txt-False", "image-True", "image-False", "music-True", "music-False",
         "archive-True", "archive-False", "others-False", "others-False", "extension-True", "extension-False",
         "empty extension-False", "wrong extension-False"])
+
 def test_is_file_type_included(file_path, main_filter, documents_filter, txt_filter,
                                office_filter, image_filter, music_filter, archive_filter, extension, expected_bool,
                                active_filters, documents_texts) -> None:
@@ -275,6 +273,5 @@ def test_is_file_type_included(file_path, main_filter, documents_filter, txt_fil
         "archive_filter": archive_filter,
         "custom_extensions": extension,
     })
-
     result = ProcessObject.is_file_type_included(file_path, test_filters, documents_texts)
     assert result == expected_bool
