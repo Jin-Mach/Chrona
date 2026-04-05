@@ -28,23 +28,27 @@ class SidePanel(QWidget):
             self.processing_button.setObjectName("processingButton")
             self.workflow_settings_button = QPushButton()
             self.workflow_settings_button.setObjectName("workflowSettingsButton")
+            self.help_button = QPushButton()
+            self.help_button.setObjectName("helpButton")
             self.about_button = QPushButton()
             self.about_button.setObjectName("aboutButton")
             main_layout.addWidget(self.processing_button)
             main_layout.addWidget(self.workflow_settings_button)
             main_layout.addStretch()
+            main_layout.addWidget(self.help_button)
             main_layout.addWidget(self.about_button)
             return main_layout
 
     def create_connection(self) -> None:
         self.processing_button.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
         self.workflow_settings_button.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(1))
+        self.help_button.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(2))
         self.about_button.clicked.connect(self.show_about_dialog)
 
     def set_ui_texts(self) -> None:
         try:
-            texts_data = LanguageProvider.get_texts_data("ui_texts", self.__class__.__name__,
-                                                         LanguageProvider.language_code)
+            texts_data = LanguageProvider.get_widgets_texts("ui_texts", self.__class__.__name__,
+                                                            LanguageProvider.language_code)
             if not texts_data:
                 raise IOError("Texts data loading failed.")
             handle_ui_texts(self, texts_data, self.findChildren(QPushButton))

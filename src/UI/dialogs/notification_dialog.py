@@ -38,8 +38,8 @@ class NotificationDialog(QDialog):
         return main_layout
 
     def set_ui_texts(self) -> None:
-        text_data = LanguageProvider.get_texts_data("ui_texts", self.__class__.__name__,
-                                                    LanguageProvider.language_code)
+        text_data = LanguageProvider.get_widgets_texts("ui_texts", self.__class__.__name__,
+                                                       LanguageProvider.language_code)
         if not text_data:
             raise IOError("texts data loading failed.")
         self.processed_text = text_data.get("processedText", "Processed files:")

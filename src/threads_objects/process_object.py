@@ -39,7 +39,6 @@ class ProcessObject(QObject):
                 return
             if not validated_set:
                 raise ValueError("Validate folders failed")
-            print(validated_set_size)
             check_error = self.check_hdd_setup(self.output_path, validated_set_size)
             if check_error is not None:
                 self.failed.emit(check_error)

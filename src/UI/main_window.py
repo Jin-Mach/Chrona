@@ -5,6 +5,7 @@ from PyQt6.QtWidgets import QMainWindow, QApplication, QWidget, QHBoxLayout, QSt
     QLineEdit
 
 from src.UI.dialogs.file_dialog import FileDialog
+from src.UI.widgets.help_widget import HelpWidget
 from src.UI.widgets.processing_widget import ProcessingWidget
 from src.UI.widgets.workflow_settings import WorkflowSettings
 from src.UI.widgets.side_panel import SidePanel
@@ -33,6 +34,7 @@ class MainWindow(QMainWindow):
         self.stacked_widget.setObjectName("stackedWidget")
         self.processing_widget = ProcessingWidget(self)
         self.workflow_settings = WorkflowSettings(self)
+        self.help_widget = HelpWidget(self)
         self.side_panel = SidePanel(self.stacked_widget, self)
         main_layout.addWidget(self.side_panel, 0)
         main_layout.addWidget(self.stacked_widget, 1)
@@ -40,14 +42,14 @@ class MainWindow(QMainWindow):
         return central_widget
 
     def setup_stack(self) -> None:
-        widgets = [self.processing_widget, self.workflow_settings]
+        widgets = [self.processing_widget, self.workflow_settings, self.help_widget]
         for widget in widgets:
             self.stacked_widget.addWidget(widget)
 
     def set_ui_texts(self) -> None:
         try:
-            texts_data = LanguageProvider.get_texts_data("ui_texts", self.__class__.__name__,
-                                                         LanguageProvider.language_code)
+            texts_data = LanguageProvider.get_widgets_texts("ui_texts", self.__class__.__name__,
+                                                            LanguageProvider.language_code)
             if not texts_data:
                 raise IOError("Texts data loading failed.")
             handle_ui_texts(self, texts_data)
@@ -79,8 +81,8 @@ class MainWindow(QMainWindow):
 
     def show_dialog(self, directory: pathlib.Path, mode: QFileDialog.FileMode, parent: QWidget, action: str, filters: bool = False) -> None:
         try:
-            texts_data = LanguageProvider.get_texts_data("ui_texts", FileDialog.__name__,
-                                                         LanguageProvider.language_code)
+            texts_data = LanguageProvider.get_widgets_texts("ui_texts", FileDialog.__name__,
+                                                            LanguageProvider.language_code)
             if not texts_data:
                 raise IOError("Texts data loading failed.")
             current_filter = None

@@ -29,7 +29,7 @@ class LanguageProvider:
             return cls.default_code
 
     @classmethod
-    def get_texts_data(cls, file_name: str, widget_name: str, language_code: str | None = None) -> dict[str, str]:
+    def get_widgets_texts(cls, file_name: str, widget_name: str, language_code: str | None = None) -> dict[str, str]:
         texts_data = {}
         try:
             json_file = file_name + ".json"
@@ -42,6 +42,20 @@ class LanguageProvider:
         except Exception as e:
             Errorhandler.handle_error(cls.__name__, e)
         return texts_data
+
+    @classmethod
+    def get_help_texts(cls, language_code: str | None = None) -> str:
+        text = ""
+        try:
+            if language_code is None:
+                language_code = cls.language_code
+            help_text_path = cls.project_path.joinpath("resources", "texts", language_code, "help_text.html")
+            if help_text_path.exists() and help_text_path.is_file():
+                with help_text_path.open("r", encoding="utf-8") as help_text_file:
+                    text = help_text_file.read()
+        except Exception as e:
+            Errorhandler.handle_error(cls.__name__, e)
+        return text
 
     @classmethod
     def get_error_text(cls, language_code: str | None = None) -> dict[str, str]:

@@ -3,12 +3,14 @@
     "titleText": "Chrona"
   },
   "SidePanel": {
-  "processingButtonText": "File Transfer",
-  "processingButtonTooltipText": "File transfer tab",
-  "workflowSettingsButtonText": "Current Transfer Settings",
-  "workflowSettingsButtonTooltipText": "Transfer settings tab",
-  "aboutButtonText": "About",
-  "aboutButtonTooltipText": "Opens the About dialog"
+    "processingButtonText": "File Transfer",
+    "processingButtonTooltipText": "File transfer tab",
+    "workflowSettingsButtonText": "Transfer Settings",
+    "workflowSettingsButtonTooltipText": "Transfer settings tab",
+    "helpButtonText": "Help",
+    "helpButtonTooltipText": "Help documentation tab",
+    "aboutButtonText": "About",
+    "aboutButtonTooltipText": "Opens the About dialog"
   },
   "ProcessingWidget": {
     "startButtonText": "Start Transfer",

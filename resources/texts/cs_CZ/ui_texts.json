@@ -4,11 +4,13 @@
   },
   "SidePanel": {
     "processingButtonText": "Přenos souborů",
-    "processingButtonTooltipText": "Záložka přenosu souborů",
-    "workflowSettingsButtonText": "Nastavení aktuálního přenosu",
-    "workflowSettingsButtonTooltipText": "Záložka nastavení přenosu",
+    "processingButtonTooltipText": "Záložka pro přenos souborů",
+    "workflowSettingsButtonText": "Nastavení přenosu",
+    "workflowSettingsButtonTooltipText": "Záložka pro nastavení přenosu",
+    "helpButtonText": "Nápověda",
+    "helpButtonTooltipText": "Záložka nápovědy",
     "aboutButtonText": "O aplikaci",
-    "aboutButtonTooltipText": "Otevře okno O aplikaci"
+    "aboutButtonTooltipText": "Otevře okno „O aplikaci“"
   },
   "ProcessingWidget": {
     "startButtonText": "Spustit přenos",

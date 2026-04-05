@@ -40,8 +40,8 @@ class ErrorDialog(QDialog):
     def set_ui_texts(self) -> None:
         try:
             from src.providers.language_provider import LanguageProvider
-            texts_data = LanguageProvider.get_texts_data("ui_texts", self.__class__.__name__,
-                                                         LanguageProvider.language_code)
+            texts_data = LanguageProvider.get_widgets_texts("ui_texts", self.__class__.__name__,
+                                                            LanguageProvider.language_code)
             if not texts_data:
                 raise IOError("No ui_texts data loaded.")
             handle_ui_texts(self, texts_data, self.findChildren(QPushButton))

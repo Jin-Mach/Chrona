@@ -76,7 +76,8 @@ class FileProvider:
         "titleText", "titleTextFolder",
         "SidePanel",
         "processingButtonText", "processingButtonTooltipText", "workflowSettingsButtonText", "workflowSettingsButtonTooltipText",
-        "ProcessingWidget", "aboutButtonText", "aboutButtonTooltipText",
+        "helpButtonText", "helpButtonTooltipText", "aboutButtonText", "aboutButtonTooltipText",
+        "ProcessingWidget",
         "startButtonText", "startButtonTooltipText", "dragGroupText", "dragLabelText", "pathGroupText",
         "sourceLabelText", "inputPathSelectText", "inputPathSelectTooltipText", "inputPathAddText",
         "inputPathAddTooltipText", "destinationLabelText", "outputPathSelectText",
@@ -132,13 +133,12 @@ class FileProvider:
                         if not cls.check_keys(file, cls.SETTINGS_KEYS, file_type="toml"):
                             missing_files[category][file] = url
                     if suffix == ".json":
-                        if suffix == ".json":
-                            if "error_texts" in file.name:
-                                if not cls.check_keys(file, cls.ERROR_TEXTS_KEYS, file_type="json"):
-                                    missing_files[category][file] = url
-                            elif "ui_texts" in file.name:
-                                if not cls.check_keys(file, cls.TEXTS_KEYS, file_type="json"):
-                                    missing_files[category][file] = url
+                        if "error_texts" in file.name:
+                            if not cls.check_keys(file, cls.ERROR_TEXTS_KEYS, file_type="json"):
+                                missing_files[category][file] = url
+                        elif "ui_texts" in file.name:
+                            if not cls.check_keys(file, cls.TEXTS_KEYS, file_type="json"):
+                                missing_files[category][file] = url
             return missing_files
         except Exception as e:
             Errorhandler.handle_error(cls.__name__, e)
