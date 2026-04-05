@@ -20,6 +20,10 @@ class FileProvider:
             "resources": {
                 cls.resources_path.joinpath("images", "splash_pixmap.jpg"):
                     "https://raw.githubusercontent.com/Jin-Mach/Chrona/main/resources/images/splash_pixmap.jpg",
+                cls.resources_path.joinpath("texts", "cs_CZ", "help_text.html"):
+                    "https://raw.githubusercontent.com/Jin-Mach/Chrona/refs/heads/main/resources/texts/cs_CZ/help_text.html",
+                cls.resources_path.joinpath("texts", "en_GB", "help_text.html"):
+                    "https://raw.githubusercontent.com/Jin-Mach/Chrona/refs/heads/main/resources/texts/en_GB/help_text.html",
                 cls.resources_path.joinpath("texts", "cs_CZ", "ui_texts.json"):
                     "https://raw.githubusercontent.com/Jin-Mach/Chrona/refs/heads/main/resources/texts/cs_CZ/ui_texts.json",
                 cls.resources_path.joinpath("texts", "en_GB", "ui_texts.json"):
