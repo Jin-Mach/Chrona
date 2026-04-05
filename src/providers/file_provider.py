@@ -52,7 +52,9 @@ class FileProvider:
         "useTimestampCheckboxState", "useCounterCheckboxState",
         "deleteFileCheckboxState", "showFailedFilesCheckboxState",
         "moveInsteadCopyCheckboxState", "overwriteCheckboxState",
-        "defaultNameRadiobuttonState", "userNameRadiobuttonState"
+        "defaultNameRadiobuttonState", "userNameRadiobuttonState",
+        "HelpWidget",
+        "textEditState"
     ]
 
     ERROR_TEXTS_KEYS = [

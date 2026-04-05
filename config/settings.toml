@@ -33,3 +33,6 @@ moveInsteadCopyCheckboxState = true
 overwriteCheckboxState = true
 defaultNameRadiobuttonState = true
 userNameRadiobuttonState = false
+
+[HelpWidget]
+textEditState = true

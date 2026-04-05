@@ -138,7 +138,6 @@
   },
   "AboutDialog": {
     "titleLabelText": "Chrona",
-    "textLabelText": "<b>Autor:</b> Jin-Mach<br><b>Verze:</b> 1.0.0<br><b>Odkaz:</b> <a href=\"https://github.com/Jin-Mach/Chrona\">https://github.com/Jin-Mach/Chrona</a>",
-    "closeButtonText": "Zavřít"
+    "textLabelText": "<b>Autor:</b> Jin-Mach<br><b>Verze:</b> 1.0.0<br><b>Odkaz:</b> <a href=\"https://github.com/Jin-Mach/Chrona\" style=\"color:#81c784; text-decoration:none;\">https://github.com/Jin-Mach/Chrona</a>",    "closeButtonText": "Zavřít"
   }
 }

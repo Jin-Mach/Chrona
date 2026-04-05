@@ -1,4 +1,5 @@
-from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QLineEdit, QMainWindow, QGroupBox, QCheckBox, QRadioButton
+from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QLineEdit, QMainWindow, QGroupBox, QCheckBox, QRadioButton, \
+    QTextEdit
 
 
 def handle_ui_texts(top_widget: QWidget, texts_data: dict[str, str], widgets: list[QWidget] | None = None) -> None:
@@ -41,7 +42,7 @@ def handle_ui_widgets(config_data: dict[str, bool | str], widgets: list[QWidget]
                         widget.setDisabled(config_data[key_name])
                     else:
                         widget.setChecked(config_data[key_name])
-            if isinstance(widget, QLineEdit):
+            if isinstance(widget, (QLineEdit, QTextEdit)):
                 if key_name in config_data:
                     widget.setReadOnly(config_data[key_name])
     except Exception as e:

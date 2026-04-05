@@ -138,7 +138,7 @@
   },
   "AboutDialog": {
     "titleLabelText": "Chrona",
-    "textLabelText": "<b>Author:</b> Jin-Mach<br><b>Version:</b> 1.0.0<br><b>Link:</b> <a href=\"https://github.com/Jin-Mach/Chrona\">https://github.com/Jin-Mach/Chrona</a>",
+    "textLabelText": "<b>Author:</b> Jin-Mach<br><b>Version:</b> 1.0.0<br><b>Link:</b> <a href=\"https://github.com/Jin-Mach/Chrona\" style=\"color:#81c784; text-decoration:none;\">https://github.com/Jin-Mach/Chrona</a>",
     "closeButtonText": "Close"
-}
+  }
 }
