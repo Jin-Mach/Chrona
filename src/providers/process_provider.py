@@ -60,6 +60,7 @@ class ProcessProvider(QObject):
         self.progress_thread.deleteLater()
         self.selected_files.clear()
         self.main_window.processing_widget.reset_count_labels()
+        self.main_window.workflow_settings.reset_name_extensions_inputs()
         QTimer.singleShot(50, self.progress_dialog.reject)
         QTimer.singleShot(100, lambda: self.show_dialogs(files_count, failed_list))
 

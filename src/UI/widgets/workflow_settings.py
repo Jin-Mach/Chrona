@@ -319,3 +319,8 @@ class WorkflowSettings(QWidget):
             path = pathlib.Path.home()
         self.full_output_path = pathlib.Path(path)
         set_lineedit_text(self.full_output_path, self.output_path_edit)
+
+    def reset_name_extensions_inputs(self) -> None:
+        self.file_name_edit.clear()
+        self.custom_extensions_edit.clear()
+        self.set_config_data()
