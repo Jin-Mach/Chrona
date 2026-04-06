@@ -44,7 +44,10 @@ def handle_ui_widgets(config_data: dict[str, bool | str], widgets: list[QWidget]
                         widget.setChecked(config_data[key_name])
             if isinstance(widget, (QLineEdit, QTextEdit)):
                 if key_name in config_data:
-                    widget.setReadOnly(config_data[key_name])
+                    if key_name == "fileNameEditState" or key_name == "customExtensionsEditState":
+                        widget.setDisabled(config_data[key_name])
+                    else:
+                        widget.setReadOnly(config_data[key_name])
     except Exception as e:
         from src.utilities.error_handler import Errorhandler
         Errorhandler.handle_error("UIWidgetsHandler", e)

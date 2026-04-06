@@ -12,7 +12,7 @@ from src.UI.widgets.drag_drop_widget import DragDropWidget
 from src.providers.config_provider import ConfigProvider
 from src.providers.language_provider import LanguageProvider
 from src.utilities.error_handler import Errorhandler
-from src.utilities.setup_handler import handle_ui_texts
+from src.utilities.setup_handler import handle_ui_texts, handle_ui_widgets
 from src.utilities.ui_helpers import set_lineedit_text
 
 if TYPE_CHECKING:
@@ -164,10 +164,9 @@ class ProcessingWidget(QWidget):
             config_data = ConfigProvider.get_config_data(self.__class__.__name__)
             if not config_data:
                 raise IOError("config data loading failed.")
-            self.input_path_edit.setReadOnly(True)
-            self.output_path_edit.setReadOnly(True)
-            self.update_input_path(config_data.get(self.__class__.__name__, {}).get("inputPathEdit", ""))
-            self.update_output_path(config_data.get(self.__class__.__name__, {}).get("outputPathEdit", ""))
+            handle_ui_widgets(config_data, self.findChildren(QLineEdit))
+            self.update_input_path(config_data.get("inputPathEditPath", ""))
+            self.update_output_path(config_data.get("outputPathEditPath", ""))
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
 

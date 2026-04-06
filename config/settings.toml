@@ -4,7 +4,9 @@ supported_languages = ["cs_CZ", "en_GB"]
 
 [ProcessingWidget]
 inputPathEditPath = ""
+inputPathEditState = true
 outputPathEditPath = ""
+outputPathEditState = true
 
 [WorkflowSettings]
 inputPathEditPath = ""
@@ -29,8 +31,6 @@ useTimestampCheckboxState = true
 useCounterCheckboxState = true
 deleteFileCheckboxState = true
 showFailedFilesCheckboxState = true
-moveInsteadCopyCheckboxState = true
-overwriteCheckboxState = true
 defaultNameRadiobuttonState = true
 userNameRadiobuttonState = false
 

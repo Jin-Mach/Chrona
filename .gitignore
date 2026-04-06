@@ -208,3 +208,4 @@ __marimo__/
 
 # Project files/folders
 .DS_Store
+/config/user_settings.toml

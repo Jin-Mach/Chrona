@@ -213,8 +213,8 @@ class WorkflowSettings(QWidget):
             if not config_data:
                 raise IOError("Config data loading failed.")
             handle_ui_widgets(config_data, self.findChildren((QLineEdit, QCheckBox, QRadioButton)))
-            self.update_input_path(config_data.get(self.__class__.__name__, {}).get("inputPathEdit", ""))
-            self.update_output_path(config_data.get(self.__class__.__name__, {}).get("outputPathEdit", ""))
+            self.update_input_path(config_data.get("inputPathEditPath", ""))
+            self.update_output_path(config_data.get("outputPathEditPath", ""))
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
 
@@ -234,8 +234,6 @@ class WorkflowSettings(QWidget):
         self.user_name_radiobutton.toggled.connect(self.update_name_options)
         self.use_timestamp_checkbox.toggled.connect(lambda _: self.validate_name_options(self.use_timestamp_checkbox))
         self.use_counter_checkbox.toggled.connect(lambda _: self.validate_name_options(self.use_counter_checkbox))
-        self.delete_file_checkbox.toggled.connect(self.delete_toggled)
-        self.show_failed_files.toggled.connect(self.move_toggled)
 
     def active_filter(self) -> dict[str, bool | str]:
         return {
@@ -309,14 +307,6 @@ class WorkflowSettings(QWidget):
                 checkbox.setChecked(False)
                 checkbox.setEnabled(False)
         self.custom_extensions_edit.setDisabled(self.filter_checkbox.isChecked())
-
-    def delete_toggled(self) -> None:
-        if self.delete_file_checkbox.isChecked():
-            self.show_failed_files.setChecked(False)
-
-    def move_toggled(self) -> None:
-        if self.show_failed_files.isChecked():
-            self.delete_file_checkbox.setChecked(False)
 
     def update_input_path(self, path: str) -> None:
         if path == "":

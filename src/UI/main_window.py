@@ -1,6 +1,6 @@
 import pathlib
 
-from PyQt6.QtGui import QShowEvent
+from PyQt6.QtGui import QShowEvent, QCloseEvent
 from PyQt6.QtWidgets import QMainWindow, QApplication, QWidget, QHBoxLayout, QStackedWidget, QFileDialog, QCheckBox, \
     QLineEdit
 
@@ -9,6 +9,7 @@ from src.UI.widgets.help_widget import HelpWidget
 from src.UI.widgets.processing_widget import ProcessingWidget
 from src.UI.widgets.workflow_settings import WorkflowSettings
 from src.UI.widgets.side_panel import SidePanel
+from src.providers.config_provider import ConfigProvider
 from src.providers.language_provider import LanguageProvider
 from src.providers.process_provider import ProcessProvider
 from src.utilities.error_handler import Errorhandler
@@ -124,3 +125,7 @@ class MainWindow(QMainWindow):
         geometry.moveCenter(screen.center())
         self.move(geometry.topLeft())
         self.centered = True
+
+    def closeEvent(self, event: QCloseEvent) -> None:
+        super().closeEvent(event)
+        ConfigProvider.save_config_data(self)
