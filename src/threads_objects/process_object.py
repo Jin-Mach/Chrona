@@ -74,14 +74,13 @@ class ProcessObject(QObject):
         include_hidden = active_filters.get("hidden_folders", False)
         validated_set = set()
         validated_set_size = 0
-        for path_str in paths_list:
+        for path in paths_list:
             if self._cancel_thread:
                 return set(), 0, True
             self._mutex.lock()
             while self._pause:
                 self._wait_condition.wait(self._mutex)
             self._mutex.unlock()
-            path = pathlib.Path(path_str)
             skip_path = False
             if not include_hidden:
                 for part in path.parts:

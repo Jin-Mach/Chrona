@@ -102,11 +102,15 @@ class MainWindow(QMainWindow):
         if action in ["input_folder_processing_widget", "add_files_processing_widget"]:
             if isinstance(path, list):
                 for str_pah in path:
-                    self.process_provider.selected_files.add(pathlib.Path(str_pah))
-                self.processing_widget.update_count_labels(files_count=len(path))
+                    new_path = pathlib.Path(str_pah)
+                    if new_path not in self.process_provider.selected_files:
+                        self.process_provider.selected_files.add(new_path)
+                        self.processing_widget.update_count_labels(files_count=1)
             elif isinstance(path, str):
-                self.process_provider.selected_files.add(pathlib.Path(path))
-                self.processing_widget.update_count_labels(folders_count=1)
+                new_path = pathlib.Path(path)
+                if new_path not in self.process_provider.selected_files:
+                    self.process_provider.selected_files.add(new_path)
+                    self.processing_widget.update_count_labels(folders_count=1)
         elif action == "output_folder_processing_widget":
             self.processing_widget.update_output_path(path)
         elif action == "input_folder_workflow_settings":
