@@ -51,7 +51,7 @@ class FileProvider:
         "documentsFilesCheckboxState", "txtFilesCheckboxState", "officeFilesCheckboxState",
         "imageFilesCheckboxState", "musicFilesCheckboxState", "archiveFilesCheckboxState",
         "useTimestampCheckboxState", "useCounterCheckboxState",
-        "deleteFileCheckboxState", "showFailedFilesCheckboxState",
+        "deleteFileCheckboxState", "overwriteFileCheckboxState", "showFailedFilesCheckboxState",
         "defaultNameRadiobuttonState", "userNameRadiobuttonState",
         "HelpWidget",
         "textEditState"
@@ -105,7 +105,7 @@ class FileProvider:
         "customExtensionsLabelText", "customExtensionsEditPlaceholderText", "customExtensionsEditText", "nameGroupText",
         "defaultNameRadiobuttonText", "userNameRadiobuttonText", "fileNameEditText",
         "useTimestampCheckboxText", "useCounterCheckboxText", "optionsGroupText", "deleteFileCheckboxText",
-        "showFailedFilesCheckboxText",
+        "overwriteFileCheckboxText", "showFailedFilesCheckboxText",
         "ErrorDialog",
         "titleText", "showHideButtonText", "closeButtonText",
         "FileDialog",
