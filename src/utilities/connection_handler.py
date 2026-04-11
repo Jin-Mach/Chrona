@@ -6,7 +6,7 @@ def check_connection() -> bool:
         url = "https://github.com/Jin-Mach/Chrona"
         response = requests.get(url, timeout=3)
         if not response.ok:
-            raise
+            return False
         return True
     except requests.exceptions.RequestException:
         return False
