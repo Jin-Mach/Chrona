@@ -70,7 +70,8 @@
     "useTimestampCheckboxText": "Use timestamp",
     "useCounterCheckboxText": "Use counter",
     "optionsGroupText": "Options",
-    "deleteFileCheckboxText": "Delete file",
+    "deleteFileCheckboxText": "Delete file after moving",
+    "overwriteFileCheckbox": "Rename file if it already exists",
     "showFailedFilesCheckboxText": "Show files that failed to copy"
   },
   "ErrorDialog": {

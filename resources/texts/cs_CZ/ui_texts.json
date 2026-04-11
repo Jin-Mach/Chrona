@@ -70,7 +70,8 @@
     "useTimestampCheckboxText": "Použít časové razítko",
     "useCounterCheckboxText": "Použít čítač",
     "optionsGroupText": "Nastavení",
-    "deleteFileCheckboxText": "Smazat soubor",
+    "deleteFileCheckboxText": "Smazat soubor po přesunu",
+    "overwriteFileCheckboxText": "Automaticky upravit název při duplicitě",
     "showFailedFilesCheckboxText": "Zobrazit nezkopírované soubory"
   },
   "ErrorDialog": {

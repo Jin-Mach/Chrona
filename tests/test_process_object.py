@@ -150,6 +150,16 @@ def test_get_output_path(base_folder, monkeypatch, active_filters, documents_tex
     expected_path = output_path.joinpath(*return_value.parts)
     assert result == expected_path
 
+@pytest.mark.parametrize("file_name, expected", [
+    ("test_file.txt", "test_file(1).txt"),
+], ids=["duplicity_file"])
+
+def test_overwrite_file_name(base_folder, file_name, expected) -> None:
+    file = base_folder.joinpath(file_name)
+    file.touch()
+    result = ProcessObject.overwrite_file_name(file)
+    assert result.name == expected
+
 @pytest.mark.parametrize("src, dest, delete_file, return_value", [
     ("test_folder1.txt", "test_folder2.txt", True, None),
     ("test_folder1.txt", "test_folder2.txt", False, None),

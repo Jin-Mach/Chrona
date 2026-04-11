@@ -56,6 +56,8 @@ class ProcessObject(QObject):
                     failed_list.append((path, FileNotFoundError("Output path not created")))
                     self.logger.error(f"{self.__class__.__name__}: Output {path} not created", exc_info=True)
                     continue
+                if self.active_filter.get("overwrite_name", True):
+                    output_path = ProcessObject.overwrite_file_name(output_path)
                 copy_error = self.copy_file(path, output_path, self.active_filter.get("delete_file", False))
                 if copy_error is not None:
                     failed_list.append((path, copy_error))
@@ -145,6 +147,20 @@ class ProcessObject(QObject):
         output_path = output_path.joinpath("_".join(name_parts)).with_suffix(file_suffix)
         output_path.parent.mkdir(parents=True, exist_ok=True)
         return output_path
+
+    @staticmethod
+    def overwrite_file_name(path: pathlib.Path) -> pathlib.Path:
+        if not path.exists():
+            return path
+        name = path.stem
+        suffix = path.suffix
+        parent = path.parent
+        counter = 1
+        new_path = parent.joinpath(f"{name}({counter}){suffix}")
+        while new_path.exists():
+            counter += 1
+            new_path = parent.joinpath(f"{name}({counter}){suffix}")
+        return new_path
 
     @classmethod
     def copy_file(cls, path: pathlib.Path, output_path: pathlib.Path, delete_file: bool) -> Exception | None:

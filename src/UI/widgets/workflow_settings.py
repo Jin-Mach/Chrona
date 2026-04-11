@@ -189,9 +189,12 @@ class WorkflowSettings(QWidget):
         layout.setSpacing(self.DEFAULT_SPACING)
         self.delete_file_checkbox = QCheckBox()
         self.delete_file_checkbox.setObjectName("deleteFileCheckbox")
+        self.overwrite_file_checkbox = QCheckBox()
+        self.overwrite_file_checkbox.setObjectName("overwriteFileCheckbox")
         self.show_failed_files = QCheckBox()
         self.show_failed_files.setObjectName("showFailedFilesCheckbox")
         layout.addWidget(self.delete_file_checkbox)
+        layout.addWidget(self.overwrite_file_checkbox)
         layout.addWidget(self.show_failed_files)
         layout.addStretch()
         self.options_group.setLayout(layout)
@@ -255,6 +258,7 @@ class WorkflowSettings(QWidget):
             "archive_filter": self.archive_files_checkbox.isChecked(),
             "custom_extensions": self.custom_extensions_edit.text().strip(),
             "delete_file": self.delete_file_checkbox.isChecked(),
+            "overwrite_name": self.overwrite_file_checkbox.isChecked(),
             "failed_files": self.show_failed_files.isChecked()
         }
 
