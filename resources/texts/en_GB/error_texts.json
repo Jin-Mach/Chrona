@@ -1,24 +1,24 @@
 {
-  "IOError": "Error reading or writing a file",
-  "PermissionError": "Insufficient permissions for reading or writing",
-  "OSError": "Not enough disk space",
+  "IOError": "Error reading or writing file",
+  "PermissionError": "Access denied",
+  "OSError": "Cannot write to storage",
   "FileNotFoundError": "File not found",
   "ConnectionError": "Connection error",
   "ValueError": "Invalid value",
-  "TypeError": "Invalid data type",
-  "KeyError": "Missing key",
-  "IndexError": "Index out of range",
+  "TypeError": "Invalid data type", -ne
+  "KeyError": "Missing key", -ne
+  "IndexError": "Index out of range", -ne
   "AttributeError": "Object has no such attribute or method",
-  "ZeroDivisionError": "Division by zero is not allowed",
-  "RuntimeError": "General runtime error",
-  "ImportError": "Error importing module",
-  "ModuleNotFoundError": "Module not found",
-  "NameError": "Unknown variable or function name",
-  "StopIteration": "Iteration finished",
-  "MemoryError": "Out of memory",
-  "AssertionError": "Assertion failed",
-  "RecursionError": "Maximum recursion depth exceeded",
-  "FloatingPointError": "Floating point error",
-  "TimeoutError": "Operation timed out",
+  "ZeroDivisionError": "Division by zero is not allowed", -ne
+  "RuntimeError": "General runtime error", -ne
+  "ImportError": "Error importing module", -ne
+  "ModuleNotFoundError": "Module not found", -ne
+  "NameError": "Unknown variable or function name", ne
+  "StopIteration": "End of iteration", -ne
+  "MemoryError": "Out of memory", -ne
+  "AssertionError": "Assertion failed", -ne
+  "RecursionError": "Maximum recursion depth exceeded", -ne
+  "FloatingPointError": "Floating point error", -ne
+  "TimeoutError": "Operation timed out", -ne
   "UnknownError": "Unknown error"
 }

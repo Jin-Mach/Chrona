@@ -1,7 +1,7 @@
 {
   "IOError": "Chyba při čtení nebo zápisu souboru",
-  "PermissionError": "Nedostatečná práva pro zápis nebo čtení",
-  "OSError": "Málo místa na disku",
+  "PermissionError": "Přístup odepřen",
+  "OSError": "Nelze zapisovat na úložiště",
   "FileNotFoundError": "Soubor nebyl nalezen",
   "ConnectionError": "Chyba při připojení",
   "ValueError": "Chyba hodnoty",

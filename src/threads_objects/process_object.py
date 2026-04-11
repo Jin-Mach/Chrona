@@ -41,6 +41,7 @@ class ProcessObject(QObject):
                 raise ValueError("Validate folders failed")
             check_error = self.check_hdd_setup(self.output_path, validated_set_size)
             if check_error is not None:
+                self.logger.error(f"{self.__class__.__name__}: HDD setup failed - {check_error}", exc_info=True)
                 self.failed.emit(check_error)
                 return
             self.files_count.emit(len(validated_set))
@@ -60,6 +61,10 @@ class ProcessObject(QObject):
                     output_path = ProcessObject.overwrite_file_name(output_path)
                 copy_error = self.copy_file(path, output_path, self.active_filter.get("delete_file", False))
                 if copy_error is not None:
+                    if isinstance(copy_error, OSError):
+                        self.logger.error(f"{self.__class__.__name__}: Copy failed - {copy_error}", exc_info=True)
+                        self.failed.emit(copy_error)
+                        return
                     failed_list.append((path, copy_error))
                     self.logger.error(f"{self.__class__.__name__}: {copy_error}", exc_info=True)
                     continue
@@ -170,7 +175,13 @@ class ProcessObject(QObject):
             if delete_file:
                 path.unlink()
             return None
-        except (PermissionError, FileNotFoundError) as e:
+        except FileNotFoundError as e:
+            return e
+        except PermissionError as e:
+            return e
+        except OSError as e:
+            return e
+        except Exception as e:
             return e
 
     @staticmethod
