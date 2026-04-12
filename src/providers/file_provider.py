@@ -30,8 +30,10 @@ class FileProvider:
                     "https://raw.githubusercontent.com/Jin-Mach/Chrona/main/resources/texts/cs_CZ/help_text.html",
                 cls.resources_path.joinpath("texts", "en_GB", "help_text.html"):
                     "https://raw.githubusercontent.com/Jin-Mach/Chrona/main/resources/texts/en_GB/help_text.html",
-                cls.resources_path.joinpath("images", "splash_pixmap.jpg"):
-                    "https://raw.githubusercontent.com/Jin-Mach/Chrona/main/resources/images/splash_pixmap.jpg"
+                cls.resources_path.joinpath("images", "splash_icon.jpg"):
+                    "https://raw.githubusercontent.com/Jin-Mach/Chrona/main/resources/images/splash_pixmap.jpg",
+                cls.resources_path.joinpath("images", "application_icon.png"):
+                    "https://raw.githubusercontent.com/Jin-Mach/Chrona/main/resources/images/application_icon.png"
             }
         }
 

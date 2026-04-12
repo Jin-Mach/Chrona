@@ -34,7 +34,7 @@ class ApplicationInitProvider:
                 if not DownloadProvider.download_files(missing_files):
                     raise ConnectionError(f"Download failed: {missing_files}")
             ApplicationInitProvider.basic_setup(project_path)
-            set_application_style(application)
+            set_application_style(application, ConfigProvider.project_path)
         except Exception as e:
             Errorhandler.handle_error(ApplicationInitProvider.__name__, e)
             return False

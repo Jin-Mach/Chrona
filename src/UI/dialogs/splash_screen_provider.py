@@ -10,7 +10,7 @@ def show_splash_screen() -> QSplashScreen | None:
     project_path = set_project_path()
     if not project_path.exists():
         return None
-    img = project_path.joinpath("resources", "images", "splash_pixmap.jpg")
+    img = project_path.joinpath("resources", "images", "splash_icon.jpg")
     if not img.exists():
         return None
     pixmap = QPixmap(str(img))
