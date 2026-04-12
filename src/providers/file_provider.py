@@ -25,7 +25,13 @@ class FileProvider:
                 cls.resources_path.joinpath("texts", "cs_CZ", "error_texts.json"):
                     "https://raw.githubusercontent.com/Jin-Mach/Chrona/main/resources/texts/cs_CZ/error_texts.json",
                 cls.resources_path.joinpath("texts", "en_GB", "error_texts.json"):
-                    "https://raw.githubusercontent.com/Jin-Mach/Chrona/main/resources/texts/en_GB/error_texts.json"
+                    "https://raw.githubusercontent.com/Jin-Mach/Chrona/main/resources/texts/en_GB/error_texts.json",
+                cls.resources_path.joinpath("texts", "cs_CZ", "help_text.html"):
+                    "https://raw.githubusercontent.com/Jin-Mach/Chrona/main/resources/texts/cs_CZ/help_text.html",
+                cls.resources_path.joinpath("texts", "en_GB", "help_text.html"):
+                    "https://raw.githubusercontent.com/Jin-Mach/Chrona/main/resources/texts/en_GB/help_text.html",
+                cls.resources_path.joinpath("images", "splash_pixmap.jpg"):
+                    "https://raw.githubusercontent.com/Jin-Mach/Chrona/main/resources/images/splash_pixmap.jpg"
             }
         }
 
