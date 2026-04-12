@@ -160,14 +160,15 @@ def test_overwrite_file_name(base_folder, file_name, expected) -> None:
     result = ProcessObject.overwrite_file_name(file)
     assert result.name == expected
 
-@pytest.mark.parametrize("src, dest, delete_file, return_value", [
-    ("test_folder1.txt", "test_folder2.txt", True, None),
-    ("test_folder1.txt", "test_folder2.txt", False, None),
-    ("test_folder1.txt", "test_folder1.txt", True, ValueError),
-    ("test_folder1.txt", "test_folder2.txt", True, PermissionError),
-], ids=["copy+delete", "copy_only", "same_path_error", "permission_error"])
+@pytest.mark.parametrize("src, dest, move_file, delete_file, expected", [
+    ("test_folder1.txt", "test_folder2.txt", False, False, None),   # keep
+    ("test_folder1.txt", "test_folder2.txt", False, True, None),    # delete
+    ("test_folder1.txt", "test_folder2.txt", True, False, None),    # move to trash
+    ("test_folder1.txt", "test_folder1.txt", False, True, ValueError),
+    ("test_folder1.txt", "test_folder2.txt", True, False, PermissionError),
+], ids=["keep", "delete", "trash", "same_path_error", "permission_error"])
 
-def test_copy_file(base_folder, monkeypatch, src, dest, delete_file, return_value) -> None:
+def test_copy_file(base_folder, monkeypatch, src, dest, move_file, delete_file, expected) -> None:
     path = base_folder.joinpath(src)
     path.touch()
     output_path = base_folder.joinpath(dest)
@@ -181,15 +182,20 @@ def test_copy_file(base_folder, monkeypatch, src, dest, delete_file, return_valu
     def fake_unlink(path_to_remove) -> None:
         pass
 
-    if return_value == PermissionError:
+    if expected is PermissionError:
         monkeypatch.setattr("shutil.copy2", fake_copy_error)
     else:
         monkeypatch.setattr("shutil.copy2", fake_copy)
     monkeypatch.setattr(pathlib.Path, "unlink", fake_unlink)
-    result = ProcessObject.copy_file(path, output_path, delete_file)
-    if return_value is ValueError:
+    result = ProcessObject.copy_file(
+        path,
+        output_path,
+        move_file,
+        delete_file
+    )
+    if expected is ValueError:
         assert isinstance(result, ValueError)
-    elif return_value is PermissionError:
+    elif expected is PermissionError:
         assert isinstance(result, PermissionError)
     else:
         assert result is None

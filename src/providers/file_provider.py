@@ -35,11 +35,48 @@ class FileProvider:
             }
         }
 
-    SETTINGS_SECTIONS = {
-        "LanguageProvider",
-        "ProcessingWidget",
-        "WorkflowSettings",
-        "HelpWidget"
+    SETTINGS_STRUCTURE = {
+        "LanguageProvider": {
+            "default_language",
+            "supported_languages"
+        },
+        "ProcessingWidget": {
+            "inputPathEditPath",
+            "inputPathEditState",
+            "outputPathEditPath",
+            "outputPathEditState"
+        },
+        "WorkflowSettings": {
+            "inputPathEditPath",
+            "inputPathEditState",
+            "outputPathEditState",
+            "yearCheckboxState",
+            "monthCheckboxState",
+            "dayCheckboxState",
+            "subfoldersTypeCheckboxState",
+            "hiddenFoldersCheckboxState",
+            "fileNameEditState",
+            "customExtensionsEditState",
+            "filterCheckboxState",
+            "documentsFilesCheckboxState",
+            "txtFilesCheckboxState",
+            "officeFilesCheckboxState",
+            "imageFilesCheckboxState",
+            "musicFilesCheckboxState",
+            "archiveFilesCheckboxState",
+            "useTimestampCheckboxState",
+            "useCounterCheckboxState",
+            "keepFileRadiobuttonState",
+            "moveToTrashRadiobuttonState",
+            "deleteFileRadiobuttonState",
+            "overwriteFileCheckboxState",
+            "showFailedFilesCheckboxState",
+            "defaultNameRadiobuttonState",
+            "userNameRadiobuttonState"
+        },
+        "HelpWidget": {
+            "textEditState"
+        }
     }
 
     TEXTS_STRUCTURE = {
@@ -117,7 +154,9 @@ class FileProvider:
             "useTimestampCheckboxText",
             "useCounterCheckboxText",
             "optionsGroupText",
-            "deleteFileCheckboxText",
+            "keepFileRadiobuttonText",
+            "moveToTrashRadiobuttonText",
+            "deleteFileRadiobuttonText",
             "overwriteFileCheckboxText",
             "showFailedFilesCheckboxText"
         },
@@ -234,7 +273,7 @@ class FileProvider:
                     missing_files[category][file] = url
                     continue
                 if file.suffix == ".toml":
-                    if not TomlValidator.validate_config(file, cls.SETTINGS_SECTIONS):
+                    if not TomlValidator.validate_config(file, cls.SETTINGS_STRUCTURE):
                         missing_files[category][file] = url
                     continue
                 if "error_texts" in file.name:

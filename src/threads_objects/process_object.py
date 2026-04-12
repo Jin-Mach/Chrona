@@ -4,6 +4,9 @@ import shutil
 import sys
 import os
 
+# noinspection PyPackageRequirements
+from send2trash import send2trash
+
 from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot, QMutex, QWaitCondition
 
 from src.utilities.logging_provider import get_logger
@@ -59,7 +62,8 @@ class ProcessObject(QObject):
                     continue
                 if self.active_filter.get("overwrite_name", True):
                     output_path = ProcessObject.overwrite_file_name(output_path)
-                copy_error = self.copy_file(path, output_path, self.active_filter.get("delete_file", False))
+                copy_error = self.copy_file(path, output_path, self.active_filter.get("move_trash", False),
+                                            self.active_filter.get("delete_file", False))
                 if copy_error is not None:
                     if isinstance(copy_error, OSError):
                         self.logger.error(f"{self.__class__.__name__}: Copy failed - {copy_error}", exc_info=True)
@@ -167,12 +171,14 @@ class ProcessObject(QObject):
         return new_path
 
     @classmethod
-    def copy_file(cls, path: pathlib.Path, output_path: pathlib.Path, delete_file: bool) -> Exception | None:
+    def copy_file(cls, path: pathlib.Path, output_path: pathlib.Path, move_file: bool, delete_file: bool) -> Exception | None:
         try:
             if path.resolve() == output_path.resolve():
                 return ValueError("Source and destination are the same")
             shutil.copy2(path, output_path)
-            if delete_file:
+            if move_file:
+                send2trash(path)
+            elif delete_file:
                 path.unlink()
             return None
         except FileNotFoundError as e:

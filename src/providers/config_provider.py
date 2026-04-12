@@ -64,7 +64,9 @@ class ConfigProvider:
                 "imageFilesCheckboxState": main_window.workflow_settings.image_files_checkbox.isChecked(),
                 "musicFilesCheckboxState": main_window.workflow_settings.music_files_checkbox.isChecked(),
                 "archiveFilesCheckboxState": main_window.workflow_settings.archive_files_checkbox.isChecked(),
-                "deleteFileCheckboxState": main_window.workflow_settings.delete_file_checkbox.isChecked(),
+                "keepFileRadiobuttonState": main_window.workflow_settings.keep_file_radiobutton.isChecked(),
+                "moveToTrashRadiobuttonState": main_window.workflow_settings.move_to_trash_radiobutton.isChecked(),
+                "deleteFileRadiobuttonState": main_window.workflow_settings.delete_file_radiobutton.isChecked(),
                 "showFailedFilesCheckboxState": main_window.workflow_settings.show_failed_files.isChecked(),
             }
             user_settings_path = ConfigProvider.project_path.joinpath("config", "user_settings.toml")

@@ -70,7 +70,9 @@
     "useTimestampCheckboxText": "Use timestamp",
     "useCounterCheckboxText": "Use counter",
     "optionsGroupText": "Options",
-    "deleteFileCheckboxText": "Delete file after moving",
+    "keepFileRadiobuttonText": "Keep file",
+    "deleteFileRadiobuttonText": "Delete file",
+    "moveToTrashRadiobuttonText": "Move to trash",
     "overwriteFileCheckboxText": "Rename file if it already exists",
     "showFailedFilesCheckboxText": "Show files that failed to copy"
   },

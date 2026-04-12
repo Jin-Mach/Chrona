@@ -30,22 +30,17 @@ class WorkflowSettings(QWidget):
         self.set_validators()
         self.create_connection()
 
-    def create_gui(self) -> QVBoxLayout:
-        main_layout = QVBoxLayout()
-        main_layout.setSpacing(self.DEFAULT_SPACING)
-        main_layout.addLayout(self.create_paths_section())
-        top_groups_layout = QHBoxLayout()
-        top_groups_layout.addWidget(self.create_folder_group())
-        top_groups_layout.addWidget(self.create_filter_group())
-        top_groups_layout.setStretch(0, 1)
-        top_groups_layout.setStretch(1, 1)
-        main_layout.addLayout(top_groups_layout)
-        bottom_groups_layout = QHBoxLayout()
-        bottom_groups_layout.addWidget(self.create_name_group())
-        bottom_groups_layout.addWidget(self.create_options_group())
-        bottom_groups_layout.setStretch(0, 1)
-        bottom_groups_layout.setStretch(1, 1)
-        main_layout.addLayout(bottom_groups_layout)
+    def create_gui(self) -> QGridLayout:
+        main_layout = QGridLayout()
+        main_layout.setHorizontalSpacing(self.DEFAULT_SPACING)
+        main_layout.setVerticalSpacing(self.DEFAULT_SPACING)
+        main_layout.addLayout(self.create_paths_section(), 0, 0, 1, 2)
+        main_layout.addWidget(self.create_folder_group(), 1, 0)
+        main_layout.addWidget(self.create_filter_group(), 1, 1)
+        main_layout.addWidget(self.create_name_group(), 2, 0)
+        main_layout.addWidget(self.create_options_group(), 2, 1)
+        main_layout.setColumnStretch(0, 1)
+        main_layout.setColumnStretch(1, 1)
         return main_layout
 
     def create_paths_section(self) -> QVBoxLayout:
@@ -187,13 +182,21 @@ class WorkflowSettings(QWidget):
         self.options_group.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         layout = QVBoxLayout()
         layout.setSpacing(self.DEFAULT_SPACING)
-        self.delete_file_checkbox = QCheckBox()
-        self.delete_file_checkbox.setObjectName("deleteFileCheckbox")
+        move_layout = QHBoxLayout()
+        self.keep_file_radiobutton = QRadioButton()
+        self.keep_file_radiobutton.setObjectName("keepFileRadiobutton")
+        self.move_to_trash_radiobutton = QRadioButton()
+        self.move_to_trash_radiobutton.setObjectName("moveToTrashRadiobutton")
+        self.delete_file_radiobutton = QRadioButton()
+        self.delete_file_radiobutton.setObjectName("deleteFileRadiobutton")
+        move_layout.addWidget(self.keep_file_radiobutton)
+        move_layout.addWidget(self.move_to_trash_radiobutton)
+        move_layout.addWidget(self.delete_file_radiobutton)
         self.overwrite_file_checkbox = QCheckBox()
         self.overwrite_file_checkbox.setObjectName("overwriteFileCheckbox")
         self.show_failed_files = QCheckBox()
         self.show_failed_files.setObjectName("showFailedFilesCheckbox")
-        layout.addWidget(self.delete_file_checkbox)
+        layout.addLayout(move_layout)
         layout.addWidget(self.overwrite_file_checkbox)
         layout.addWidget(self.show_failed_files)
         layout.addStretch()
@@ -257,7 +260,8 @@ class WorkflowSettings(QWidget):
             "music_filter": self.music_files_checkbox.isChecked(),
             "archive_filter": self.archive_files_checkbox.isChecked(),
             "custom_extensions": self.custom_extensions_edit.text().strip(),
-            "delete_file": self.delete_file_checkbox.isChecked(),
+            "move_trash": self.move_to_trash_radiobutton.isChecked(),
+            "delete_file": self.delete_file_radiobutton.isChecked(),
             "overwrite_name": self.overwrite_file_checkbox.isChecked(),
             "failed_files": self.show_failed_files.isChecked()
         }
