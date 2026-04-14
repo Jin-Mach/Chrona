@@ -17,6 +17,7 @@ class ProcessObject(QObject):
     finished = pyqtSignal(int, list)
     failed = pyqtSignal(Exception)
     files_count = pyqtSignal(int)
+    empty_validated_set = pyqtSignal()
     progress = pyqtSignal(int)
 
     def __init__(self, documents_texts: dict[str, str], output_path: pathlib.Path, selected_paths: set[pathlib.Path],
@@ -38,10 +39,11 @@ class ProcessObject(QObject):
         try:
             validated_set, validated_set_size, cancel_status = self.check_dir_folders(self.selected_paths, self.active_filter, self.documents_texts)
             if cancel_status:
-                self.finished.emit([])
+                self.finished.emit(0, [])
                 return
             if not validated_set:
-                raise ValueError("Validate folders failed")
+                self.empty_validated_set.emit()
+                return
             check_error = self.check_hdd_setup(self.output_path, validated_set_size)
             if check_error is not None:
                 self.logger.error(f"{self.__class__.__name__}: HDD setup failed - {check_error}", exc_info=True)

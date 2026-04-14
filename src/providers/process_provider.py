@@ -22,9 +22,12 @@ class ProcessProvider(QObject):
         self.main_window = main_window
         self.selected_files = set()
 
+    def get_ui_texts(self) -> dict[str, str]:
+        return LanguageProvider.get_widgets_texts(self.__class__.__name__, LanguageProvider.language_code)
+
     def start_process(self) -> None:
         try:
-            ui_texts = LanguageProvider.get_widgets_texts(self.__class__.__name__, LanguageProvider.language_code)
+            ui_texts = self.get_ui_texts()
             if not ui_texts:
                 raise IOError("Texts data loading failed.")
             if not self.selected_files:
@@ -44,25 +47,30 @@ class ProcessProvider(QObject):
             self.progress_dialog.cancel_progress_button.clicked.connect(self.cancel_thread)
             self.progress_object.moveToThread(self.progress_thread)
             self.progress_thread.started.connect(self.progress_object.run_process)
+            self.progress_object.empty_validated_set.connect(self.show_empty_validated_set_dialog)
             self.progress_object.files_count.connect(self.progress_dialog.set_progress_bar_range)
             self.progress_object.progress.connect(self.progress_dialog.update_progress_value_label)
-            self.progress_object.finished.connect(self.stop_thread)
+            self.progress_object.finished.connect(self.handle_finish)
             self.progress_object.failed.connect(self.show_error_dialog)
             self.progress_dialog.show()
             QTimer.singleShot(0, self.progress_thread.start)
         except Exception as e:
             Errorhandler.handle_error(self.__class__.__name__, e)
 
-    def stop_thread(self, files_count: int, failed_list: list[tuple[pathlib.Path, Exception]]) -> None:
-        self.progress_thread.quit()
-        self.progress_thread.wait()
-        self.progress_object.deleteLater()
-        self.progress_thread.deleteLater()
-        self.selected_files.clear()
-        self.main_window.processing_widget.reset_count_labels()
-        self.main_window.workflow_settings.reset_name_extensions_inputs()
+    def show_empty_validated_set_dialog(self) -> None:
+        self.stop_thread()
         QTimer.singleShot(50, self.progress_dialog.reject)
-        QTimer.singleShot(100, lambda: self.show_dialogs(files_count, failed_list))
+        ui_texts = self.get_ui_texts()
+        if not ui_texts:
+            raise IOError("Texts data loading failed.")
+        show_error_dialog(ui_texts.get("titleText", "Error"),
+                          ui_texts.get("messageText", "No file selected for transfer."),
+                          self.main_window)
+
+    def handle_finish(self, files_count: int, failed_list: list[tuple[pathlib.Path, Exception]]) -> None:
+        self.stop_thread()
+        QTimer.singleShot(50, self.progress_dialog.reject)
+        QTimer.singleShot(100, lambda: self.show_notification_dialog(files_count, failed_list))
 
     def cancel_thread(self) -> None:
         self.progress_object.pause_thread()
@@ -73,7 +81,7 @@ class ProcessProvider(QObject):
         else:
             self.progress_object.resume_thread()
 
-    def show_dialogs(self, files_count: int, failed_list: list[tuple[pathlib.Path, Exception]]) -> None:
+    def show_notification_dialog(self, files_count: int, failed_list: list[tuple[pathlib.Path, Exception]]) -> None:
         self.notification_dialog = NotificationDialog(self.main_window)
         self.notification_dialog.update_label_text(files_count - len(failed_list), len(failed_list))
         self.notification_dialog.show()
@@ -86,3 +94,12 @@ class ProcessProvider(QObject):
         self.main_window.processing_widget.reset_count_labels()
         QTimer.singleShot(50, self.progress_dialog.reject)
         Errorhandler.handle_error(self.__class__.__name__, exception)
+
+    def stop_thread(self) -> None:
+        self.progress_thread.quit()
+        self.progress_thread.wait()
+        self.progress_object.deleteLater()
+        self.progress_thread.deleteLater()
+        self.selected_files.clear()
+        self.main_window.processing_widget.reset_count_labels()
+        self.main_window.workflow_settings.reset_name_extensions_inputs()
