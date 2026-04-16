@@ -11,6 +11,7 @@ class FileProvider:
         cls.project_path = project_path
         cls.config_path = project_path.joinpath("config")
         cls.resources_path = project_path.joinpath("resources")
+        cls.styles_path = project_path.joinpath("src", "UI", "styles")
 
         cls.required_files = {
             "config": {
@@ -34,6 +35,10 @@ class FileProvider:
                     "https://raw.githubusercontent.com/Jin-Mach/Chrona/main/resources/images/splash_pixmap.jpg",
                 cls.resources_path.joinpath("images", "application_icon.png"):
                     "https://raw.githubusercontent.com/Jin-Mach/Chrona/main/resources/images/application_icon.png"
+            },
+            "styles": {
+                cls.styles_path.joinpath("application_style.qss"):
+                    "https://raw.githubusercontent.com/Jin-Mach/Chrona/main/src/UI/styles/application_style.qss"
             }
         }
 
@@ -266,7 +271,7 @@ class FileProvider:
     @classmethod
     def check_missing_files(cls) -> dict[str, dict[pathlib.Path, str]]:
         missing_files = {}
-        for path in (cls.config_path, cls.resources_path):
+        for path in (cls.config_path, cls.resources_path, cls.styles_path):
             path.mkdir(parents=True, exist_ok=True)
         for category, files in cls.required_files.items():
             missing_files[category] = {}
