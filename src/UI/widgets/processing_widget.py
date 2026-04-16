@@ -153,7 +153,8 @@ class ProcessingWidget(QWidget):
             self.folders_count_label.setText(f"{self.folders_count_text} {self.folders_count_value}")
             self.files_count_label.setText(f"{self.files_count_text} {self.files_count_value}")
             self.no_items_title = texts_data.get("titleText", "Error")
-            self.no_items_text = texts_data.get("messageText", "No items to delete")
+            self.no_items_delete = texts_data.get("noItemsDeleteText", "No items to delete")
+            self.no_items_text = texts_data.get("noItemsText", "No items to display")
             self.clear_title = texts_data.get("questionTitleText", "Confirmation")
             self.clear_items_text = texts_data.get("clearItemText", "Are you sure you want to clear all items?")
         except Exception as e:
@@ -212,7 +213,7 @@ class ProcessingWidget(QWidget):
 
     def show_clear_items_dialog(self) -> None:
         if not self.main_window.process_provider.selected_files:
-            show_error_dialog(self.no_items_title, self.no_items_text, self.main_window)
+            show_error_dialog(self.no_items_title, self.no_items_delete, self.main_window)
             return
         result = show_question_dialog(self.clear_title, self.clear_items_text, self.main_window)
         if result:

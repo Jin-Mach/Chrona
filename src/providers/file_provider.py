@@ -125,7 +125,8 @@ class FileProvider:
             "clearItemsButtonText",
             "clearItemsButtonTooltipText",
             "titleText",
-            "messageText",
+            "noItemsDeleteText",
+            "noItemsText"
             "questionTitleText",
             "clearItemText"
         },

@@ -35,7 +35,8 @@
     "clearItemsButtonText": "Smazat vše",
     "clearItemsButtonTooltipText": "Trvale odstraní všechny položky ze seznamu",
     "titleText": "Chyba",
-    "messageText": "Žádné položky ke smazání",
+    "noItemsDeleteText": "Žádné položky ke smazání",
+    "noItemsText": "Žádné položky k zobrazení",
     "questionTitleText": "Potvrzení",
     "clearItemText": "Opravdu odstranit všechny položky?"
   },

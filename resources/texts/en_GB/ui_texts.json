@@ -35,7 +35,8 @@
     "clearItemsButtonText": "Clear all",
     "clearItemsButtonTooltipText": "Permanently removes all items from the list",
     "titleText": "Error",
-    "messageText": "No items to delete",
+    "noItemsDeleteText": "No items to delete",
+    "noItemsText": "No items to display",
     "questionTitleText": "Confirmation",
     "clearItemText": "Are you sure you want to clear all items?"
   },
