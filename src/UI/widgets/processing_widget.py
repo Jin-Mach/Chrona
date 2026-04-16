@@ -2,7 +2,7 @@ import pathlib
 
 from typing import TYPE_CHECKING
 
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QTimer
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QGroupBox, QLabel, QSizePolicy, QLineEdit, \
     QGridLayout
 
@@ -208,7 +208,7 @@ class ProcessingWidget(QWidget):
             show_error_dialog(self.no_items_title, self.no_items_text, self.main_window)
             return
         dialog = SelectedItemsDialog(self.main_window)
-        dialog.show()
+        QTimer.singleShot(1, dialog.show)
 
     def show_clear_items_dialog(self) -> None:
         if not self.main_window.process_provider.selected_files:

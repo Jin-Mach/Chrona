@@ -1,0 +1,211 @@
+QWidget {
+    color: #e4e7eb;
+    font-size: 13px;
+}
+
+QMainWindow {
+    background-color: #21252b;
+}
+
+QPushButton {
+    background-color: #2f6fed;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+}
+
+QPushButton:hover {
+    background-color: #3c7cff;
+}
+
+QPushButton:pressed {
+    background-color: #255fd1;
+}
+
+QPushButton:disabled {
+    background-color: #3a3f46;
+    color: #7d848d;
+}
+
+#itemButton {
+    background-color: #2f6fed;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    min-width: 60px;
+}
+
+#itemButton:hover {
+    background-color: #3c7cff;
+}
+
+#itemButton:pressed {
+    background-color: #255fd1;
+}
+
+#itemButton:disabled {
+    background-color: #3a3f46;
+    color: #7d848d;
+}
+
+QLineEdit,
+QTextEdit,
+QPlainTextEdit {
+    background-color: #23272e;
+    color: #e4e7eb;
+    border: 1px solid #343b44;
+    border-radius: 6px;
+    padding: 6px;
+    selection-background-color: #2f6fed;
+}
+
+QLineEdit:focus,
+QTextEdit:focus,
+QPlainTextEdit:focus {
+    border: 1px solid #4c8dff;
+}
+
+QListWidget {
+    background-color: #23272e;
+    border: 1px solid #343b44;
+    border-radius: 6px;
+    padding: 4px;
+}
+
+QListWidget QWidget {
+    background: transparent;
+}
+
+QListWidget::item {
+    padding: 0px;
+    border-radius: 0px;
+}
+
+QListWidget::item:selected {
+    background-color: rgba(47, 111, 237, 0.2);
+}
+
+QListWidget::item:hover {
+    background-color: #2d333b;
+}
+
+QCheckBox {
+    spacing: 8px;
+}
+
+QCheckBox::indicator {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #4a515b;
+    border-radius: 4px;
+    background-color: #23272e;
+}
+
+QCheckBox::indicator:hover {
+    border: 1px solid #5a93ff;
+}
+
+QCheckBox::indicator:checked {
+    background-color: #2f6fed;
+    border: 1px solid #2f6fed;
+}
+
+QRadioButton {
+    spacing: 8px;
+}
+
+QRadioButton::indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    border: 1px solid #4a515b;
+    background-color: #23272e;
+}
+
+QRadioButton::indicator:hover {
+    border: 1px solid #5a93ff;
+}
+
+QRadioButton::indicator:checked {
+    background-color: #2f6fed;
+    border: 4px solid #23272e;
+}
+
+QScrollBar:vertical {
+    background: #1c1f24;
+    width: 12px;
+    margin: 0px;
+}
+
+QScrollBar::handle:vertical {
+    background: #3a3f46;
+    border-radius: 6px;
+    min-height: 20px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #4a515b;
+}
+
+QScrollBar:horizontal {
+    background: #1c1f24;
+    height: 12px;
+}
+
+QScrollBar::handle:horizontal {
+    background: #3a3f46;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background: #4a515b;
+}
+
+QScrollBar::up-arrow:vertical,
+QScrollBar::down-arrow:vertical {
+    background: none;
+    border: none;
+    width: 0px;
+    height: 0px;
+}
+
+QScrollBar::sub-line:vertical,
+QScrollBar::add-line:vertical {
+    height: 0px;
+    background: none;
+    border: none;
+}
+
+QDialog,
+QMessageBox {
+    background-color: #21252b;
+    color: #e4e7eb;
+}
+
+QMessageBox QLabel {
+    color: #e4e7eb;
+    background: transparent;
+}
+
+QMessageBox QPushButton {
+    background-color: #2f6fed;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 12px;
+    min-width: 80px;
+}
+
+QMessageBox QPushButton:hover {
+    background-color: #3c7cff;
+}
+
+QMessageBox QPushButton:pressed {
+    background-color: #255fd1;
+}
+
+QMessageBox {
+    messagebox-text-interaction-flags: 5;
+}

@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from PyQt6.QtCore import QFileInfo, Qt
+from PyQt6.QtCore import QFileInfo, Qt, QSize
 from PyQt6.QtWidgets import QDialog, QLayout, QVBoxLayout, QFileIconProvider, QListWidgetItem, QListWidget, QPushButton, \
     QWidget, QHBoxLayout, QLabel, QDialogButtonBox, QSizePolicy
 
@@ -68,30 +68,41 @@ class SelectedItemsDialog(QDialog):
 
     def set_items_list(self) -> None:
         provider = QFileIconProvider()
-        for index, path in enumerate(sorted(self.selected_files)):
+        for path in sorted(self.selected_files):
             icon_type = QFileInfo(str(path))
             icon = provider.icon(icon_type)
+            icon_pixmap = icon.pixmap(QSize(24, 24))
             item = QListWidgetItem()
-            item.setIcon(icon)
             item.setData(Qt.ItemDataRole.UserRole, path)
+            item.setText("")
             item_widget = QWidget()
-            item_widget.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+            item_widget.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
             item_layout = QHBoxLayout()
-            item_layout.setContentsMargins(5, 5, 5, 5)
-            item_layout.setSpacing(10)
+            item_layout.setContentsMargins(8, 6, 8, 6)
+            item_layout.setSpacing(8)
+            icon_label = QLabel()
+            icon_label.setPixmap(icon_pixmap)
+            icon_label.setFixedSize(24, 24)
+            icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            item_layout.addWidget(icon_label, alignment=Qt.AlignmentFlag.AlignVCenter)
             item_label = QLabel()
             item_label.setText(str(path.name))
             item_label.setToolTip(str(path))
             item_label.setToolTipDuration(5000)
-            item_button = QPushButton()
-            item_button.setText(self.item_button_text)
-            item_button.clicked.connect(lambda _, it=item: self.delete_selected_item(it))
-            item_layout.addWidget(item_label)
+            item_label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+            item_layout.addWidget(item_label, alignment=Qt.AlignmentFlag.AlignVCenter)
             item_layout.addStretch()
-            item_layout.addWidget(item_button)
+            item_button = QPushButton()
+            item_button.setObjectName("itemButton")
+            item_button.setText(self.item_button_text)
+            item_button.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+            item_button.clicked.connect(lambda checked, it=item: self.delete_selected_item(it))
+            item_layout.addWidget(item_button, alignment=Qt.AlignmentFlag.AlignVCenter)
             item_widget.setLayout(item_layout)
             item_widget.adjustSize()
-            item.setSizeHint(item_widget.sizeHint())
+            widget_height = item_widget.sizeHint().height()
+            item_widget.setFixedHeight(widget_height)
+            item.setSizeHint(QSize(item_widget.sizeHint().width(), widget_height))
             self.list_widget.addItem(item)
             self.list_widget.setItemWidget(item, item_widget)
 
