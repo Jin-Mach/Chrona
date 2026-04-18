@@ -17,15 +17,18 @@ def handle_ui_texts(top_widget: QWidget, texts_data: dict[str, str], widgets: li
             if isinstance(widget, (QLabel, QPushButton, QCheckBox, QRadioButton)):
                 if text:
                     widget.setText(text)
+                if tooltip:
+                    widget.setToolTip(tooltip)
+                    if  isinstance(widget, QPushButton):
+                        widget.setToolTipDuration(5000)
+                    else:
+                        widget.setToolTipDuration(0)
             if isinstance(widget, QGroupBox):
                 if text:
                     widget.setTitle(text)
             if isinstance(widget, QLineEdit):
                 if placeholder:
                     widget.setPlaceholderText(placeholder)
-            if tooltip:
-                widget.setToolTip(tooltip)
-                widget.setToolTipDuration(5000)
     except Exception as e:
         from src.utilities.error_handler import Errorhandler
         Errorhandler.handle_error("UITextsHandler", e)

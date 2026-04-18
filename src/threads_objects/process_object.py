@@ -226,6 +226,7 @@ class ProcessObject(QObject):
             documents_texts["officeFiles"]: documents_texts["officeSuffixes"],
             documents_texts["imageFiles"]: documents_texts["imageSuffixes"],
             documents_texts["musicFiles"]: documents_texts["musicSuffixes"],
+            documents_texts["videoFiles"]: documents_texts["videoSuffixes"],
             documents_texts["archiveFiles"]: documents_texts["archiveSuffixes"],
         }
         folder_name = documents_texts["othersFiles"]

@@ -3,7 +3,7 @@ import pathlib
 from typing import TYPE_CHECKING
 
 from PyQt6.QtGui import QRegularExpressionValidator
-from PyQt6.QtCore import QRegularExpression
+from PyQt6.QtCore import QRegularExpression, Qt
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QGroupBox, QCheckBox, QRadioButton, QLineEdit,
                              QPushButton, QGridLayout, QLabel, QSizePolicy)
 
@@ -103,9 +103,6 @@ class WorkflowSettings(QWidget):
         self.subfolders_type_checkbox = QCheckBox()
         self.subfolders_type_checkbox.setObjectName("subfoldersTypeCheckbox")
         layout.addWidget(self.subfolders_type_checkbox)
-        self.hidden_folders_checkbox = QCheckBox()
-        self.hidden_folders_checkbox.setObjectName("hiddenFoldersCheckbox")
-        layout.addWidget(self.hidden_folders_checkbox)
         layout.addStretch()
         self.folder_group.setLayout(layout)
         return self.folder_group
@@ -129,22 +126,28 @@ class WorkflowSettings(QWidget):
         self.image_files_checkbox.setObjectName("imageFilesCheckbox")
         self.music_files_checkbox = QCheckBox()
         self.music_files_checkbox.setObjectName("musicFilesCheckbox")
+        self.video_files_checkbox = QCheckBox()
+        self.video_files_checkbox.setObjectName("videoFilesCheckbox")
         self.archive_files_checkbox = QCheckBox()
         self.archive_files_checkbox.setObjectName("archiveFilesCheckbox")
-        files_layout.addWidget(self.documents_files_checkbox, 0, 0)
-        files_layout.addWidget(self.txt_files_checkbox, 0, 1)
-        files_layout.addWidget(self.office_files_checkbox, 0, 2)
-        files_layout.addWidget(self.image_files_checkbox, 1, 0)
-        files_layout.addWidget(self.music_files_checkbox, 1, 1)
-        files_layout.addWidget(self.archive_files_checkbox, 1, 2)
+        files_layout.addWidget(self.create_info_widget(self.documents_files_checkbox), 0, 0)
+        files_layout.addWidget(self.create_info_widget(self.txt_files_checkbox), 0, 1)
+        files_layout.addWidget(self.create_info_widget(self.office_files_checkbox), 0, 2)
+        files_layout.addWidget(self.create_info_widget(self.image_files_checkbox), 1, 0)
+        files_layout.addWidget(self.create_info_widget(self.music_files_checkbox), 1, 1)
+        files_layout.addWidget(self.create_info_widget(self.video_files_checkbox), 1, 2)
+        files_layout.addWidget(self.create_info_widget(self.archive_files_checkbox), 2, 0)
         self.custom_extensions_label = QLabel()
         self.custom_extensions_label.setObjectName("customExtensionsLabel")
         self.custom_extensions_edit = QLineEdit()
         self.custom_extensions_edit.setObjectName("customExtensionsEdit")
+        self.hidden_folders_checkbox = QCheckBox()
+        self.hidden_folders_checkbox.setObjectName("hiddenFoldersCheckbox")
         layout.addWidget(self.filter_checkbox)
         layout.addLayout(files_layout)
-        layout.addWidget(self.custom_extensions_label)
+        layout.addWidget(self.create_info_widget(self.custom_extensions_label))
         layout.addWidget(self.custom_extensions_edit)
+        layout.addWidget(self.hidden_folders_checkbox)
         layout.addStretch()
         self.filter_group.setLayout(layout)
         return self.filter_group
@@ -258,6 +261,7 @@ class WorkflowSettings(QWidget):
             "office_filter": self.office_files_checkbox.isChecked(),
             "image_filter": self.image_files_checkbox.isChecked(),
             "music_filter": self.music_files_checkbox.isChecked(),
+            "video_filter": self.video_files_checkbox.isChecked(),
             "archive_filter": self.archive_files_checkbox.isChecked(),
             "custom_extensions": self.custom_extensions_edit.text().strip(),
             "move_trash": self.move_to_trash_radiobutton.isChecked(),
@@ -332,3 +336,18 @@ class WorkflowSettings(QWidget):
         self.file_name_edit.clear()
         self.custom_extensions_edit.clear()
         self.set_config_data()
+
+    @staticmethod
+    def create_info_widget(checkbox: QCheckBox | QLabel) -> QWidget:
+        container = QWidget()
+        layout = QHBoxLayout(container)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(4)
+        info = QLabel("ⓘ")
+        info.setObjectName(f"{checkbox.objectName()}Info")
+        info.setCursor(Qt.CursorShape.ArrowCursor)
+        info.setFixedWidth(20)
+        layout.addWidget(checkbox)
+        layout.addWidget(info)
+        layout.addStretch()
+        return container

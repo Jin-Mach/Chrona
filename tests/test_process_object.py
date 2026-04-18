@@ -26,17 +26,19 @@ def folder_with_files(base_folder) -> Path:
 def documents_texts() -> dict[str, str | list[str]]:
     return {
         "documentsFiles": "Documents",
-        "documentsSuffixes": ["pdf", "doc", "docx", "odt", "rtf", "tex"],
+        "documentsSuffixes": ["pdf", "odt", "rtf", "tex", "json", "xml", "yaml", "yml", "rst"],
         "txtFiles": "Text_files",
         "txtSuffixes": ["txt", "log", "md", "cfg", "ini", "csv"],
         "officeFiles": "Office",
-        "officeSuffixes": ["xls", "xlsx", "ppt", "pptx", "doc", "docx"],
+        "officeSuffixes": ["xls", "xlsx", "xlsm", "ppt", "pptx", "doc", "docx", "ods", "odp"],
         "imageFiles": "Images",
-        "imageSuffixes": ["jpg", "jpeg", "png", "bmp", "gif", "tiff", "svg", "webp", "heic"],
+        "imageSuffixes": ["jpg", "jpeg", "png", "bmp", "gif", "tiff", "svg", "webp", "heic", "avif", "ico"],
         "musicFiles": "Music",
-        "musicSuffixes": ["mp3", "wav", "flac", "aac", "ogg", "m4a", "wma"],
+        "musicSuffixes": ["mp3", "wav", "flac", "aac", "ogg", "m4a", "wma", "opus"],
+        "videoFiles": "Video",
+        "videoSuffixes": ["mp4", "mkv", "avi", "mov", "wmv", "flv", "webm", "m4v"],
         "archiveFiles": "Archive",
-        "archiveSuffixes": ["zip", "rar", "7z", "tar", "gz", "bz2", "xz", "lzma"],
+        "archiveSuffixes": ["zip", "rar", "7z", "tar", "gz", "bz2", "xz", "lzma", "iso", "cab"],
         "othersFiles": "Others"
     }
 
@@ -58,6 +60,7 @@ def active_filters() -> dict[str, bool | str]:
         "office_filter": True,
         "image_filter": True,
         "music_filter": True,
+        "video_filter": True,
         "archive_filter": True,
         "custom_extensions": "pdf",
         "delete_file": True,

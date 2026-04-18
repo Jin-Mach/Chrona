@@ -26,6 +26,7 @@ txtFilesCheckboxState = true
 officeFilesCheckboxState = true
 imageFilesCheckboxState = true
 musicFilesCheckboxState = true
+videoFilesCheckboxState = true
 archiveFilesCheckboxState = true
 useTimestampCheckboxState = true
 useCounterCheckboxState = true

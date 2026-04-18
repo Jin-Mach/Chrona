@@ -22,6 +22,7 @@ def get_current_filter(widgets: list[QWidget], texts_data: dict[str, str]) -> st
         "officeFilesCheckboxText": "*.xls *.xlsx *.ppt *.pptx *.doc *.docx",
         "imageFilesCheckboxText": "*.jpg *.jpeg *.png *.bmp *.gif *.tiff *.svg *.webp *.heic",
         "musicFilesCheckboxText": "*.mp3 *.wav *.flac *.aac *.ogg *.m4a *.wma",
+        "videoFilesCheckboxText": "*.mp4 *.mkv *.avi *.mov *.wmv *.flv *.webm *.m4v",
         "archiveFilesCheckboxText": "*.zip *.rar *.7z *.tar *.gz *.bz2 *.xz *.lzma",
     }
     for widget in widgets:
