@@ -4,7 +4,7 @@ import pytest
 
 from pathlib import Path
 
-from src.threads_objects.process_object import ProcessObject
+from src.core.workers.process_object import ProcessObject
 
 @pytest.fixture
 def base_folder(tmp_path) -> Path:

@@ -3,9 +3,9 @@ import sys
 from PyQt6.QtCore import QTimer
 from PyQt6.QtWidgets import QApplication
 
-from src.UI.dialogs.splash_screen_provider import show_splash_screen
-from src.UI.main_window import MainWindow
-from src.providers.application_init_provider import ApplicationInitProvider
+from src.ui.dialogs.splash_screen_provider import show_splash_screen
+from src.ui.main_window import MainWindow
+from core.providers.application_init_provider import ApplicationInitProvider
 
 
 def run_application() -> None:

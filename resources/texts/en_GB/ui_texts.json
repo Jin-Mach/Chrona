@@ -101,7 +101,7 @@
     "archiveFilesCheckboxText": "Archives",
     "customExtensionsEditText": "Custom"
   },
-  "ProcessProvider": {
+  "ProcessController": {
     "titleText": "Error",
     "messageText": "No file selected for transfer.",
     "questionTitleText": "Chrona",

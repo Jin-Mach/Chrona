@@ -101,7 +101,7 @@
     "archiveFilesCheckboxText": "Archivy",
     "customExtensionsEditText": "Vlastní"
   },
-  "ProcessProvider": {
+  "ProcessController": {
     "titleText": "Chyba",
     "messageText": "Není vybrán žádný soubor pro přenos.",
     "questionTitleText": "Chrona",
